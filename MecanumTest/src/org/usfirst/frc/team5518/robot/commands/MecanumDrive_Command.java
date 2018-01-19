@@ -27,11 +27,11 @@ public class MecanumDrive_Command extends Command {
     		driveControl = OI.xbox; // Set locally defined controller to the control from the OI so that calling it is simpler
     		flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
     }
-
+    
     // Called just before this Command runs the first time
     protected void initialize() {
     }
-
+    
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     		
@@ -61,9 +61,9 @@ public class MecanumDrive_Command extends Command {
     		
     		// ------------------------- FLIGHT CONTROLS -------------------------
     		/*
-    		ySpeed = driveControl.getRawAxis(RobotMap.JOYSTICK_YAXIS); // Set vertical movement to forward/backward (y axis)
-		zRotation = driveControl.getRawAxis(RobotMap.JOYSTICK_ZAXIS); // Set rotation movement to turning stick (z axis)
-		xSpeed = driveControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (x axis)
+    		ySpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_YAXIS); // Set vertical movement to forward/backward (y axis)
+		zRotation = flightControl.getRawAxis(RobotMap.JOYSTICK_ZAXIS); // Set rotation movement to turning stick (z axis)
+		xSpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (x axis)
     		*/
     		
     		Robot.driveTrainSub.Drive(ySpeed, xSpeed, zRotation);
