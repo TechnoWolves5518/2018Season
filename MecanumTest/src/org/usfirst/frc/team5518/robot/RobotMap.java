@@ -17,10 +17,10 @@ public class RobotMap {
 	
 	// PORT MAPPING
 	// drive train
-	public static int FRONT_LEFT = 1;
-	public static int BACK_LEFT = 2;
-	public static int FRONT_RIGHT = 3;
-	public static int BACK_RIGHT = 4;
+	public static int FRONT_LEFT = 0;
+	public static int BACK_LEFT = 1;
+	public static int FRONT_RIGHT = 2;
+	public static int BACK_RIGHT = 3;
 	
 	// WINGMAN STUFF RIPOFF
 	// axes
