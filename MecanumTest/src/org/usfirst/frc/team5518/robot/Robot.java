@@ -24,6 +24,11 @@ public class Robot extends TimedRobot {
 	// Commit number one: hello world!
 	
 	// Calls to the subsystems and commands, as well as the OI
+	// IMPORTANT 
+	// Whenever you create a subsystem it is automagically registered with the Scheduler 
+	// class (look in the Scheduler constructor). That means that whenever you call 
+	// Scheduler.getInstance().run() it basically calls the SubSystems command execute() 
+	// method of every SubSystem registered.
 	public static final DriveTrain_Subsystem driveTrainSub = new DriveTrain_Subsystem();
 	public static final MecanumDrive_Command driveInputCom = new MecanumDrive_Command();
 	public static OI m_oi;
@@ -90,6 +95,8 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
+		// The scheduler has every subSystem registered an will call the current
+		// command of that subsystem. 
 		Scheduler.getInstance().run();
 	}
 

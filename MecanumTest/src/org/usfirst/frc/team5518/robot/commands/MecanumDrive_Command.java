@@ -21,15 +21,16 @@ public class MecanumDrive_Command extends Command {
     public MecanumDrive_Command() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    		requires(Robot.driveTrainSub);
-    		ySpeed = 0; xSpeed = 0; zRotation = 0;
-    		ky = 1; kx = 1; kz = 1; // Alter the max speeds to tune the movement of the robot
-    		driveControl = OI.xbox; // Set locally defined controller to the control from the OI so that calling it is simpler
-    		flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
+		requires(Robot.driveTrainSub);
+		ySpeed = 0; xSpeed = 0; zRotation = 0;
+		ky = 1; kx = 1; kz = 1; // Alter the max speeds to tune the movement of the robot
+		driveControl = OI.xbox; // Set locally defined controller to the control from the OI so that calling it is simpler
+		flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
     }
     
     // Called just before this Command runs the first time
     protected void initialize() {
+    	System.out.println("START TRYING");
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -37,27 +38,30 @@ public class MecanumDrive_Command extends Command {
     		
     		// ------------------------- XBOX CONTROLS -------------------------
     		
-    		ySpeed = ky * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
+    		xSpeed = ky * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
     		zRotation = kz * driveControl.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
     		
-    		xSpeed = kx * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
+    		// ySpeed = kx * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
     		
     		ltValue = driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER);
     		rtValue = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER);
     		
+    		System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
+    		
     		// Determine which trigger value is larger - that value will be dominant
-    		/*
+    		
     		// Method 2 of strafing
+    		
     		if (ltValue > rtValue) {
-    			xSpeed = -driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER); // LT makes strafe value negative
+    			ySpeed = -driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER); // LT makes strafe value negative
     		}
     		else if (rtValue > ltValue) {
-    			xSpeed = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER); // RT makes strafe value positive
+    			ySpeed = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER); // RT makes strafe value positive
     		}
     		else {
-    			xSpeed = 0;
+    			ySpeed = 0;
     		}
-    		*/
+    		
     		
     		// ------------------------- FLIGHT CONTROLS -------------------------
     		/*
@@ -67,6 +71,7 @@ public class MecanumDrive_Command extends Command {
     		*/
     		
     		Robot.driveTrainSub.Drive(ySpeed, xSpeed, zRotation);
+    		// System.out.println("------------OUTPUT-------------");
     		// Call the Drive() function from the DriveTrain_Subsystem, pass in collected 
     		
     }

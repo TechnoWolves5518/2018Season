@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
+import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.VictorSP;
@@ -22,11 +23,12 @@ public class DriveTrain_Subsystem extends Subsystem {
 
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(Robot.driveInputCom);
     }
     
     public void Drive(double ySpeed, double xSpeed, double zRot) {
     		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
+    		System.out.println("------------------------DriveTrain_Subsystem Drive 2 () ----------------------");
     		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
     }
     
