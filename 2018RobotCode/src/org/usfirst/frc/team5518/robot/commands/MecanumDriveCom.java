@@ -72,7 +72,7 @@ public class MecanumDriveCom extends Command {
 		xSpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (x axis)
 		 */
 	
-		Robot.driveTrainSub.Drive(ySpeed, xSpeed, zRotation);
+		Robot.driveTrainSub.drive(ySpeed, xSpeed, zRotation);
 		// System.out.println("------------OUTPUT-------------");
 		// Call the Drive() function from the DriveTrain_Subsystem, pass in collected 
 		
@@ -85,13 +85,13 @@ public class MecanumDriveCom extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-		Robot.driveTrainSub.Stop(); // Call the failsafe Stop() function
+		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		Robot.driveTrainSub.Stop(); // Call the failsafe Stop() function
+		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 }
 

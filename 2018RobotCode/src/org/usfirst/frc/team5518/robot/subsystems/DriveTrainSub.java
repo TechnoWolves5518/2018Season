@@ -49,12 +49,12 @@ public class DriveTrainSub extends Subsystem {
      * @param xSpeed the x speed
      * @param zRot the z rotation
      */
-    public void Drive(double ySpeed, double xSpeed, double zRot) {
+    public void drive(double ySpeed, double xSpeed, double zRot) {
 		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
     }
     
-    public void Stop() {
+    public void stop() {
 		driveBase.driveCartesian(0, 0, 0);
 		// Stop driving. Failsafe if connection is interrupted or robot code ends.
     }
