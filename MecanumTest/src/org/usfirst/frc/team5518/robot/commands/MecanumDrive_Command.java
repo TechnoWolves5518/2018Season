@@ -37,7 +37,9 @@ public class MecanumDrive_Command extends Command {
     		// ------------------------- XBOX CONTROLS -------------------------
     		
     		xSpeed = RobotMap.KX * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
+    		xSpeed = xSpeed * xSpeed;
     		zRotation = RobotMap.KZ * driveControl.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
+    		zRotation = zRotation * zRotation;
     		
     		// ySpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
     		
@@ -52,9 +54,11 @@ public class MecanumDrive_Command extends Command {
     		
     		if (ltValue > rtValue) {
     			ySpeed = RobotMap.KY * -driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER); // LT makes strafe value negative
+    			ySpeed = -1 * (ySpeed * ySpeed);
     		}
     		else if (rtValue > ltValue) {
     			ySpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER); // RT makes strafe value positive
+    			ySpeed = ySpeed * ySpeed;
     		}
     		else {
     			ySpeed = 0;

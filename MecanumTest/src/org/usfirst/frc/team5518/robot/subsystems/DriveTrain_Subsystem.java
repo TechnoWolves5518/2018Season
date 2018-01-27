@@ -18,6 +18,18 @@ public class DriveTrain_Subsystem extends Subsystem {
 	public VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
 	public VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 	
+	// enable deadband elimination
+	frontLeftMotor.enableDeadbandElimination(true);
+	backLeftMotor.enableDeadbandElimination(true);
+	frontRightMotor.enableDeadbandElimination(true);
+	backRightMotor.enableDeadbandElimination(true);
+	
+	// enable the safety
+	frontLeftMotor.setSafetyEnabled(true);
+	backLeftMotor.setSafetyEnabled(true);
+	frontRightMotor.setSafetyEnabled(true);
+	backRightMotor.setSafetyEnabled(true);
+	
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
 
@@ -26,6 +38,13 @@ public class DriveTrain_Subsystem extends Subsystem {
         setDefaultCommand(Robot.driveInputCom);
     }
     
+    /**
+     * A cool Taha method.
+     * @author Taha Bokhari
+     * @param ySpeed the y speed
+     * @param xSpeed the x speed
+     * @param zRot the z rotation
+     */
     public void Drive(double ySpeed, double xSpeed, double zRot) {
     		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
     		System.out.println("------------------------DriveTrain_Subsystem Drive 2 () ----------------------");
