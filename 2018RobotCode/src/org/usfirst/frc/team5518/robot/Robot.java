@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
+import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,8 +28,12 @@ public class Robot extends TimedRobot {
 	// class (look in the Scheduler constructor). That means that whenever you call 
 	// Scheduler.getInstance().run() it basically calls the SubSystems command execute() 
 	// method of every SubSystem registered.
+	
 	public static final DriveTrainSub driveTrainSub = new DriveTrainSub();
 	public static final MecanumDriveCom driveInputCom = new MecanumDriveCom();
+	
+	public static final SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
+	
 	public static OI m_oi;
 
 	/**
