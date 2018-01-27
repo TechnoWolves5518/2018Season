@@ -13,26 +13,30 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 public class DriveTrain_Subsystem extends Subsystem {
 	
 	// Construct and define motor controllers
-	public VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
-	public VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
-	public VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
-	public VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
-	
-	// enable deadband elimination
-	frontLeftMotor.enableDeadbandElimination(true);
-	backLeftMotor.enableDeadbandElimination(true);
-	frontRightMotor.enableDeadbandElimination(true);
-	backRightMotor.enableDeadbandElimination(true);
-	
-	// enable the safety
-	frontLeftMotor.setSafetyEnabled(true);
-	backLeftMotor.setSafetyEnabled(true);
-	frontRightMotor.setSafetyEnabled(true);
-	backRightMotor.setSafetyEnabled(true);
+	private VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
+	private VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
+	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
+	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 	
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
-
+	
+	public DriveTrain_Subsystem() {
+		
+		// enable deadband elimination
+		frontLeftMotor.enableDeadbandElimination(true);
+		backLeftMotor.enableDeadbandElimination(true);
+		frontRightMotor.enableDeadbandElimination(true);
+		backRightMotor.enableDeadbandElimination(true);
+		
+		// enable the safety
+		frontLeftMotor.setSafetyEnabled(true);
+		backLeftMotor.setSafetyEnabled(true);
+		frontRightMotor.setSafetyEnabled(true);
+		backRightMotor.setSafetyEnabled(true);
+		
+	}
+	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(Robot.driveInputCom);
@@ -46,14 +50,13 @@ public class DriveTrain_Subsystem extends Subsystem {
      * @param zRot the z rotation
      */
     public void Drive(double ySpeed, double xSpeed, double zRot) {
-    		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
-    		System.out.println("------------------------DriveTrain_Subsystem Drive 2 () ----------------------");
-    		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
+		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
+		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
     }
     
     public void Stop() {
-    		driveBase.driveCartesian(0, 0, 0);
-    		// Stop driving. Failsafe if connection is interrupted or robot code ends.
+		driveBase.driveCartesian(0, 0, 0);
+		// Stop driving. Failsafe if connection is interrupted or robot code ends.
     }
 }
 
