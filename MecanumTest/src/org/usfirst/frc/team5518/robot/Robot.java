@@ -21,10 +21,6 @@ import org.usfirst.frc.team5518.robot.subsystems.DriveTrain_Subsystem;
  */
 public class Robot extends TimedRobot {
 	
-	// Commit number one: hello world!
-	// Commit number something: please work!
-	// Commit number something+1: plz
-	
 	// Calls to the subsystems and commands, as well as the OI
 	// IMPORTANT 
 	// Whenever you create a subsystem it is automagically registered with the Scheduler 
