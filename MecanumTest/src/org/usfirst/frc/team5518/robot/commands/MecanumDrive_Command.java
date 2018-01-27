@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.Joystick;
 public class MecanumDrive_Command extends Command {
 	
 	public double ySpeed, xSpeed, zRotation;
-	public double ky, kx, kz;
 	public double ltValue, rtValue;
 	private Joystick driveControl;
 	private Joystick flightControl;
@@ -23,7 +22,6 @@ public class MecanumDrive_Command extends Command {
         // eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 		ySpeed = 0; xSpeed = 0; zRotation = 0;
-		ky = 1; kx = 1; kz = 1; // Alter the max speeds to tune the movement of the robot
 		driveControl = OI.xbox; // Set locally defined controller to the control from the OI so that calling it is simpler
 		flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
     }
@@ -38,10 +36,10 @@ public class MecanumDrive_Command extends Command {
     		
     		// ------------------------- XBOX CONTROLS -------------------------
     		
-    		xSpeed = ky * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
-    		zRotation = kz * driveControl.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
+    		xSpeed = RobotMap.KX * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
+    		zRotation = RobotMap.KZ * driveControl.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
     		
-    		// ySpeed = kx * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
+    		// ySpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
     		
     		ltValue = driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER);
     		rtValue = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER);
@@ -53,23 +51,23 @@ public class MecanumDrive_Command extends Command {
     		// Method 2 of strafing
     		
     		if (ltValue > rtValue) {
-    			ySpeed = -driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER); // LT makes strafe value negative
+    			ySpeed = RobotMap.KY * -driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER); // LT makes strafe value negative
     		}
     		else if (rtValue > ltValue) {
-    			ySpeed = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER); // RT makes strafe value positive
+    			ySpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER); // RT makes strafe value positive
     		}
     		else {
     			ySpeed = 0;
     		}
-    		
-    		
+
+
     		// ------------------------- FLIGHT CONTROLS -------------------------
     		/*
     		ySpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_YAXIS); // Set vertical movement to forward/backward (y axis)
 		zRotation = flightControl.getRawAxis(RobotMap.JOYSTICK_ZAXIS); // Set rotation movement to turning stick (z axis)
 		xSpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (x axis)
-    		*/
-    		
+    		 */
+
     		Robot.driveTrainSub.Drive(ySpeed, xSpeed, zRotation);
     		// System.out.println("------------OUTPUT-------------");
     		// Call the Drive() function from the DriveTrain_Subsystem, pass in collected 

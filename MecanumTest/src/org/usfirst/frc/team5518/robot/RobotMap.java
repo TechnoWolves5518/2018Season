@@ -15,6 +15,11 @@ package org.usfirst.frc.team5518.robot;
  */
 public class RobotMap {
 	
+	// DRIVE
+	public static double KX = 0.5;
+	public static double KY = 0.5;
+	public static double KZ = 0.5;
+	
 	// PORT MAPPING
 	// drive train
 	public static int FRONT_LEFT = 0;
