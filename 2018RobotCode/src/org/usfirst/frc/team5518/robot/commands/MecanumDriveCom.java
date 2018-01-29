@@ -49,7 +49,8 @@ public class MecanumDriveCom extends Command {
 		ltValue = driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER);
 		rtValue = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER);
 		*/
-		System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
+		// System.out.println("THE CODE IS UPDATED");
+    	System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
 		
 		// Determine which trigger value is larger - that value will be dominant
 		
@@ -72,11 +73,10 @@ public class MecanumDriveCom extends Command {
 		
 		xSpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_YAXIS); // Set vertical movement to forward/backward (x axis)
 		zRotation = flightControl.getRawAxis(RobotMap.JOYSTICK_ZAXIS); // Set rotation movement to turning stick (z axis)
-		ySpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (y axis)
-		 
-	
+		ySpeed = -flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (y axis)
+		
 		Robot.driveTrainSub.drive(ySpeed, xSpeed, zRotation);
-		// System.out.println("------------OUTPUT-------------");
+		System.out.println("------------OUTPUT-------------");
 		// Call the Drive() function from the DriveTrain_Subsystem, pass in collected 
 		
     }
