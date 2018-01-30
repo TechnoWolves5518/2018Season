@@ -7,11 +7,13 @@
 
 package org.usfirst.frc.team5518.robot;
 
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -29,12 +31,31 @@ public class Robot extends TimedRobot {
 	// Scheduler.getInstance().run() it basically calls the SubSystems command execute() 
 	// method of every SubSystem registered.
 	
+	/**
+	 * Subsystems
+	 */
 	public static final DriveTrainSub driveTrainSub = new DriveTrainSub();
 	public static final MecanumDriveCom driveInputCom = new MecanumDriveCom();
-	
 	public static final SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
 	
+	/**
+	 * Joystick (operator) interface
+	 */
 	public static OI m_oi;
+	
+	/**
+	 * Autonomous definitions
+	 */
+	private boolean isDebug = true;  // Set to false during competition.
+	private DriverStation ds;
+	private enum AutoFunction {
+	                kScale,
+	                kSwitch,
+		            kLine,
+	                kChoose,   // Choose best based on gameData.
+	                kDoNothing
+	                }
+	private AutoFunction kAutoFunction = AutoFunction.kChoose;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -73,7 +94,42 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		System.out.println("Auto init.");
 		
+		// Get robot location from DriverStation.
+		int teamStation; 
+		teamStation = ds.getLocation();
+		
+		// Get autoFunction instructions from DriverStation.
+		//AutoFunction auto = ds.getAutoFunction();
+		AutoFunction autoFunction = AutoFunction.kScale;
+		
+		// Get game data from DriverStation.
+		String gameData;
+		gameData = ds.getGameSpecificMessage();
+		
+		// Handle autonomous based on starting position.
+		// teamStation = 1 (Left)
+		if (teamStation == 1) {
+			if (isDebug) {
+				System.out.println("Auto Position = 1 ");
+			}
+			//doAutoLeft(autoFunction, gameData);
+		}
+		// teamStation = 2 (Middle)
+		else if (teamStation == 2) {
+			if (isDebug){
+				System.out.println("Auto Position = 2 ");
+			}
+			doAutoMiddle(autoFunction, gameData);
+		}
+		// teamStation = 3 (Right)
+		else {
+			if (isDebug){
+				System.out.println("Auto Position = 3 ");
+			}
+			//doAutoRight(autoFunction, gameData);
+		}
 	}
 
 	/**
@@ -82,6 +138,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		if (isDebug) {
+			System.out.println("Auto periodic.");
+		}
 	}
 
 	@Override
@@ -103,4 +163,82 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 	}
+	
+	/**
+	 * doAutoMiddle
+	 *   This function handles autonomous form the middle starting position.
+	 *   When autoFunction is:
+	 *    - LINE then drive forward and stop.
+	 *    - SWITCH or CHOOSE then drive forward or Left and launch the cube.
+	 *    - SCALE then drive right or left to Scale and launch the cube.
+	 *    - DONOTHING then do nothing.
+	 * @param function
+	 * @param gameData
+	 */
+	private void doAutoMiddle(AutoFunction function, String gameData) {
+		// Send log msg.
+		if (isDebug || ds.isAutonomous()) {
+			System.out.println("AutoMiddle " + function.toString() + " : using gamedata "+gameData);
+		}
+		
+		// DONOTHING : Do nothing.
+		if (function == AutoFunction.kDoNothing) {
+			if (isDebug) {
+				System.out.println("Do nothing.");
+			}
+			return;
+		}
+		
+		// kLINE : Drive forward and stop.
+		if (function == AutoFunction.kLine){
+			if (isDebug){
+				System.out.println("Drive forward and stop.");
+			}
+			//autoToAutoLine();
+			return;
+		}
+		
+		// kSWITCH or kCHOOSE : Determine gameData and launch in switch.		
+		if (function == AutoFunction.kSwitch || function == AutoFunction.kChoose){
+			// Check gameData for which side to launch into.
+			if(gameData.charAt(0) == 'R')
+			{
+				//Drive forward and launch.
+				if (isDebug){
+					System.out.println("Drive forward and launch.");
+				}
+				//autoMiddleToSwitch();
+			} 
+			// gameData(0) == 'L'
+			else {
+				//Drive left to Switch and launch.
+				if (isDebug){
+					System.out.println("Drive left to switch and launch.");
+				}
+				//autoMiddleLeftToSwitch();
+			}
+			return;
+		}
+		
+		// kSCALE : Determine gameData and launch in scale.
+		if (function == AutoFunction.kScale){
+			// Check gameData for which side to drive to.
+			if (gameData.charAt(1) == 'R'){
+				// Drive right to Scale and launch.
+				if (isDebug){
+					System.out.println("Drive right to scale and launch.");
+				}
+				//autoMiddleDriveRightToScale();
+			}
+			// gameData(1) == 'L'
+			else {
+				// Drive left to scale and launch.
+				if (isDebug){
+					System.out.println("Drive left to scale and launch.");
+				}
+				//autoMiddleDriveLeftToScale();
+			}
+		}
+		return;	
+	}//end doAutoMiddle()
 }
