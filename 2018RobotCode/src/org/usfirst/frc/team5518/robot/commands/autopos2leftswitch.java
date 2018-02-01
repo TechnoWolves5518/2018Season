@@ -3,9 +3,9 @@ package org.usfirst.frc.team5518.robot.commands;
 import org.usfirst.frc.team5518.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
-public class toLineAndStopCom extends Command {
+public class autopos2leftswitch extends Command {
 	
-    public toLineAndStopCom() {
+    public autopos2leftswitch() {
     	super(1);
     	
         // Use requires() here to declare subsystem dependencies
@@ -14,6 +14,7 @@ public class toLineAndStopCom extends Command {
 		
 		// End drive toLineAndStop.
 		setTimeout(3.0);
+		
     }
     
     @Override
@@ -22,10 +23,15 @@ public class toLineAndStopCom extends Command {
     	//Robot.driveTrainSub.drive(0.3, 0.0, 0.0);
     }
     
+    //1. Move forward.
+    //2. Strafe Left.
+    //3. Switch launch.
     @Override
     protected void execute() {
     	// Using default speed, etc.
     	Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
+    	//We are going to LEFT STRAFE
+    	System.out.println("Left Strafe, then shoot.");
     }
     
 	@Override
