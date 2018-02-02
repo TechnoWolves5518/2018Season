@@ -49,7 +49,7 @@ public class DriveTrainSub extends Subsystem {
     }
     
     /**
-     * A cool Taha method.
+     * An UNcool Taha method.
      * @author Taha Bokhari
      * @param ySpeed the y speed (side to side) (-0.3, 0, 0) <-- Left
      * @param xSpeed the x speed (forward/backward) (0, 0.3, 0) <-- Forward

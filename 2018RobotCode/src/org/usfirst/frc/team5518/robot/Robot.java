@@ -13,8 +13,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
-import org.usfirst.frc.team5518.robot.commands.toLineAndStopCom;
+import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
 
@@ -55,7 +54,7 @@ public class Robot extends TimedRobot {
 	// Robot Commands.
 	Command autonomousCommand;
 	Command toLineAndStop;
-	Command autopos2leftswitch;
+	Command autoCommand;
 	
 	// DriveStation Custom data
 	private enum AutoFunction {
@@ -112,6 +111,12 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 	}
 
+	
+	private void log(String msg){
+		if (isDebug){
+			System.out.println(msg);
+		}
+	}
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -126,34 +131,31 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		System.out.println("Auto init.");
-		
+
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kScale;		
-		
+		autoFunction    = AutoFunction.kSwitch;		
+		log("gameData = " + gameData + " location = " + robotLocation);
 		// Handle autonomous based on starting position.
 		// robotLocation = 1 (Left)
 		if (robotLocation == 1){
-			if (isDebug){
-				System.out.println("Auto Position = 1 ");
-			}
+			log("Auto Position = 1 ");
+
 			//doAutoLeft(autoFunction, gameData);
 		}
 		// robotLocation = 2 (Middle)
 		else if (robotLocation ==2){
-			if (isDebug){
-				System.out.println("Auto Position = 2 ");
-			}
+			log("Auto Position = 2 ");
+
 			autonomousCommand = doAutoMiddle(autoFunction, gameData);
 		}
 		// robotLocation = 3 (Right)
 		else {
-			if (isDebug){
-				System.out.println("Auto Position = 3 ");
-			}
+			log("Auto Position = 3 ");
+
 			//doAutoRight(autoFunction, gameData);
-		}
+		} 
 		autonomousCommand.start();
 		
 		// Get robot location from DriverStation.
@@ -281,7 +283,7 @@ public class Robot extends TimedRobot {
 				if (isDebug){
 					System.out.println("Drive left to switch and launch.");
 				}
-				return autopos2leftswitch;
+				return new autopos2leftswitch();
 			}
 			return commandToRun;
 		}
