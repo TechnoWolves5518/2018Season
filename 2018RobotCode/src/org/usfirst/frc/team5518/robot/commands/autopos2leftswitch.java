@@ -34,18 +34,20 @@ public class autopos2leftswitch extends Command {
     
     protected void execute() {
     	System.out.println("autopos2 execute");
-    	if (this.timeSinceInitialized() < leftTime)
+    	double t = this.timeSinceInitialized();
+    	if (t < leftTime)
     	{
     		System.out.println("We are driving forward");
     		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
-    	} else if (this.timeSinceInitialized() <= stopDrive && this.timeSinceInitialized() >= leftTime) { 
+    	} else if (t <= stopDrive && t >= leftTime) { 
     		System.out.println("We are driving left");
     		Robot.driveTrainSub.drive(-0.3, 0.0, 0.0);  		
-    	}else if (this.timeSinceInitialized() >= stopDrive) {
+    	}else if (t >= stopDrive) {
     		System.out.println("We are no longer driving");
     		Robot.driveTrainSub.drive(0.0, 0.0, 0.0); 
-    		//Stop
     	}
+    	
+    	Robot.log("Finished driving -- shoot at middle left switch");
     	// Using default speed, etc.
     	
     	//We are going to LEFT STRAFE

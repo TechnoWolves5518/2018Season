@@ -66,7 +66,7 @@ public class Robot extends TimedRobot {
 	                }
 	
 	// Custom definitions.
-	private boolean      isDebug    = true;  // Set to false during competition.
+	private static boolean      isDebug    = true;  // Set to false during competition.
 	private String       gameData;
 	private int          robotLocation;
 	private AutoFunction autoFunction;
@@ -112,11 +112,12 @@ public class Robot extends TimedRobot {
 	}
 
 	
-	private void log(String msg){
+	public static void log(String msg){
 		if (isDebug){
 			System.out.println(msg);
 		}
 	}
+	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
