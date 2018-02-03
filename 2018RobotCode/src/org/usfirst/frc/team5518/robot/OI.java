@@ -22,10 +22,10 @@ public class OI {
 	public static Joystick xbox = new Joystick(0); // Create XBOX controller from USB port 0
 	public static Joystick flight = new Joystick(0); // Create flight controller from USB port 0
 	
-	private Button xbutton = new JoystickButton(xbox, RobotMap.XBOX_XBTN);
+	private Button lBumper = new JoystickButton(xbox, RobotMap.XBOX_LBUMPER);
 	
 	public OI() {
-		xbutton.whenPressed(new PneuLauncherCom());
+		lBumper.whileHeld(new PneuLauncherCom());
 	}
 	
 	
