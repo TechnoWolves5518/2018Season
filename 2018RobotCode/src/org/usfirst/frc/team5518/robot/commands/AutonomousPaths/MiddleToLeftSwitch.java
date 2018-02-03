@@ -4,9 +4,9 @@ import org.usfirst.frc.team5518.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5518.robot.Logger;
 
-public class autopos2leftswitch extends Command {
+public class MiddleToLeftSwitch extends Command {
 	
-    public autopos2leftswitch() {
+    public MiddleToLeftSwitch() {
     	//super(1);
     	
         // Use requires() here to declare subsystem dependencies
@@ -32,24 +32,24 @@ public class autopos2leftswitch extends Command {
     // speed = 0.3; //Time we want to pass before going left.
     
     protected void execute() {
-    	Robot.logger.info("autopos2 execute");
+    	Robot.logger.debug("MiddleToLeftSwitch execute");
     	double t = this.timeSinceInitialized();
     	Robot.logger.debug("Time since initialized = " + t);
     	if (t < forwardTime)
     	{
-    		Robot.logger.info("We are driving forward");
+    		Robot.logger.debug("We are driving forward");
     		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
     	} 
     	else if (forwardTime <= t && t < leftTime) { 
-    		Robot.logger.info("We are driving left");
+    		Robot.logger.debug("We are driving left");
     		Robot.driveTrainSub.drive(-0.3, 0.0, 0.0);  		
     	} 
     	else if (leftTime <= t && t < stopDrive) {
-    		Robot.logger.info("We are driving forward again");
+    		Robot.logger.debug("We are driving forward again");
     		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
     	} 
     	else {
-    		Robot.logger.info("We are no longer driving");
+    		Robot.logger.debug("We are no longer driving");
     		Robot.driveTrainSub.drive(0.0, 0.0, 0.0); 
     	}
     	
@@ -58,7 +58,7 @@ public class autopos2leftswitch extends Command {
     	// Using default speed, etc.
     	
     	//We are going to LEFT STRAFE
-    	Robot.logger.info("Left Strafe, then shoot.");
+    	Robot.logger.debug("Left Strafe, then shoot.");
     	
     }
     

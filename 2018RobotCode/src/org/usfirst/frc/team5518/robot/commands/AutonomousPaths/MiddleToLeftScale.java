@@ -7,9 +7,9 @@ import org.usfirst.frc.team5518.robot.Logger;
 /**
  *
  */
-public class MiddleToRightScale extends Command {
+public class MiddleToLeftScale extends Command {
 
-    public MiddleToRightScale() {
+    public MiddleToLeftScale() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.driveTrainSub);
@@ -17,47 +17,47 @@ public class MiddleToRightScale extends Command {
 
     @Override
     protected void initialize() {
-    	Robot.logger.info("MiddleToRightScale init");
+    	Robot.logger.info("MiddleToLeftScale init");
     	// Using default speed, etc.
     	//Robot.driveTrainSub.drive(0.3, 0.0, 0.0);
     }
     
     //1. Move forward.
-    //2. Strafe Right.
+    //2. Strafe Left.
     //3. Switch launch.
     
-    double forwardTime = 2.0; //Time we want to pass before going right.
-    double rightTime = 3.0;
+    double forwardTime = 2.0; //Time we want to pass before going left.
+    double leftTime = 3.0;
     double stopDrive = 7.0; //Time we want to pass before going shoot.
-    // speed = 0.3; //Time we want to pass before going right.
+    // speed = 0.3; //Time we want to pass before going left.
     
     protected void execute() {
-    	Robot.logger.info("MiddleToRightScale execute");
+    	Robot.logger.debug("MiddleToLeftScale execute");
     	double t = this.timeSinceInitialized();
     	Robot.logger.debug("Time since initialized = " + t);
     	if (t < forwardTime)
     	{
-    		Robot.logger.info("We are driving forward");
+    		Robot.logger.debug("We are driving forward");
     		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
     	} 
-    	else if (forwardTime <= t && t < rightTime) { 
-    		Robot.logger.info("We are driving right");
-    		Robot.driveTrainSub.drive(0.3, 0.0, 0.0);  		
+    	else if (forwardTime <= t && t < leftTime) { 
+    		Robot.logger.info("We are driving left");
+    		Robot.driveTrainSub.drive(-0.3, 0.0, 0.0);  		
     	} 
-    	else if (rightTime <= t && t < stopDrive) {
-    		Robot.logger.info("We are driving forward again");
+    	else if (leftTime <= t && t < stopDrive) {
+    		Robot.logger.debug("We are driving forward again");
     		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
     	} 
     	else {
-    		Robot.logger.info("We are no longer driving");
+    		Robot.logger.debug("We are no longer driving");
     		Robot.driveTrainSub.drive(0.0, 0.0, 0.0); 
     	}
     	
-    	Robot.logger.debug("Finished driving -- shoot at middle right scale");
+    	Robot.logger.debug("Finished driving -- shoot at middle left scale");
     	// Using default speed, etc.
     	
-    	//We are going to RIGHT STRAFE
-    	Robot.logger.info("Right Strafe, then shoot.");
+    	//We are going to LEFT STRAFE
+    	Robot.logger.debug("Left Strafe, then shoot.");
     	
     }
     

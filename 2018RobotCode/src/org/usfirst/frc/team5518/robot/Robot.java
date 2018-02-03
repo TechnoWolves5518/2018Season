@@ -125,7 +125,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		System.out.println("Auto init.");
+		logger.debug("Auto init.");
 
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
@@ -136,8 +136,8 @@ public class Robot extends TimedRobot {
 		// robotLocation = 1 (Left)
 		if (robotLocation == 1){
 			logger.debug("Auto Position = 1 ");
+			autonomousCommand = doAutoLeft(autoFunction, gameData);
 
-			//doAutoLeft(autoFunction, gameData);
 		}
 		// robotLocation = 2 (Middle)
 		else if (robotLocation ==2){
@@ -152,35 +152,6 @@ public class Robot extends TimedRobot {
 			//doAutoRight(autoFunction, gameData);
 		} 
 		autonomousCommand.start();
-		
-		// Get robot location from DriverStation.
-		int teamStation; 
-		teamStation = ds.getLocation();
-		
-		// Get autoFunction instructions from DriverStation.
-		//AutoFunction auto = ds.getAutoFunction();
-		AutoFunction autoFunction = AutoFunction.kScale;
-		
-		// Get game data from DriverStation.
-		String gameData;
-		gameData = ds.getGameSpecificMessage();
-		
-		// Handle autonomous based on starting position.
-		// teamStation = 1 (Left)
-		if (teamStation == 1) {
-			logger.debug("Auto Position = 1 ");
-			//doAutoLeft(autoFunction, gameData);
-		}
-		// teamStation = 2 (Middle)
-		else if (teamStation == 2) {
-			logger.debug("Auto Position = 2 ");
-			doAutoMiddle(autoFunction, gameData);
-		}
-		// teamStation = 3 (Right)
-		else {
-			logger.debug("Auto Position = 3 ");
-			//doAutoRight(autoFunction, gameData);
-		}
 		
 	}
 
@@ -219,6 +190,45 @@ public class Robot extends TimedRobot {
 	}
 	
 	/**
+	 * doAutoLeft
+	 * This function handles autonomous from the left starting position.
+	 * When autoFunction is:
+	 *   - LINE then drive forward and stop.
+	 *   - SWITCH or SCALE then drive to specified switch/scale.
+	 *   - DONOTHING then do nothing.
+	 *   - CHOOSE then go the best route.
+	 * @param function
+	 * @param gameData
+	 */
+	private Command doAutoLeft(AutoFunction function, String gameData){
+		Command commandToRun = toLineAndStop;
+		
+		if (ds.IsAutonomous()){
+			logger.debug("AutoLeft " + function.toString() + " : using gamedata " + gameData);
+		}
+		
+		if (function == AutoFunction.kDoNothing){
+			logger.debug("Do nothing.");
+			return commandToRun;
+		}
+		
+		if (function == AutoFunction.kSwitch){
+			if(gameData.charAt(0) == 'R')
+			{
+				//Forward, right, then pivot right to switch.
+				logger.debug("Forward, right, then pivot right to switch.");
+				//return new MiddleToRightSwitch();
+			} 
+			// gameData(0) == 'L'
+			else {
+				//Drive forward, then pivot right to switch.
+				logger.debug("Drive forward, then pivot right to switch.");
+				return new LeftToLeftSwitch();
+			}
+		}
+	}
+	
+	/**
 	 * doAutoMiddle
 	 *   This function handles autonomous from the middle starting position.
 	 *   When autoFunction is:
@@ -234,7 +244,7 @@ public class Robot extends TimedRobot {
 		
 		// Send log msg.
 		if (ds.isAutonomous()){
-			logger.info("AutoMiddle "+function.toString()+" : using gamedata "+gameData);
+			logger.debug("AutoMiddle "+function.toString()+" : using gamedata "+gameData);
 			//Gamedata gives the layout of the switches. (Example - LRL - Left Right Left)
 			
 		}
@@ -258,15 +268,14 @@ public class Robot extends TimedRobot {
 			{
 				//Drive forward and launch.
 				logger.debug("Drive forward and launch.");
-				//autoMiddleToSwitch();
+				return new MiddleToRightSwitch();
 			} 
 			// gameData(0) == 'L'
 			else {
 				//Drive left to Switch and launch.
 				logger.debug("Drive left to switch and launch.");
-				return new autopos2leftswitch();
+				return new MiddleToLeftSwitch();
 			}
-			return commandToRun;
 		}
 		
 		// kSCALE : Determine gameData and launch in scale.
