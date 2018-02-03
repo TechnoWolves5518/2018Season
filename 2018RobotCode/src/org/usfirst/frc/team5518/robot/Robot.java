@@ -10,10 +10,13 @@ package org.usfirst.frc.team5518.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
+import org.usfirst.frc.team5518.robot.commands.DriveDistance;
+import org.usfirst.frc.team5518.robot.commands.StrafeDistance;
 import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
@@ -43,18 +46,25 @@ public class Robot extends TimedRobot {
 	/**
 	 * Subsystems
 	 */
-	public static final DriveTrainSub driveTrainSub = new DriveTrainSub();
-	public static final MecanumDriveCom driveInputCom = new MecanumDriveCom();
-	public static final SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
-  public static final AutoDriveSub autoDriveSub = new AutoDriveSub();
-	public static final Logger logger = new Logger();
+	public static DriveTrainSub driveTrainSub;
+	public static MecanumDriveCom driveInputCom;
+	
+	public static SpecialFunctionsSub sfSub;
+	
+	public static AutoDriveSub autoDriveSub;
+	public static DriveDistance driveDistance;
+	public static StrafeDistance strafeDistance;
+	
+	public static Logger logger = new Logger();
 
 	public static OI m_oi;
 	public static DriverStation ds;
 	
 	// Robot Commands.
 	Command autonomousCommand;
+	CommandGroup autoCommandGroup;
 	Command toLineAndStop;
+	CommandGroup middleToLeftSwitchGroup;
 	Command autoCommand;
 	
 	// DriveStation Custom data
@@ -83,13 +93,22 @@ public class Robot extends TimedRobot {
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
 		
+		driveTrainSub = new DriveTrainSub();
+		sfSub = new SpecialFunctionsSub();
+		autoDriveSub = new AutoDriveSub();
+		
+		driveInputCom = new MecanumDriveCom();
+//		driveDistance = new DriveDistance(0, 0);
+//		strafeDistance = new StrafeDistance(0, 0);
+		
 		// Autonomous data initial.
 		gameData        = "";
 		robotLocation   = -1;
 		autoFunction    = AutoFunction.kSwitch;
 		
 		// Initialize all autonomous commands.
-		toLineAndStop = new toLineAndStopCom();
+		toLineAndStop = new ToLineAndStopCom();
+		middleToLeftSwitchGroup = new MiddleToLeftSwitchGroup();
 		
 		// Default.
 		autonomousCommand = toLineAndStop;
@@ -146,6 +165,7 @@ public class Robot extends TimedRobot {
 			logger.debug("Auto Position = 2 ");
 
 			autonomousCommand = doAutoMiddle(autoFunction, gameData);
+			// autoCommandGroup = doAutoMiddle(autoFunction, gameData);
 		}
 		// robotLocation = 3 (Right)
 		else {
@@ -154,6 +174,7 @@ public class Robot extends TimedRobot {
 			//doAutoRight(autoFunction, gameData);
 		} 
 		autonomousCommand.start();
+		// autoCommandGroup.start();
     
 	}
 
@@ -164,7 +185,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
-		autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
+		// autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
 	}
 
 	@Override
@@ -203,7 +224,7 @@ public class Robot extends TimedRobot {
 	private Command doAutoLeft(AutoFunction function, String gameData){
 		Command commandToRun = toLineAndStop;
 		
-		if (ds.IsAutonomous()){
+		if (ds.isAutonomous()){
 			logger.debug("AutoLeft " + function.toString() + " : using gamedata " + gameData);
 		}
 		
@@ -226,6 +247,8 @@ public class Robot extends TimedRobot {
 				return new LeftToLeftSwitch();
 			}
 		}
+		
+		return commandToRun;
 	}
 	
 	/**
@@ -239,8 +262,8 @@ public class Robot extends TimedRobot {
 	 * @param function
 	 * @param gameData
 	 */
-	private Command doAutoMiddle(AutoFunction function, String gameData){
-		Command commandToRun = toLineAndStop;
+	private CommandGroup doAutoMiddle(AutoFunction function, String gameData){
+		CommandGroup commandToRun = middleToLeftSwitchGroup;
 		
 		// Send log msg.
 		if (ds.isAutonomous()){
@@ -252,13 +275,13 @@ public class Robot extends TimedRobot {
 		// DONOTHING : Do nothing.
 		if (function == AutoFunction.kDoNothing){
 			logger.debug("Do nothing.");
-			return commandToRun;
+			// return commandToRun;
 		}
 		
 		// kLINE : Drive forward and stop.
 		if (function == AutoFunction.kLine){
 			logger.debug("Drive forward and stop.");
-			return toLineAndStop;
+			// return toLineAndStop;
 		}
 		
 		// kSWITCH or kCHOOSE : Determine gameData and launch in switch.		
@@ -268,13 +291,14 @@ public class Robot extends TimedRobot {
 			{
 				//Drive forward and launch.
 				logger.debug("Drive forward and launch.");
-				return new MiddleToRightSwitch();
+				// return new MiddleToRightSwitch();
 			} 
 			// gameData(0) == 'L'
 			else {
 				//Drive left to Switch and launch.
 				logger.debug("Drive left to switch and launch.");
-				return new MiddleToLeftSwitch();
+				// return new MiddleToLeftSwitch();
+				return middleToLeftSwitchGroup;
 			}
 		}
 		
@@ -284,13 +308,13 @@ public class Robot extends TimedRobot {
 			if (gameData.charAt(1) == 'R'){
 				// Drive right to Scale and launch.
 				logger.debug("Drive right to scale and launch.");
-				return new MiddleToRightScale();
+				// return new MiddleToRightScale();
 			}
 			// gameData(1) == 'L'
 			else {
 				// Drive left to scale and launch.
 				logger.debug("Drive left to scale and launch.");
-				return new MiddleToLeftScale();
+				// return new MiddleToLeftScale();
 			}
 		}
 		return commandToRun;	

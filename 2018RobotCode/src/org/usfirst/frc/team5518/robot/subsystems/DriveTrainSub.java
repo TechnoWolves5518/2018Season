@@ -18,7 +18,7 @@ public class DriveTrainSub extends Subsystem {
 	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
 	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 	
-	private float expiraton = 0.5f;
+	private float expiraton = 0.75f;
 	
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
