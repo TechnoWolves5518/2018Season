@@ -18,7 +18,7 @@ public class AutoDriveSub extends Subsystem {
 	private boolean isDone;
 	
 	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumfrence)
-    public static final double kPulsesPerRevolution = 1440; // Encoder pulses in one shaft revolution
+    public static final double kPulsesPerRevolution = -1440; // Encoder pulses in one shaft revolution
     public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
 	
     private Encoder leftEncoder = new Encoder(0, 1, false, EncodingType.k4X);
@@ -48,9 +48,10 @@ public class AutoDriveSub extends Subsystem {
     		
     		if (avgEncoderPos() > -vertDist) {
     			evenDrive();
-    			System.out.println("distance: " + avgEncoderPos());
+    			System.out.println("left distance: " + leftEncoder.getDistance() + "    left encoder values: " + leftEncoder.getRaw());
+    			System.out.println("right distance: " + rightEncoder.getDistance() + "    right encoder values: " + rightEncoder.getRaw());
     			Robot.driveTrainSub.drive(0, vertSpeed, rotAdjustment);
-    			Robot.logger.debug("Outputting drive values");
+    			// Robot.logger.debug("Outputting drive values");
     			// Robot.driveTrainSub.drive(0.0, 0.2, 0);
     			isDone = false;
     		}

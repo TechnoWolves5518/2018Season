@@ -147,7 +147,7 @@ public class Robot extends TimedRobot {
 		autoDriveSub.resetEncoders();
 
 		logger.debug("Auto init.");
-
+		/*
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
@@ -175,7 +175,7 @@ public class Robot extends TimedRobot {
 		} 
 		autonomousCommand.start();
 		// autoCommandGroup.start();
-    
+    */
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
-		// autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
+		autoDriveSub.autoDrive(12, 0.3f);
 	}
 
 	@Override
