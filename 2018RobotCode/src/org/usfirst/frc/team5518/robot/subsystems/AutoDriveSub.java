@@ -85,10 +85,10 @@ public class AutoDriveSub extends Subsystem {
     
     private void evenDrive() {
     		
-    		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {
+    		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
 			rotAdjustment = -0.2f;
 		}
-    		else if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {
+    		else if (rightEncoder.getDistance() > leftEncoder.getDistance() + 0.3f) {
     			rotAdjustment = 0.2f;
     		}
     		
