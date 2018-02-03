@@ -83,8 +83,6 @@ public class AutoDriveSub extends Subsystem {
     	
     }
     
-    
-    
     private void evenDrive() {
     		
     		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {

@@ -29,11 +29,11 @@ public class MiddleToLeftSwitchGroup extends CommandGroup {
         // arm.
     	
     	Robot.logger.debug("Driving forward 1");
-    	addSequential(new DriveDistance(3, 0.2f));
+    	addSequential(new DriveDistance(12, 0.2f));
 //    	Robot.logger.debug("Driving right");
 //    	addSequential(new StrafeDistance(48, 0.3f));
     	Robot.logger.debug("Driving forward 2");
-    	addSequential(new DriveDistance(7, 0.8f));
+    	addSequential(new DriveDistance(24, 0.5f));
     	Robot.logger.debug("Done with Command Group");
     	// add shoot command
     	
