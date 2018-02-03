@@ -4,9 +4,9 @@ import org.usfirst.frc.team5518.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5518.robot.Logger;
 
-public class toLineAndStopCom extends Command {
+public class ToLineAndStopCom extends Command {
 	
-    public toLineAndStopCom() {
+    public ToLineAndStopCom() {
     	//super(1);
     	
         // Use requires() here to declare subsystem dependencies

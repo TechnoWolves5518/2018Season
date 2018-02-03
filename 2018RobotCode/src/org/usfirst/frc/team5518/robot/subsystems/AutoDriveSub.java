@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
 import org.usfirst.frc.team5518.robot.Robot;
+import org.usfirst.frc.team5518.robot.Logger;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
@@ -13,6 +14,8 @@ public class AutoDriveSub extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
+	
+	private boolean isDone;
 	
 	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumfrence)
     public static final double kPulsesPerRevolution = 1440; // Encoder pulses in one shaft revolution
@@ -41,17 +44,43 @@ public class AutoDriveSub extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void autoDrive(float vertDist, float strafeDist, float rotDist,
-    							float vertSpeed, float strafeSpeed, float rotSpeed) {
-    		
+    public void autoDrive(float vertDist, float vertSpeed) {
     		
     		if (avgEncoderPos() > -vertDist) {
     			evenDrive();
     			System.out.println("distance: " + avgEncoderPos());
-    			// Robot.driveTrainSub.drive(vertSpeed, strafeSpeed, rotSpeed+rotAdjustment);
-    			Robot.driveTrainSub.drive(0.0, 0.2, 0);
+    			Robot.driveTrainSub.drive(0, vertSpeed, rotAdjustment);
+    			Robot.logger.debug("Outputting drive values");
+    			// Robot.driveTrainSub.drive(0.0, 0.2, 0);
+    			isDone = false;
     		}
-    		
+    		else {
+    			isDone = true;
+    		}
+    }
+    
+    public void autoStrafe(float strafeDist, float strafeSpeed) {
+
+		if (avgEncoderPos() > -strafeDist) {
+			evenDrive();
+			System.out.println("distance: " + avgEncoderPos());
+			// Robot.driveTrainSub.drive(0, strafeSpeed, rotAdjustment);
+			Robot.driveTrainSub.drive(0.2, 0.0, 0);
+		}
+
+    }
+    
+    public boolean doneDriving() {
+    	return isDone;
+    }
+    
+    public void autoRotate(float rotateTime, float rotateSpeed) {
+    	
+    	if (rotateTime < 50) {
+    		rotateTime++;
+    		Robot.driveTrainSub.drive(0.0, 0.0, 0.3);
+    	}
+    	
     }
     
     private void evenDrive() {
@@ -70,7 +99,7 @@ public class AutoDriveSub extends Subsystem {
     }
     
     public void resetEncoders() {
-    		leftEncoder.reset();
+    	leftEncoder.reset();
         rightEncoder.reset();
     }
     
