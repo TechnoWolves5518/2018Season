@@ -10,6 +10,7 @@ package org.usfirst.frc.team5518.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
+import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
 
@@ -33,6 +34,8 @@ public class Robot extends TimedRobot {
 	public static final MecanumDriveCom driveInputCom = new MecanumDriveCom();
 	
 	public static final SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
+	
+	public static final AutoDriveSub autoDriveSub = new AutoDriveSub();
 	
 	public static OI m_oi;
 
@@ -82,6 +85,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		
+		autoDriveSub.autoDrive(36f, 0f, 0f, 0.2f, 0f, 0f);
+		
 	}
 
 	@Override

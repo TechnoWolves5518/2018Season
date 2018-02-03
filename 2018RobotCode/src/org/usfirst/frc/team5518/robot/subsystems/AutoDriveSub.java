@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
+import org.usfirst.frc.team5518.robot.Robot;
+
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -12,12 +14,14 @@ public class AutoDriveSub extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	public static final double kDistancePerRevolution = 8 * Math.PI;
-    public static final double kPulsesPerRevolution = 1440;
-    public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution;
+	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumfrence)
+    public static final double kPulsesPerRevolution = 1440; // Encoder pulses in one shaft revolution
+    public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
 	
-    private Encoder leftEncoder = new Encoder(1, 2, false, EncodingType.k4X);
-    private Encoder rightEncoder = new Encoder(3, 4, true, EncodingType.k4X);
+    private Encoder leftEncoder = new Encoder(0, 1, false, EncodingType.k4X);
+    private Encoder rightEncoder = new Encoder(2, 3, true, EncodingType.k4X);
+    
+    private float rotAdjustment = 0;
     
 	public AutoDriveSub() {
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
@@ -26,10 +30,7 @@ public class AutoDriveSub extends Subsystem {
         leftEncoder.setMaxPeriod(0.1);
         leftEncoder.setMinRate(10);
         
-        
-        
-        leftEncoder.reset();
-        rightEncoder.reset();
+        resetEncoders();
 	}
 	
     public void initDefaultCommand() {
@@ -37,9 +38,44 @@ public class AutoDriveSub extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-    public void autoDrive(float dist) {
+    public void autoDrive(float vertDist, float strafeDist, float rotDist,
+    							float vertSpeed, float strafeSpeed, float rotSpeed) {
+    		
+    		resetEncoders();
+    		
+    		if (avgEncoderPos() < vertDist) {
+    			evenDrive();
+    			Robot.driveTrainSub.drive(vertSpeed, strafeSpeed, rotSpeed+rotAdjustment);
+    		}
     		
     }
     
+    private void evenDrive() {
+    		
+    		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {
+			rotAdjustment = -0.2f;
+		}
+    		else if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {
+    			rotAdjustment = 0.2f;
+    		}
+    		
+    }
+    
+    private double avgEncoderPos() {
+    		return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+    }
+    
+    public void resetEncoders() {
+    		leftEncoder.reset();
+        rightEncoder.reset();
+    }
+    
 }
+
+
+
+
+
+
+
 
