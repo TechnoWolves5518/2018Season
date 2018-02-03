@@ -7,7 +7,11 @@
 
 package org.usfirst.frc.team5518.robot;
 
+import org.usfirst.frc.team5518.robot.commands.PneuLauncherCom;
+
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -17,5 +21,12 @@ public class OI {
 	
 	public static Joystick xbox = new Joystick(0); // Create XBOX controller from USB port 0
 	public static Joystick flight = new Joystick(0); // Create flight controller from USB port 0
+	
+	private Button xbutton = new JoystickButton(xbox, RobotMap.XBOX_XBTN);
+	
+	public OI() {
+		xbutton.whenPressed(new PneuLauncherCom());
+	}
+	
 	
 }
