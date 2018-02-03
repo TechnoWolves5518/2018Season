@@ -45,6 +45,7 @@ public class AutoDriveSub extends Subsystem {
     		
     		if (avgEncoderPos() < vertDist) {
     			evenDrive();
+    			System.out.println("distance: " + avgEncoderPos());
     			Robot.driveTrainSub.drive(vertSpeed, strafeSpeed, rotSpeed+rotAdjustment);
     		}
     		

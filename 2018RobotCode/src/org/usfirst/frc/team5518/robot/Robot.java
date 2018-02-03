@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 		
-		autoDriveSub.autoDrive(36f, 0f, 0f, 0.2f, 0f, 0f);
+		autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
 		
 	}
 
