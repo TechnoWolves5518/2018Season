@@ -1,5 +1,11 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
+import org.usfirst.frc.team5518.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
@@ -9,54 +15,49 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  */
 public class SpecialFunctionsSub extends Subsystem {
 	
-	/** Define 2 motor controllers for intake */
+	private VictorSP leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
+	private VictorSP rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
 	
-	/** Define compressor object */
-
-	/** Define 3 (double) solenoids for launcher */
+	private Compressor compressor = new Compressor(RobotMap.COMPRESSOR);
+	private DoubleSolenoid doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
 	
-	/**
-	 * Constructor for initializing components
-	 */
 	public SpecialFunctionsSub() {
-		// init components
+		
+		compressor.setClosedLoopControl(true); // refill compressor automatically
+		compressor.start(); // turn compressor on
 		
 		// enable safety on motor controllers
-		
-		// turn compressor on
+		leftMotor.setSafetyEnabled(true);
+		rightMotor.setSafetyEnabled(true);
 		
 	}
 	
-	/**
-	 * Shoot the power cube at a target. This method will be called
-	 * upon a button press on the joystick and will also be used
-	 * to fire and immediately retract the pneumatic cylinders.
-	 */
-	public void shoot() {
-		// extend all the cylinders via solenoids
-		
-		// delay thread to allow time for cylinders to fully extend
-		
-		// retract all the cylinders via solenoids
-	}
-	
-	/**
-	 * Power the two intake motors to get power cubes onto
-	 * the roobit. This method will be called while a button on
-	 * the joystick is held down.
-	 * 
-	 * @param speed Set the speed of the intake motor controllers
-	 * with the speed ranging from -1 and 1. Set positive values to
-	 * enable the motors to spin 'forwards' and negative values to
-	 * enable the motors to spin 'backwards.'
-	 */
-	public void intake(double speed) {
-		// set speed of both motors via the motor controllers
-	}
-
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+	public void shootSwitch() {
+		
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+		Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids
+		
+	}
+	
+	public void shootScale() {
+		
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+		Timer.delay(.15); // delay thread to allow time for cylinders to fully extend
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids
+
+	}
+	
+	public void intake(double speed) {
+		// set speed of both motors via the motor controllers
+		leftMotor.set(speed);
+		rightMotor.set(speed);
+	}
+
 }
 
