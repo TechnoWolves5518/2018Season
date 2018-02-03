@@ -18,6 +18,8 @@ public class DriveTrainSub extends Subsystem {
 	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
 	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 	
+	private float expiraton = 0.5f;
+	
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
 	
@@ -31,9 +33,13 @@ public class DriveTrainSub extends Subsystem {
 		
 		// enable the safety
 		frontLeftMotor.setSafetyEnabled(true);
+		frontLeftMotor.setExpiration(expiraton);
 		backLeftMotor.setSafetyEnabled(true);
+		backLeftMotor.setExpiration(expiraton);
 		frontRightMotor.setSafetyEnabled(true);
+		frontRightMotor.setExpiration(expiraton);
 		backRightMotor.setSafetyEnabled(true);
+		backRightMotor.setExpiration(expiraton);
 		
 	}
 	
@@ -43,11 +49,11 @@ public class DriveTrainSub extends Subsystem {
     }
     
     /**
-     * A cool Taha method.
+     * An UNcool Taha method.
      * @author Taha Bokhari
-     * @param ySpeed the y speed
-     * @param xSpeed the x speed
-     * @param zRot the z rotation
+     * @param ySpeed the y speed (side to side) (-0.3, 0, 0) <-- Left
+     * @param xSpeed the x speed (forward/backward) (0, 0.3, 0) <-- Forward
+     * @param zRot the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
      */
     public void drive(double ySpeed, double xSpeed, double zRot) {
 		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
