@@ -30,6 +30,9 @@ public class AutoDriveSub extends Subsystem {
         leftEncoder.setMaxPeriod(0.1);
         leftEncoder.setMinRate(10);
         
+//        leftEncoder.setReverseDirection(true);
+//        rightEncoder.setReverseDirection(true);
+        
         resetEncoders();
 	}
 	
@@ -41,12 +44,12 @@ public class AutoDriveSub extends Subsystem {
     public void autoDrive(float vertDist, float strafeDist, float rotDist,
     							float vertSpeed, float strafeSpeed, float rotSpeed) {
     		
-    		resetEncoders();
     		
-    		if (avgEncoderPos() < vertDist) {
+    		if (avgEncoderPos() > -vertDist) {
     			evenDrive();
     			System.out.println("distance: " + avgEncoderPos());
-    			Robot.driveTrainSub.drive(vertSpeed, strafeSpeed, rotSpeed+rotAdjustment);
+    			// Robot.driveTrainSub.drive(vertSpeed, strafeSpeed, rotSpeed+rotAdjustment);
+    			Robot.driveTrainSub.drive(0.0, 0.2, 0);
     		}
     		
     }
