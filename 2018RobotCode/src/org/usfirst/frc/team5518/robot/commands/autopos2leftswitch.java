@@ -2,6 +2,7 @@ package org.usfirst.frc.team5518.robot.commands;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team5518.robot.Logger;
 
 public class autopos2leftswitch extends Command {
 	
@@ -12,14 +13,11 @@ public class autopos2leftswitch extends Command {
         // eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 		
-		// End drive toLineAndStop.
-		//setTimeout(4.0);
-		
     }
     
     @Override
     protected void initialize() {
-    	System.out.println("autopos2 init");
+    	Robot.logger.info("autopos2 init");
     	// Using default speed, etc.
     	//Robot.driveTrainSub.drive(0.3, 0.0, 0.0);
     }
@@ -28,30 +26,39 @@ public class autopos2leftswitch extends Command {
     //2. Strafe Left.
     //3. Switch launch.
     
-    double leftTime = 2.0; //Time we want to pass before going left.
-    double stopDrive = 4.0; //Time we want to pass before going shoot.
+    double forwardTime = 2.0; //Time we want to pass before going left.
+    double leftTime = 3.0;
+    double stopDrive = 7.0; //Time we want to pass before going shoot.
     // speed = 0.3; //Time we want to pass before going left.
     
     protected void execute() {
-    	System.out.println("autopos2 execute");
+    	Robot.logger.info("autopos2 execute");
     	double t = this.timeSinceInitialized();
-    	if (t < leftTime)
+    	Robot.logger.debug("Time since initialized = " + t);
+    	if (t < forwardTime)
     	{
-    		System.out.println("We are driving forward");
+    		Robot.logger.info("We are driving forward");
     		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
-    	} else if (t <= stopDrive && t >= leftTime) { 
-    		System.out.println("We are driving left");
+    	} 
+    	else if (forwardTime <= t && t < leftTime) { 
+    		Robot.logger.info("We are driving left");
     		Robot.driveTrainSub.drive(-0.3, 0.0, 0.0);  		
-    	}else if (t >= stopDrive) {
-    		System.out.println("We are no longer driving");
+    	} 
+    	else if (leftTime <= t && t < stopDrive) {
+    		Robot.logger.info("We are driving forward again");
+    		Robot.driveTrainSub.drive(0.0, 0.3, 0.0);
+    	} 
+    	else {
+    		Robot.logger.info("We are no longer driving");
     		Robot.driveTrainSub.drive(0.0, 0.0, 0.0); 
     	}
     	
-    	Robot.log("Finished driving -- shoot at middle left switch");
+    	
+    	Robot.logger.debug("Finished driving -- shoot at middle left switch");
     	// Using default speed, etc.
     	
     	//We are going to LEFT STRAFE
-    	System.out.println("Left Strafe, then shoot.");
+    	Robot.logger.info("Left Strafe, then shoot.");
     	
     }
     

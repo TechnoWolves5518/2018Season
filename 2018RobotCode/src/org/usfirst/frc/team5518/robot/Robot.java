@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
+import org.usfirst.frc.team5518.robot.Logger;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -43,6 +44,7 @@ public class Robot extends TimedRobot {
 	public static final DriveTrainSub driveTrainSub = new DriveTrainSub();
 	public static final MecanumDriveCom driveInputCom = new MecanumDriveCom();
 	public static final SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
+	public static final Logger logger = new Logger();
 	
 	// Global robot components.
 	/**
@@ -66,7 +68,6 @@ public class Robot extends TimedRobot {
 	                }
 	
 	// Custom definitions.
-	private static boolean      isDebug    = true;  // Set to false during competition.
 	private String       gameData;
 	private int          robotLocation;
 	private AutoFunction autoFunction;
@@ -86,7 +87,7 @@ public class Robot extends TimedRobot {
 		// Autonomous data initial.
 		gameData        = "";
 		robotLocation   = -1;
-		autoFunction    = AutoFunction.kScale;
+		autoFunction    = AutoFunction.kSwitch;
 		
 		// Initialize all autonomous commands.
 		toLineAndStop = new toLineAndStopCom();
@@ -110,13 +111,6 @@ public class Robot extends TimedRobot {
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
 	}
-
-	
-	public static void log(String msg){
-		if (isDebug){
-			System.out.println(msg);
-		}
-	}
 	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -137,23 +131,23 @@ public class Robot extends TimedRobot {
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
 		autoFunction    = AutoFunction.kSwitch;		
-		log("gameData = " + gameData + " location = " + robotLocation);
+		logger.info("gameData = " + gameData + " location = " + robotLocation);
 		// Handle autonomous based on starting position.
 		// robotLocation = 1 (Left)
 		if (robotLocation == 1){
-			log("Auto Position = 1 ");
+			logger.debug("Auto Position = 1 ");
 
 			//doAutoLeft(autoFunction, gameData);
 		}
 		// robotLocation = 2 (Middle)
 		else if (robotLocation ==2){
-			log("Auto Position = 2 ");
+			logger.debug("Auto Position = 2 ");
 
 			autonomousCommand = doAutoMiddle(autoFunction, gameData);
 		}
 		// robotLocation = 3 (Right)
 		else {
-			log("Auto Position = 3 ");
+			logger.debug("Auto Position = 3 ");
 
 			//doAutoRight(autoFunction, gameData);
 		} 
@@ -174,23 +168,17 @@ public class Robot extends TimedRobot {
 		// Handle autonomous based on starting position.
 		// teamStation = 1 (Left)
 		if (teamStation == 1) {
-			if (isDebug) {
-				System.out.println("Auto Position = 1 ");
-			}
+			logger.debug("Auto Position = 1 ");
 			//doAutoLeft(autoFunction, gameData);
 		}
 		// teamStation = 2 (Middle)
 		else if (teamStation == 2) {
-			if (isDebug){
-				System.out.println("Auto Position = 2 ");
-			}
+			logger.debug("Auto Position = 2 ");
 			doAutoMiddle(autoFunction, gameData);
 		}
 		// teamStation = 3 (Right)
 		else {
-			if (isDebug){
-				System.out.println("Auto Position = 3 ");
-			}
+			logger.debug("Auto Position = 3 ");
 			//doAutoRight(autoFunction, gameData);
 		}
 		
@@ -245,25 +233,21 @@ public class Robot extends TimedRobot {
 		Command commandToRun = toLineAndStop;
 		
 		// Send log msg.
-		if (isDebug || ds.isAutonomous()){
-			System.out.println("AutoMiddle "+function.toString()+" : using gamedata "+gameData);
+		if (ds.isAutonomous()){
+			logger.info("AutoMiddle "+function.toString()+" : using gamedata "+gameData);
 			//Gamedata gives the layout of the switches. (Example - LRL - Left Right Left)
 			
 		}
 		
 		// DONOTHING : Do nothing.
 		if (function == AutoFunction.kDoNothing){
-			if (isDebug){
-				System.out.println("Do nothing.");
-			}
+			logger.debug("Do nothing.");
 			return commandToRun;
 		}
 		
 		// kLINE : Drive forward and stop.
 		if (function == AutoFunction.kLine){
-			if (isDebug){
-				System.out.println("Drive forward and stop.");
-			}
+			logger.debug("Drive forward and stop.");
 			return toLineAndStop;
 		}
 		
@@ -273,17 +257,13 @@ public class Robot extends TimedRobot {
 			if(gameData.charAt(0) == 'R')
 			{
 				//Drive forward and launch.
-				if (isDebug){
-					System.out.println("Drive forward and launch.");
-				}
+				logger.debug("Drive forward and launch.");
 				//autoMiddleToSwitch();
 			} 
 			// gameData(0) == 'L'
 			else {
 				//Drive left to Switch and launch.
-				if (isDebug){
-					System.out.println("Drive left to switch and launch.");
-				}
+				logger.debug("Drive left to switch and launch.");
 				return new autopos2leftswitch();
 			}
 			return commandToRun;
@@ -294,18 +274,14 @@ public class Robot extends TimedRobot {
 			// Check gameData position[1] for Scale.
 			if (gameData.charAt(1) == 'R'){
 				// Drive right to Scale and launch.
-				if (isDebug){
-					System.out.println("Drive right to scale and launch.");
-				}
-				//autoMiddleDriveRightToScale();
+				logger.debug("Drive right to scale and launch.");
+				return new MiddleToRightScale();
 			}
 			// gameData(1) == 'L'
 			else {
 				// Drive left to scale and launch.
-				if (isDebug){
-					System.out.println("Drive left to scale and launch.");
-				}
-				//autoMiddleDriveLeftToScale();
+				logger.debug("Drive left to scale and launch.");
+				return new MiddleToLeftScale();
 			}
 		}
 		return commandToRun;	
