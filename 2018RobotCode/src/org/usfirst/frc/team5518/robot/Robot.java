@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
+import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
@@ -44,12 +46,9 @@ public class Robot extends TimedRobot {
 	public static final DriveTrainSub driveTrainSub = new DriveTrainSub();
 	public static final MecanumDriveCom driveInputCom = new MecanumDriveCom();
 	public static final SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
+  public static final AutoDriveSub autoDriveSub = new AutoDriveSub();
 	public static final Logger logger = new Logger();
-	
-	// Global robot components.
-	/**
-	 * Joystick (operator) interface
-	 */
+
 	public static OI m_oi;
 	public static DriverStation ds;
 	
@@ -125,6 +124,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+
+		autoDriveSub.resetEncoders();
+
 		logger.debug("Auto init.");
 
 		// Define robot data needed only for autonomous.
@@ -152,7 +154,7 @@ public class Robot extends TimedRobot {
 			//doAutoRight(autoFunction, gameData);
 		} 
 		autonomousCommand.start();
-		
+    
 	}
 
 	/**
@@ -162,9 +164,7 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
 
-		/*if (isDebug){
-			System.out.println("Auto periodic.");
-		}*/
+		autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
 	}
 
 	@Override
