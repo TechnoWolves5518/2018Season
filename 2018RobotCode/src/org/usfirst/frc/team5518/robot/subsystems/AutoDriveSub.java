@@ -71,16 +71,16 @@ public class AutoDriveSub extends Subsystem {
     }
     
     public boolean doneDriving() {
-    	return isDone;
+    		return isDone;
     }
     
     public void autoRotate(float rotateTime, float rotateSpeed) {
-    	
-    	if (rotateTime < 50) {
-    		rotateTime++;
-    		Robot.driveTrainSub.drive(0.0, 0.0, 0.3);
-    	}
-    	
+	    	
+	    	if (rotateTime < 50) {
+	    		rotateTime++;
+	    		Robot.driveTrainSub.drive(0.0, 0.0, 0.3);
+	    	}
+	    	
     }
     
     private void evenDrive() {
@@ -99,7 +99,7 @@ public class AutoDriveSub extends Subsystem {
     }
     
     public void resetEncoders() {
-    	leftEncoder.reset();
+    		leftEncoder.reset();
         rightEncoder.reset();
     }
     
