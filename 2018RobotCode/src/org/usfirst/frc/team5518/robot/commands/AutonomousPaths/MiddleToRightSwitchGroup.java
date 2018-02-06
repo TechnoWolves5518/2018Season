@@ -1,16 +1,16 @@
-package org.usfirst.frc.team5518.robot.commands;
+package org.usfirst.frc.team5518.robot.commands.AutonomousPaths;
+
+import org.usfirst.frc.team5518.robot.Robot;
+import org.usfirst.frc.team5518.robot.commands.DriveDistance;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team5518.robot.Robot;
-import org.usfirst.frc.team5518.robot.Logger;
-
 
 /**
  *
  */
-public class MiddleToLeftSwitchGroup extends CommandGroup {
+public class MiddleToRightSwitchGroup extends CommandGroup {
 
-    public MiddleToLeftSwitchGroup() {
+    public MiddleToRightSwitchGroup() {
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
@@ -27,15 +27,8 @@ public class MiddleToLeftSwitchGroup extends CommandGroup {
         // e.g. if Command1 requires chassis, and Command2 requires arm,
         // a CommandGroup containing them would require both the chassis and the
         // arm.
-    	
-    	Robot.logger.debug("Driving forward 1");
+    	Robot.logger.debug("MiddleToRightSwitch");
     	addSequential(new DriveDistance(12, 0.2f));
-//    	Robot.logger.debug("Driving right");
-//    	addSequential(new StrafeDistance(48, 0.3f));
-    	Robot.logger.debug("Driving forward 2");
-    	addSequential(new DriveDistance(24, 0.5f));
-    	Robot.logger.debug("Done with Command Group");
-    	// add shoot command
-    	
+    	//add shooter
     }
 }

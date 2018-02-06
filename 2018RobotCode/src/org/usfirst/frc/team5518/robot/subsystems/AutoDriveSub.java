@@ -31,7 +31,7 @@ public class AutoDriveSub extends Subsystem {
         rightEncoder.setDistancePerPulse(kDistancePerPulse);
         
         leftEncoder.setMaxPeriod(0.1);
-        leftEncoder.setMinRate(10);
+//        leftEncoder.setMinRate(10);
         
 //        leftEncoder.setReverseDirection(true);
 //        rightEncoder.setReverseDirection(true);
@@ -85,10 +85,10 @@ public class AutoDriveSub extends Subsystem {
     
     private void evenDrive() {
     		
-    		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {
+    		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
 			rotAdjustment = -0.2f;
 		}
-    		else if (leftEncoder.getDistance() > rightEncoder.getDistance() + 1) {
+    		else if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
     			rotAdjustment = 0.2f;
     		}
     		

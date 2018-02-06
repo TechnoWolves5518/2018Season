@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
 import org.usfirst.frc.team5518.robot.commands.DriveDistance;
 import org.usfirst.frc.team5518.robot.commands.StrafeDistance;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToLeftScaleGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToLeftSwitchGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToRightScaleGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToRightSwitchGroup;
 import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
@@ -93,6 +97,8 @@ public class Robot extends TimedRobot {
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
 		
+		logger.setDebug(true); //Must be false during competition
+		
 		driveTrainSub = new DriveTrainSub();
 		sfSub = new SpecialFunctionsSub();
 		autoDriveSub = new AutoDriveSub();
@@ -104,7 +110,7 @@ public class Robot extends TimedRobot {
 		// Autonomous data initial.
 		gameData        = "";
 		robotLocation   = -1;
-		autoFunction    = AutoFunction.kSwitch;
+		autoFunction    = AutoFunction.kScale;
 		
 		// Initialize all autonomous commands.
 		toLineAndStop = new ToLineAndStopCom();
@@ -151,7 +157,7 @@ public class Robot extends TimedRobot {
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kSwitch;		
+		autoFunction    = AutoFunction.kScale;		
 		logger.info("gameData = " + gameData + " location = " + robotLocation);
 		// Handle autonomous based on starting position.
 		// robotLocation = 1 (Left)
@@ -292,6 +298,7 @@ public class Robot extends TimedRobot {
 				//Drive forward and launch.
 				logger.debug("Drive forward and launch.");
 				// return new MiddleToRightSwitch();
+				return new MiddleToRightSwitchGroup();
 			} 
 			// gameData(0) == 'L'
 			else {
@@ -308,13 +315,13 @@ public class Robot extends TimedRobot {
 			if (gameData.charAt(1) == 'R'){
 				// Drive right to Scale and launch.
 				logger.debug("Drive right to scale and launch.");
-				// return new MiddleToRightScale();
+			    return new MiddleToRightScaleGroup();
 			}
 			// gameData(1) == 'L'
 			else {
 				// Drive left to scale and launch.
 				logger.debug("Drive left to scale and launch.");
-				// return new MiddleToLeftScale();
+				return new MiddleToLeftScaleGroup();
 			}
 		}
 		return commandToRun;	

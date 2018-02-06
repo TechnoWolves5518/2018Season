@@ -5,6 +5,10 @@ public class Logger {
 	private static boolean isVerbose = false;
 	private static boolean isInfo = true;
 	
+	public void setDebug(boolean status){
+		isDebug = status;
+	}
+	
 	public void info(String s){
 		if (isInfo){
 			System.out.println(s);
