@@ -14,6 +14,7 @@ public class MecanumDriveCom extends Command {
 	
 	public double ySpeed, xSpeed, zRotation;
 	public double ltValue, rtValue;
+	public boolean nos;
 	private Joystick driveControl;
 	private Joystick flightControl;
 	
@@ -22,6 +23,7 @@ public class MecanumDriveCom extends Command {
         // eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 		ySpeed = 0; xSpeed = 0; zRotation = 0;
+		nos = false;
 		driveControl = OI.xbox; // Set locally defined controller to the control from the OI so that calling it is simpler
 		flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
     }
@@ -35,7 +37,7 @@ public class MecanumDriveCom extends Command {
     protected void execute() {
 		
 		// ------------------------- XBOX CONTROLS -------------------------
-		/*
+		
 		xSpeed = RobotMap.KX * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
 		xSpeed *= xSpeed;
 		
@@ -44,7 +46,13 @@ public class MecanumDriveCom extends Command {
 		
 		ySpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
 		ySpeed *= ySpeed;
-		*/
+		
+		nos = driveControl.getRawButton(RobotMap.XBOX_RBUMPER);
+		
+		if (!nos) {
+			xSpeed /= 0.33f;
+		}
+		
 		/*
 		ltValue = driveControl.getRawAxis(RobotMap.XBOX_LTRIGGER);
 		rtValue = driveControl.getRawAxis(RobotMap.XBOX_RTRIGGER);
@@ -70,12 +78,12 @@ public class MecanumDriveCom extends Command {
 		*/
 	
 		// ------------------------- FLIGHT CONTROLS -------------------------
-		
+		/*
 		xSpeed = flightControl.getRawAxis(RobotMap.JOYSTICK_YAXIS); // Set vertical movement to forward/backward (x axis)
 		zRotation = flightControl.getRawAxis(RobotMap.JOYSTICK_ZAXIS); // Set rotation movement to turning stick (z axis)
 		ySpeed = -flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (y axis)
-		
-		Robot.driveTrainSub.drive(ySpeed, xSpeed, zRotation);
+		*/
+		Robot.driveTrainSub.drive(xSpeed, ySpeed, zRotation);
 		// System.out.println("------------OUTPUT-------------");
 		// Call the Drive() function from the DriveTrain_Subsystem, pass in collected 
 		

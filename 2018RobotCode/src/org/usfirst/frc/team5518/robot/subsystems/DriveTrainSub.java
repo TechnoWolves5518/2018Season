@@ -55,8 +55,8 @@ public class DriveTrainSub extends Subsystem {
      * @param xSpeed the x speed (forward/backward) (0, 0.3, 0) <-- Forward
      * @param zRot the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
      */
-    public void drive(double ySpeed, double xSpeed, double zRot) {
-		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
+    public void drive(double xSpeed, double ySpeed, double zRot) {
+		driveBase.driveCartesian(xSpeed, ySpeed, zRot);
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
     }
     

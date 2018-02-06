@@ -41,7 +41,7 @@ public class PneuLauncherCom extends Command {
     	
     	isXPressed = Robot.m_oi.xbox.getRawButton(RobotMap.XBOX_XBTN);
     	if (isXPressed != wasXPressed && isXPressed == true){
-    		Robot.sfSub.shootSwitch();    		
+    		Robot.sfSub.shootScale();
     	}
     	wasXPressed = isXPressed;
     	
