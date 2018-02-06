@@ -16,7 +16,7 @@ public class MecanumDriveCom extends Command {
 	public double ltValue, rtValue;
 	public boolean nos;
 	private Joystick driveControl;
-	private Joystick flightControl;
+	// private Joystick flightControl;
 	
     public MecanumDriveCom() {
         // Use requires() here to declare subsystem dependencies
@@ -24,8 +24,8 @@ public class MecanumDriveCom extends Command {
 		requires(Robot.driveTrainSub);
 		ySpeed = 0; xSpeed = 0; zRotation = 0;
 		nos = false;
-		driveControl = OI.xbox; // Set locally defined controller to the control from the OI so that calling it is simpler
-		flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
+		driveControl = OI.driveController; // Set locally defined controller to the control from the OI so that calling it is simpler
+		// flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
     }
     
     // Called just before this Command runs the first time

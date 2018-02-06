@@ -15,8 +15,6 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PneuLauncherCom extends Command {
 	// hello
 	public boolean isAPressed, wasAPressed, isXPressed, wasXPressed;
-	private Button aButton = new JoystickButton(Robot.m_oi.xbox, RobotMap.XBOX_ABTN);
-	private Button xButton = new JoystickButton(Robot.m_oi.xbox, RobotMap.XBOX_XBTN);
 	
 	public PneuLauncherCom() {
         // Use requires() here to declare subsystem dependencies
@@ -33,13 +31,13 @@ public class PneuLauncherCom extends Command {
   
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	isAPressed = Robot.m_oi.xbox.getRawButton(RobotMap.XBOX_ABTN);
+    	isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
     	if (isAPressed != wasAPressed && isAPressed == true){
     		Robot.sfSub.shootSwitch();    		
     	}
     	wasAPressed = isAPressed;
     	
-    	isXPressed = Robot.m_oi.xbox.getRawButton(RobotMap.XBOX_XBTN);
+    	isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
     	if (isXPressed != wasXPressed && isXPressed == true){
     		Robot.sfSub.shootScale();
     	}
