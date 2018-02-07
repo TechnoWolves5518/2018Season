@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class MecanumDriveCom extends Command {
 	
-	public double ySpeed, xSpeed, zRotation;
+	public double strafeSpeed, driveSpeed, zRotation;
 	public double ltValue, rtValue;
 	public boolean nos;
 	private Joystick driveControl;
@@ -22,7 +22,7 @@ public class MecanumDriveCom extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		requires(Robot.driveTrainSub);
-		ySpeed = 0; xSpeed = 0; zRotation = 0;
+		strafeSpeed = 0; driveSpeed = 0; zRotation = 0;
 		nos = false;
 		driveControl = OI.driveController; // Set locally defined controller to the control from the OI so that calling it is simpler
 		// flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
@@ -38,19 +38,19 @@ public class MecanumDriveCom extends Command {
 		
 		// ------------------------- XBOX CONTROLS -------------------------
 		
-		xSpeed = RobotMap.KX * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
-		xSpeed *= xSpeed;
+		driveSpeed = RobotMap.KX * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
+		driveSpeed *= driveSpeed;
 		
 		zRotation = RobotMap.KZ * driveControl.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
 		zRotation *= zRotation;
 		
-		ySpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
-		ySpeed *= ySpeed;
+		strafeSpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
+		strafeSpeed *= strafeSpeed;
 		
 		nos = driveControl.getRawButton(RobotMap.XBOX_RBUMPER);
 		
 		if (!nos) {
-			xSpeed /= 0.33f;
+			driveSpeed /= 0.33f;
 		}
 		
 		/*
@@ -83,7 +83,7 @@ public class MecanumDriveCom extends Command {
 		zRotation = flightControl.getRawAxis(RobotMap.JOYSTICK_ZAXIS); // Set rotation movement to turning stick (z axis)
 		ySpeed = -flightControl.getRawAxis(RobotMap.JOYSTICK_XAXIS); // Set strafe movment to moving stic l and r (y axis)
 		*/
-		Robot.driveTrainSub.drive(xSpeed, ySpeed, zRotation);
+		Robot.driveTrainSub.drive(driveSpeed, strafeSpeed, zRotation);
 		// System.out.println("------------OUTPUT-------------");
 		// Call the Drive() function from the DriveTrain_Subsystem, pass in collected 
 		

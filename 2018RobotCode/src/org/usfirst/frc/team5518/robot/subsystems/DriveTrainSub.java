@@ -60,12 +60,12 @@ public class DriveTrainSub extends Subsystem {
     /**
      * A cool Taha method.
      * @author Taha Bokhari
-     * @param xSpeed the x speed (forward/backward) (-0.3, 0, 0) <-- Backwards
-     * @param ySpeed the y speed (side to side) (0, 0.3, 0) <-- Right
-     * @param zRot the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
+     * @param drive the y speed (forward/backward) (-0.3, 0, 0) <-- Backwards
+     * @param strafe the x speed (side to side) (0, 0.3, 0) <-- Right
+     * @param rotate the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
      */
-    public void drive(double xSpeed, double ySpeed, double zRot) {
-		driveBase.driveCartesian(xSpeed, ySpeed, zRot);
+    public void drive(double drive, double strafe, double rotate) {
+		driveBase.driveCartesian(strafe, drive, rotate);
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
     }
     
