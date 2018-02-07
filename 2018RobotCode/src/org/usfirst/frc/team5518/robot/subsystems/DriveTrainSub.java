@@ -3,6 +3,9 @@ package org.usfirst.frc.team5518.robot.subsystems;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -18,10 +21,16 @@ public class DriveTrainSub extends Subsystem {
 	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
 	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 	
+	private WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(RobotMap.FRONT_LEFT);
+	private WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(RobotMap.BACK_LEFT);
+	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
+	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
+	
 	private float expiraton = 0.75f;
 	
 	// Combine all the motor controllers into a drive base
-	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+	// private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
 	
 	public DriveTrainSub() {
 		
@@ -49,10 +58,10 @@ public class DriveTrainSub extends Subsystem {
     }
     
     /**
-     * An UNcool Taha method.
+     * A cool Taha method.
      * @author Taha Bokhari
-     * @param ySpeed the y speed (side to side) (-0.3, 0, 0) <-- Left
-     * @param xSpeed the x speed (forward/backward) (0, 0.3, 0) <-- Forward
+     * @param xSpeed the x speed (forward/backward) (-0.3, 0, 0) <-- Backwards
+     * @param ySpeed the y speed (side to side) (0, 0.3, 0) <-- Right
      * @param zRot the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
      */
     public void drive(double xSpeed, double ySpeed, double zRot) {
@@ -63,6 +72,44 @@ public class DriveTrainSub extends Subsystem {
     public void stop() {
 		driveBase.driveCartesian(0, 0, 0);
 		// Stop driving. Failsafe if connection is interrupted or robot code ends.
+    }
+    
+    public void setupVictors() {
+    		
+    		// enable deadband elimination
+		frontLeftMotor.enableDeadbandElimination(true);
+		backLeftMotor.enableDeadbandElimination(true);
+		frontRightMotor.enableDeadbandElimination(true);
+		backRightMotor.enableDeadbandElimination(true);
+		
+		// enable the safety
+		frontLeftMotor.setSafetyEnabled(true);
+		frontLeftMotor.setExpiration(expiraton);
+		backLeftMotor.setSafetyEnabled(true);
+		backLeftMotor.setExpiration(expiraton);
+		frontRightMotor.setSafetyEnabled(true);
+		frontRightMotor.setExpiration(expiraton);
+		backRightMotor.setSafetyEnabled(true);
+		backRightMotor.setExpiration(expiraton);
+    }
+    
+    public void setupTalons() {
+    		
+		frontLeftTalon.configNeutralDeadband(0.06, 0);
+		backLeftTalon.configNeutralDeadband(0.06, 0);
+		frontRightTalon.configNeutralDeadband(0.06, 0);
+		backRightTalon.configNeutralDeadband(0.06, 0);
+		
+		// enable the safety
+		frontLeftTalon.setSafetyEnabled(true);
+		frontLeftTalon.setExpiration(expiraton);
+		backLeftTalon.setSafetyEnabled(true);
+		backLeftTalon.setExpiration(expiraton);
+		frontRightTalon.setSafetyEnabled(true);
+		frontRightTalon.setExpiration(expiraton);
+		backRightTalon.setSafetyEnabled(true);
+		backRightTalon.setExpiration(expiraton);
+    		
     }
 }
 
