@@ -18,6 +18,6 @@ public class LeftToRightScaleGroup extends CommandGroup {
     	addSequential(new DriveDistance(7, 0.1f));
     	//Turn Left
     	addSequential(new DriveDistance(7, 0.1f));
-    	//Turn Left
+    	//Turn Left 
     }
 }
