@@ -13,11 +13,11 @@ public class MiddleToLeftScaleGroup extends CommandGroup {
     public MiddleToLeftScaleGroup() {
     	Robot.logger.debug("MiddleToLeftScaleGroup.java");
     	Robot.logger.debug("Driving forward 1");
-    	addSequential(new DriveDistance(12, 0.1f));
+    	addSequential(new DriveDistance(12, 0.3f));
     	Robot.logger.debug("Strafe Left");
     	//Strafe left
     	Robot.logger.debug("strafe again");
-    	addSequential(new DriveDistance(12, 0.1f));
+    	addSequential(new DriveDistance(6, 0.1f));
     	//rotate
     	//shoot
         // e.g. addParallel(new Command1());

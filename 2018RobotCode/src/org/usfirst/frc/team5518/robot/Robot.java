@@ -21,6 +21,7 @@ import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToLeftScale
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToLeftSwitchGroup;
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToRightScaleGroup;
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToRightSwitchGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.ToLineAndStopGroup;
 import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
@@ -157,7 +158,7 @@ public class Robot extends TimedRobot {
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kScale;		
+		autoFunction    = AutoFunction.kLine;		
 		logger.info("gameData = " + gameData + " location = " + robotLocation);
 		// Handle autonomous based on starting position.
 		// robotLocation = 1 (Left)
@@ -287,7 +288,7 @@ public class Robot extends TimedRobot {
 		// kLINE : Drive forward and stop.
 		if (function == AutoFunction.kLine){
 			logger.debug("Drive forward and stop.");
-			// return toLineAndStop;
+			return new ToLineAndStopGroup();
 		}
 		
 		// kSWITCH or kCHOOSE : Determine gameData and launch in switch.		

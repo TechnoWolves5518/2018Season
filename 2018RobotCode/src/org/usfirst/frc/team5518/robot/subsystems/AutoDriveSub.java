@@ -21,8 +21,8 @@ public class AutoDriveSub extends Subsystem {
     public static final double kPulsesPerRevolution = 1440; // Encoder pulses in one shaft revolution
     public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
 	
-    private Encoder leftEncoder = new Encoder(0, 1, false, EncodingType.k4X);
-    private Encoder rightEncoder = new Encoder(2, 3, true, EncodingType.k4X);
+    private Encoder leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
+    private Encoder rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
     
     private float rotAdjustment = 0;
     
@@ -46,12 +46,13 @@ public class AutoDriveSub extends Subsystem {
     
     public void autoDrive(float vertDist, float vertSpeed) {
     		
-    		if (avgEncoderPos() > -vertDist) {
+    		if (avgEncoderPos() < vertDist) {
     			evenDrive();
-    			System.out.println("distance: " + avgEncoderPos());
-    			Robot.driveTrainSub.drive(0, vertSpeed, rotAdjustment);
-    			Robot.logger.debug("Outputting drive values");
-    			// Robot.driveTrainSub.drive(0.0, 0.2, 0);
+    			// System.out.println("distance: " + avgEncoderPos());
+    			Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
+    			Robot.driveTrainSub.drive(vertSpeed, 0, rotAdjustment);
+    			// Robot.logger.debug("Outputting drive values");
+    			// Robot.driveTrainSub.drive(0.2, 0.0, 0);
     			isDone = false;
     		}
     		else {
@@ -61,7 +62,7 @@ public class AutoDriveSub extends Subsystem {
     
     public void autoStrafe(float strafeDist, float strafeSpeed) {
 
-		if (avgEncoderPos() > -strafeDist) {
+		if (avgEncoderPos() < strafeDist) {
 			evenDrive();
 			System.out.println("distance: " + avgEncoderPos());
 			// Robot.driveTrainSub.drive(0, strafeSpeed, rotAdjustment);
