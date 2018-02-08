@@ -8,16 +8,16 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class LeftToRightScaleGroup extends CommandGroup {
+public class LeftToRightScaleOptionalGroup extends CommandGroup {
 
-    public LeftToRightScaleGroup() {
+    public LeftToRightScaleOptionalGroup() {
     	Robot.logger.debug("LeftToRightScaleGroup.java");
     	Robot.logger.debug("Moving forward");
     	addSequential(new DriveDistance(7, 0.1f));
     	//Turn Right
-    	addSequential(new DriveDistance(7, 0.2f));
+    	addSequential(new DriveDistance(7, 0.1f));
     	//Turn Left
-    	addSequential(new DriveDistance(7, 0.3f));
+    	addSequential(new DriveDistance(7, 0.1f));
     	//Turn Left 
     }
 }
