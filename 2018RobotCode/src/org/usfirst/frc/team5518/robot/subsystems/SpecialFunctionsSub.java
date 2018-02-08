@@ -9,21 +9,32 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * [INSERT PURPOSE HERE: WHAT DOES THE CLASS DO & ACHIEVE?]
+ * The Special Functions subsystem serves to operate pneumatics
+ * on the robot for launching the power cube either on a scale or
+ * a switch as well as intaking a power cube for loading it onto
+ * the robot.
  *
- * @author [INSERT NAME OF WHOEVER WROTE THIS CODE]
+ * @author Armaan Syed
+ * @author Taha Bokhari
  */
 public class SpecialFunctionsSub extends Subsystem {
 	
-	private VictorSP leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
-	private VictorSP rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
+	/** The motor controllers for intaking a powercube */
+	private VictorSP leftMotor;
+	private VictorSP rightMotor;
 	
-	private Compressor compressor = new Compressor(RobotMap.COMPRESSOR);
-	private DoubleSolenoid doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
+	/** Pneumatic components */
+	private Compressor compressor;
+	private DoubleSolenoid doubleSolenoid;
 	
 	public SpecialFunctionsSub() {
+		// init components
+		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
+		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
+		compressor = new Compressor(RobotMap.COMPRESSOR);
+		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
 		
-		compressor.setClosedLoopControl(true); // refill compressor automatically
+		//compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
 		
 		// enable safety on motor controllers
@@ -32,8 +43,11 @@ public class SpecialFunctionsSub extends Subsystem {
 		
 	}
 	
+	/**
+	 * Set a default command for the subsystem
+	 */
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
+        // No need to set default command
         //setDefaultCommand(new MySpecialCommand());
     }
     
