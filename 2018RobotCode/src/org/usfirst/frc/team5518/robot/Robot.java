@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
 		
+		// Set to FALSE for competition.
 		logger.setDebug(true); //Must be false during competition
 		
 		driveTrainSub = new DriveTrainSub();
