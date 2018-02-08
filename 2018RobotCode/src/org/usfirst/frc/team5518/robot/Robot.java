@@ -17,10 +17,21 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
 import org.usfirst.frc.team5518.robot.commands.DriveDistance;
 import org.usfirst.frc.team5518.robot.commands.StrafeDistance;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.LeftToLeftScaleGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.LeftToLeftSwitchGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.LeftToRightScaleGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.LeftToRightSwitchBehindGroup;
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToLeftScaleGroup;
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToLeftSwitchGroup;
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToRightScaleGroup;
 import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.MiddleToRightSwitchGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.RightToLeftScaleGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.RightToLeftScaleOptionalGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.RightToLeftSwitchBehindGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.RightToLeftSwitchFrontGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.RightToRightScaleGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.RightToRightSwitchGroup;
+import org.usfirst.frc.team5518.robot.commands.AutonomousPaths.ToLineAndStopGroup;
 import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
@@ -79,6 +90,7 @@ public class Robot extends TimedRobot {
 	                kChoose,   // Choose best based on gameData.
 	                kDoNothing
 	                }
+	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
 	
 	// Custom definitions.
 	private String       gameData;
@@ -111,7 +123,8 @@ public class Robot extends TimedRobot {
 		// Autonomous data initial.
 		gameData        = "";
 		robotLocation   = -1;
-		autoFunction    = AutoFunction.kScale;
+		autoFunction    = AutoFunction.kSwitch;
+		optionalPath    = true;
 		
 		// Initialize all autonomous commands.
 		toLineAndStop = new ToLineAndStopCom();
@@ -158,7 +171,7 @@ public class Robot extends TimedRobot {
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kScale;		
+		autoFunction    = AutoFunction.kSwitch;		
 		logger.info("gameData = " + gameData + " location = " + robotLocation);
 		// Handle autonomous based on starting position.
 		// robotLocation = 1 (Left)
@@ -178,7 +191,7 @@ public class Robot extends TimedRobot {
 		else {
 			logger.debug("Auto Position = 3 ");
 
-			//doAutoRight(autoFunction, gameData);
+			autonomousCommand = doAutoRight(autoFunction, gameData);
 		} 
 		autonomousCommand.start();
 		// autoCommandGroup.start();
@@ -245,18 +258,97 @@ public class Robot extends TimedRobot {
 			{
 				//Forward, right, then pivot right to switch.
 				logger.debug("Forward, right, then pivot right to switch.");
-				//return new MiddleToRightSwitch();
+				return new LeftToRightSwitchBehindGroup();
 			} 
 			// gameData(0) == 'L'
 			else {
 				//Drive forward, then pivot right to switch.
 				logger.debug("Drive forward, then pivot right to switch.");
-				return new LeftToLeftSwitch();
+				return new LeftToLeftSwitchGroup();
+			}			
+		}
+		if (function == AutoFunction.kScale) {
+			if (gameData.charAt(1) == 'R') {
+				//Drive to right scale
+				logger.debug("Drive to right scale");
+				return new LeftToRightScaleGroup();
+			}
+			//gameData(1) == 'L'
+			else {
+				//Drive to left scale
+				logger.debug("Drive to left scale");
+				return new LeftToLeftScaleGroup();
 			}
 		}
-		
 		return commandToRun;
 	}
+	
+	/**
+	 * doAutoRight
+	 * This function handles autonomous from the right starting position.
+	 * When autoFunction is:
+	 *   - LINE then drive forward and stop.
+	 *   - SWITCH or SCALE then drive to specified switch/scale.
+	 *   - DONOTHING then do nothing.
+	 *   - CHOOSE then go the best route.
+	 * @param function
+	 * @param gameData
+	 */
+	
+	private Command doAutoRight(AutoFunction function, String gameData){
+		Command commandToRun = toLineAndStop;
+		
+		if (ds.isAutonomous()){
+			logger.debug("AutoLeft " + function.toString() + " : using gamedata " + gameData);
+		}
+		
+		if (function == AutoFunction.kDoNothing){
+			logger.debug("Do nothing.");
+			return commandToRun;
+		}
+		
+		if (function == AutoFunction.kSwitch){
+			if(gameData.charAt(0) == 'R')
+			{
+				//Forward, right, then pivot right to switch.
+				logger.debug("Forward, right, then pivot right to switch.");
+				return new RightToRightSwitchGroup();
+			} 
+			// gameData(0) == 'L'
+			else {
+				//Drive forward, then pivot right to switch.
+				logger.debug("Drive forward, then pivot right to switch.");
+				if (optionalPath != true) {
+					logger.debug("Optional = False");
+					return new RightToLeftSwitchBehindGroup();
+				} else {
+					logger.debug("Optional = True");
+					return new RightToLeftSwitchFrontGroup();
+				}
+				
+			}			
+		}
+		
+		if (function == AutoFunction.kScale) {
+			if (gameData.charAt(1) == 'R') {
+				//Drive to right scale
+				logger.debug("Drive to right scale");
+				return new RightToRightScaleGroup();
+				}
+			//gameData(1) == 'L'
+			else {
+				//Drive to left scale
+				logger.debug("Drive to left scale");
+				
+				if (optionalPath != true) {
+					return new RightToLeftScaleGroup();
+				} else {
+					return new RightToLeftScaleOptionalGroup();
+				}
+			}
+		}
+		return commandToRun;
+	}  //End of doAutoRight
 	
 	/**
 	 * doAutoMiddle
@@ -288,7 +380,7 @@ public class Robot extends TimedRobot {
 		// kLINE : Drive forward and stop.
 		if (function == AutoFunction.kLine){
 			logger.debug("Drive forward and stop.");
-			// return toLineAndStop;
+			return new ToLineAndStopGroup();
 		}
 		
 		// kSWITCH or kCHOOSE : Determine gameData and launch in switch.		
