@@ -114,9 +114,12 @@ public class Robot extends TimedRobot {
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
 
-		String Path_Back = "PATH_BACK";
-		isBackPath = SmartDashboard.getBoolean(Path_Back, isBackPath);
 		SmartDashboard.putString("Test Game Data  : ", "**");
+		String Path_Back = "PATH_BACK";
+		//isBackPath = SmartDashboard.getBoolean(Path_Back, isBackPath);
+		SmartDashboard.putBoolean(Path_Back, isBackPath);
+		SmartDashboard.p
+
 		
 		// Set to FALSE for competition.
 		logger.setDebug(false); //Must be false during competition
