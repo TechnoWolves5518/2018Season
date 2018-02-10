@@ -4,7 +4,9 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/**
+ * This is the robot class
+ */
 package org.usfirst.frc.team5518.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -74,6 +76,7 @@ public class Robot extends TimedRobot {
 
 	public static OI m_oi;
 	public static DriverStation ds;
+	public static SmartDashboard smartDS;
 	
 	// Robot Commands.
 	Command autonomousCommand;
@@ -96,6 +99,8 @@ public class Robot extends TimedRobot {
 	private String       gameData;
 	private int          robotLocation;
 	private AutoFunction autoFunction;
+	private boolean      isBackPath; // Default: Back=True, Toggle=False (i.e. Front)
+	public static SmartDashboard dashy = new SmartDashboard();
 	
 	
 	
@@ -108,9 +113,13 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
+
+		String Path_Back = "PATH_BACK";
+		isBackPath = SmartDashboard.getBoolean(Path_Back, isBackPath);
+		SmartDashboard.putString("Test Game Data  : ", "**");
 		
 		// Set to FALSE for competition.
-		logger.setDebug(true); //Must be false during competition
+		logger.setDebug(false); //Must be false during competition
 		
 		driveTrainSub = new DriveTrainSub();
 		sfSub = new SpecialFunctionsSub();
@@ -165,13 +174,29 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 
 		autoDriveSub.resetEncoders();
+		String testGameData = "";
 
-		logger.debug("Auto init.");
-
+		logger.debug("Auto init.  **** ");
+		try {
+		SmartDashboard.getString("Test GameData", testGameData);
+		System.out.println("Test Game Data : " + testGameData);
+		}
+		catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kSwitch;		
+		autoFunction    = AutoFunction.kSwitch;	
+		isBackPath      = SmartDashboard.getBoolean("Path_Back", isBackPath);
+		
+		SmartDashboard.putString("Game Data : ", gameData);
+		SmartDashboard.putNumber("Location  : ", robotLocation);
+		
+		
+		
+		
 		logger.info("gameData = " + gameData + " location = " + robotLocation);
 		// Handle autonomous based on starting position.
 		// robotLocation = 1 (Left)
