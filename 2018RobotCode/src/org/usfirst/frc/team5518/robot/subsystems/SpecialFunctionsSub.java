@@ -4,6 +4,7 @@ import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -26,6 +27,9 @@ public class SpecialFunctionsSub extends Subsystem {
 	/** Pneumatic components */
 	private Compressor compressor;
 	private DoubleSolenoid doubleSolenoid;
+	private Solenoid solenoid;
+	
+	private int x;
 	
 	public SpecialFunctionsSub() {
 		// init components
@@ -33,13 +37,14 @@ public class SpecialFunctionsSub extends Subsystem {
 		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
 		compressor = new Compressor(RobotMap.COMPRESSOR);
 		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
+		solenoid = new Solenoid(RobotMap.SOLENOID);
 		
 		//compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
 		
 		// enable safety on motor controllers
-		leftMotor.setSafetyEnabled(true);
-		rightMotor.setSafetyEnabled(true);
+		leftMotor.setSafetyEnabled(false);
+		rightMotor.setSafetyEnabled(false);
 		
 	}
 	
@@ -55,7 +60,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		
 		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
 		Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids
+		doubleSolenoid.set(DoubleSolenoid.Value.kOff); // retract all the cylinders via solenoids (NULL)
+		solenoid.set(false);
 		
 	}
 	
@@ -63,14 +69,15 @@ public class SpecialFunctionsSub extends Subsystem {
 		
 		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
 		Timer.delay(.15); // delay thread to allow time for cylinders to fully extend
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids
-
+		doubleSolenoid.set(DoubleSolenoid.Value.kOff); // retract all the cylinders via solenoids (NULL)
+		solenoid.set(false);
+		
 	}
 	
 	public void intake(double speed) {
 		// set speed of both motors via the motor controllers
 		leftMotor.set(speed);
-		rightMotor.set(speed);
+		rightMotor.set(-speed);
 	}
 
 }
