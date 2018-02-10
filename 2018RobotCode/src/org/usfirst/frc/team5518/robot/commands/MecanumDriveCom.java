@@ -40,15 +40,15 @@ public class MecanumDriveCom extends Command {
 		
 		driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
 		driveSpeed = Robot.driveTrainSub.quadCurve(driveSpeed);
-//		driveSpeed *= RobotMap.KY;
+		driveSpeed *= RobotMap.KY;
 		
 		zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
 		zRotation = Robot.driveTrainSub.quadCurve(zRotation);
-//		zRotation *= RobotMap.KZ;
+		zRotation *= RobotMap.KZ;
 		
 		strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
 		strafeSpeed = Robot.driveTrainSub.quadCurve(strafeSpeed);
-//		strafeSpeed *= RobotMap.KX;
+		strafeSpeed *= RobotMap.KX;
 		
 		nos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER);
 		
