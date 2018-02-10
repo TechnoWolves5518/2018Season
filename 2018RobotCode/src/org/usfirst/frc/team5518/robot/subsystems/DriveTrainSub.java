@@ -74,8 +74,7 @@ public class DriveTrainSub extends Subsystem {
      */
     public void drive(double drive, double strafe, double rotate) {
 		// System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
-		// System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
-		System.out.println("drive input:  " + OI.driveController.getRawAxis(1));
+		System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
 		driveBase.driveCartesian(drive, strafe, rotate);
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
     }

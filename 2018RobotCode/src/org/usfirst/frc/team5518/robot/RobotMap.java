@@ -30,7 +30,7 @@ public class RobotMap {
 	// special Functions 
 	public static int LEFT_INTAKE = 4;
     public static int RIGHT_INTAKE = 5;
-    public static double INTAKE_SPEED = 0.3;
+    public static double INTAKE_SPEED = .5;
     public static int COMPRESSOR = 0; //PCM port
     public static int DS_FORWARD = 1; //PCM port 
     public static int DS_BACKWARD = 2; //PCM port

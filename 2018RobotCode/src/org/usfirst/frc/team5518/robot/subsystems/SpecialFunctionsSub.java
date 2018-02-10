@@ -42,6 +42,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		//compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
 		
+		leftMotor.setInverted(true);
+		
 		// enable safety on motor controllers
 		leftMotor.setSafetyEnabled(false);
 		rightMotor.setSafetyEnabled(false);
@@ -77,7 +79,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	public void intake(double speed) {
 		// set speed of both motors via the motor controllers
 		leftMotor.set(speed);
-		rightMotor.set(-speed);
+		rightMotor.set(speed);
 	}
 
 }
