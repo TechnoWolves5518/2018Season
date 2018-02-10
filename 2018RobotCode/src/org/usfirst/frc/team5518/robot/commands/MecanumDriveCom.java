@@ -15,7 +15,7 @@ public class MecanumDriveCom extends Command {
 	public double strafeSpeed, driveSpeed, zRotation;
 	public double ltValue, rtValue;
 	public boolean nos;
-	private Joystick driveControl;
+	// private Joystick driveControl;
 	// private Joystick flightControl;
 	
     public MecanumDriveCom() {
@@ -24,7 +24,7 @@ public class MecanumDriveCom extends Command {
 		requires(Robot.driveTrainSub);
 		strafeSpeed = 0; driveSpeed = 0; zRotation = 0;
 		nos = false;
-		driveControl = OI.driveController; // Set locally defined controller to the control from the OI so that calling it is simpler
+		// driveControl = OI.driveController; // Set locally defined controller to the control from the OI so that calling it is simpler
 		// flightControl = OI.flight; // Set locally defined controller to the control from the OI so that calling it is simpler
     }
     
@@ -38,19 +38,22 @@ public class MecanumDriveCom extends Command {
 		
 		// ------------------------- XBOX CONTROLS -------------------------
 		
-		driveSpeed = RobotMap.KX * driveControl.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
-		driveSpeed *= driveSpeed;
+		driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick
+		driveSpeed = Robot.driveTrainSub.quadCurve(driveSpeed);
+//		driveSpeed *= RobotMap.KY;
 		
-		zRotation = RobotMap.KZ * driveControl.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
-		zRotation *= zRotation;
+		zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Set tank rotation to right stick
+		zRotation = Robot.driveTrainSub.quadCurve(zRotation);
+//		zRotation *= RobotMap.KZ;
 		
-		strafeSpeed = RobotMap.KY * driveControl.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
-		strafeSpeed *= strafeSpeed;
+		strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Method 1 of strafing
+		strafeSpeed = Robot.driveTrainSub.quadCurve(strafeSpeed);
+//		strafeSpeed *= RobotMap.KX;
 		
-		nos = driveControl.getRawButton(RobotMap.XBOX_RBUMPER);
+		nos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER);
 		
 		if (!nos) {
-			driveSpeed /= 0.33f;
+			driveSpeed *= 0.66f;
 		}
 		
 		/*
@@ -102,7 +105,8 @@ public class MecanumDriveCom extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
+		System.out.println("ROBOT INTERRUPTED");
+    	Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 }
 

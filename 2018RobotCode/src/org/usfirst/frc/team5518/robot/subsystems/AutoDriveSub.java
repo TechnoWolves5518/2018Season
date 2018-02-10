@@ -46,7 +46,7 @@ public class AutoDriveSub extends Subsystem {
     
     public void autoDrive(float vertDist, float vertSpeed) {
     		
-    		if (avgEncoderPos() > -vertDist) {
+    		if (avgEncoderPos() < vertDist) {
     			evenDrive();
     			System.out.println("distance: " + avgEncoderPos());
     			Robot.driveTrainSub.drive(0, vertSpeed, rotAdjustment);
@@ -61,7 +61,7 @@ public class AutoDriveSub extends Subsystem {
     
     public void autoStrafe(float strafeDist, float strafeSpeed) {
 
-		if (avgEncoderPos() > -strafeDist) {
+		if (avgEncoderPos() < strafeDist) {
 			evenDrive();
 			System.out.println("distance: " + avgEncoderPos());
 			// Robot.driveTrainSub.drive(0, strafeSpeed, rotAdjustment);

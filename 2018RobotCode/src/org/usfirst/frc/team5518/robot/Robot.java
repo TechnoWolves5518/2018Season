@@ -22,6 +22,7 @@ import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
 import org.usfirst.frc.team5518.robot.Logger;
+import org.usfirst.frc.team5518.robot.OI;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -49,7 +50,7 @@ public class Robot extends TimedRobot {
 	public static DriveTrainSub driveTrainSub;
 	public static MecanumDriveCom driveInputCom;
 	
-	public static SpecialFunctionsSub sfSub;
+	public static SpecialFunctionsSub sfSub = new SpecialFunctionsSub();
 	
 	public static AutoDriveSub autoDriveSub;
 	public static DriveDistance driveDistance;
@@ -94,7 +95,7 @@ public class Robot extends TimedRobot {
 		ds            = DriverStation.getInstance();
 		
 		driveTrainSub = new DriveTrainSub();
-		sfSub = new SpecialFunctionsSub();
+//		sfSub = new SpecialFunctionsSub();
 		autoDriveSub = new AutoDriveSub();
 		
 		driveInputCom = new MecanumDriveCom();
@@ -201,6 +202,11 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 	}
+	
+//	@Override
+//	public void teleopDisabled() {
+//		
+//	}
 
 	/**
 	 * This function is called periodically during test mode.

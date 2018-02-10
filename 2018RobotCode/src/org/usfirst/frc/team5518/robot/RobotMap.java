@@ -16,9 +16,9 @@ package org.usfirst.frc.team5518.robot;
 public class RobotMap {
 
 	// DRIVE
-	public static double KX = 0.5;
-	public static double KY = 0.5;
-	public static double KZ = 0.5;
+	public static double KX = 0.75;
+	public static double KY = 0.75;
+	public static double KZ = 0.75;
 	
 	// PORT MAPPING
 	// drive train
@@ -43,7 +43,7 @@ public class RobotMap {
 	// XBOX 360/ONE CONTROLLER MAPPING
 	// axes
 	public static int XBOX_LSTICKX = 0;
-	public static int XBOX_LSTICKY = 1; 
+	public static int XBOX_LSTICKY = 1;
 	public static int XBOX_RSTICKX = 4;
 	public static int XBOX_RSTICKY = 5;
 	public static int XBOX_LTRIGGER = 2;
