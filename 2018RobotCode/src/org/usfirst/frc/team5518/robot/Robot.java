@@ -113,6 +113,7 @@ public class Robot extends TimedRobot {
 		
 		// Default.
 		autonomousCommand = toLineAndStop;
+		
 	}
 
 	/**
@@ -193,6 +194,7 @@ public class Robot extends TimedRobot {
 	public void teleopInit() {
 		// Cancel autonomous.
 		autonomousCommand.cancel();
+		Robot.sfSub.initNeutral();
 	}
 
 	/**

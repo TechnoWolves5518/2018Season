@@ -27,9 +27,8 @@ public class SpecialFunctionsSub extends Subsystem {
 	/** Pneumatic components */
 	private Compressor compressor;
 	private DoubleSolenoid doubleSolenoid;
-	private Solenoid solenoid;
+//	private Solenoid solenoid;
 	
-	private int x;
 	
 	public SpecialFunctionsSub() {
 		// init components
@@ -37,7 +36,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
 		compressor = new Compressor(RobotMap.COMPRESSOR);
 		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
-		solenoid = new Solenoid(RobotMap.SOLENOID);
+//		solenoid = new Solenoid(RobotMap.SOLENOID);
 		
 		//compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
@@ -59,22 +58,33 @@ public class SpecialFunctionsSub extends Subsystem {
     }
     
 	public void shootSwitch() {
-		
+		System.out.println("SHOOT SWITCH");
 		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
 		Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
-		doubleSolenoid.set(DoubleSolenoid.Value.kOff); // retract all the cylinders via solenoids (NULL)
-		solenoid.set(false);
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+//		solenoid.set(false);
 		
 	}
 	
 	public void shootScale() {
-		
+		System.out.println("SHOOT SCALE");
 		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-		Timer.delay(.15); // delay thread to allow time for cylinders to fully extend
-		doubleSolenoid.set(DoubleSolenoid.Value.kOff); // retract all the cylinders via solenoids (NULL)
-		solenoid.set(false);
+		Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+//		solenoid.set(false);
 		
 	}
+	
+	public void initNeutral() {
+		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
+	}
+	public void pForward() {
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+	}
+	public void pReverse() {
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+	
 	
 	public void intake(double speed) {
 		// set speed of both motors via the motor controllers

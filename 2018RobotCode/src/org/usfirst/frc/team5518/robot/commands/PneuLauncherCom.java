@@ -26,7 +26,11 @@ public class PneuLauncherCom extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		Robot.sfSub.shootSwitch();
+    		isAPressed = false;
+    		wasAPressed = false;
+    		isXPressed = false;
+    		wasXPressed = false;
+    		Robot.sfSub.initNeutral();
     }
     
   
@@ -35,7 +39,7 @@ public class PneuLauncherCom extends Command {
 	    	
     		isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
 	    	if (isAPressed != wasAPressed && isAPressed == true){
-	    		Robot.sfSub.shootSwitch();    		
+	    		Robot.sfSub.shootSwitch();   		
 	    	}
 	    	wasAPressed = isAPressed;
 	    	
