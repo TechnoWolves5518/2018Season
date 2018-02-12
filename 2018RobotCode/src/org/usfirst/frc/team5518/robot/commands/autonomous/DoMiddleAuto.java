@@ -14,7 +14,7 @@ public class DoMiddleAuto extends CommandGroup {
         
     	// Check if DS is in autonomous mode, print destination and gamedata to console
     			if ( Robot.ds.isAutonomous() ) {
-    				Robot.logger.debug("AutoMiddle " + function.toString() + " : using gamedata " + Robot.gameData);
+    				Robot.logger.debug("MiddleAuto " + function.toString() + " : using gamedata " + Robot.gameData);
     			}
     			
     			if (function == FieldTarget.kDoNothing) { // If DO NOTHING is chosen in dashboard

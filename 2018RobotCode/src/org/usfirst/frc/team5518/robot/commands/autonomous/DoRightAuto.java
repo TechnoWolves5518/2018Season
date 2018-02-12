@@ -14,7 +14,7 @@ public class DoRightAuto extends CommandGroup {
         
     		// Check if DS is in autonomous mode, print destination and gamedata to console
 		if ( Robot.ds.isAutonomous() ) {
-			Robot.logger.debug("AutoRight " + function.toString() + " : using gamedata " + gameData);
+			Robot.logger.debug("RightAuto " + function.toString() + " : using gamedata " + gameData);
 		}
 		
 		if (function == FieldTarget.kDoNothing) { // If DO NOTHING is chosen in dashboard
