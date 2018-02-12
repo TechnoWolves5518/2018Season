@@ -1,9 +1,13 @@
 package org.usfirst.frc.team5518.robot;
 
 public class Logger {
-	private static boolean isDebug = true; //false during competitions
+	private static boolean isDebug = false; //false during competitions
 	private static boolean isVerbose = false;
 	private static boolean isInfo = true;
+	
+	public void setDebug(boolean status){
+		isDebug = status;
+	}
 	
 	public void info(String s){
 		if (isInfo){
