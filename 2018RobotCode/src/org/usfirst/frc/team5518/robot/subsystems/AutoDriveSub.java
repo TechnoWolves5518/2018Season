@@ -15,7 +15,7 @@ public class AutoDriveSub extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 	
-	private boolean isDone;
+	private boolean isDone; // Used to check if the distance has been reached
 	
 	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumfrence)
     public static final double kPulsesPerRevolution = 1440; // Encoder pulses in one shaft revolution
@@ -47,14 +47,15 @@ public class AutoDriveSub extends Subsystem {
     public void autoDrive(float vertDist, float vertSpeed) {
     		
     		if (avgEncoderPos() < vertDist) {
-    			evenDrive();
-    			System.out.println("distance: " + avgEncoderPos());
-    			Robot.driveTrainSub.drive(0, vertSpeed, rotAdjustment);
-    			Robot.logger.debug("Outputting drive values");
-    			// Robot.driveTrainSub.drive(0.0, 0.2, 0);
+    			
+    			evenDrive(); // First check for any necessary adjustments to speed on either side
+    			
+    			Robot.logger.debug("right:  " + rightEncoder.getDistance() + "  left:  " + leftEncoder.getDistance() + "distance: " + avgEncoderPos()); // For debugging purposes
+    			
+    			Robot.driveTrainSub.drive(vertSpeed, 0 , rotAdjustment);
+    			
     			isDone = false;
-    		}
-    		else {
+    		} else {
     			isDone = true;
     		}
     }
@@ -62,10 +63,11 @@ public class AutoDriveSub extends Subsystem {
     public void autoStrafe(float strafeDist, float strafeSpeed) {
 
 		if (avgEncoderPos() < strafeDist) {
+			
 			evenDrive();
 			System.out.println("distance: " + avgEncoderPos());
 			// Robot.driveTrainSub.drive(0, strafeSpeed, rotAdjustment);
-			Robot.driveTrainSub.drive(0.2, 0.0, 0);
+			Robot.driveTrainSub.drive(0.0, 0.2, 0.0);
 		}
 
     }
@@ -95,7 +97,7 @@ public class AutoDriveSub extends Subsystem {
     }
     
     private double avgEncoderPos() {
-    		return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+    		return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance())) / 2;
     }
     
     public void resetEncoders() {
