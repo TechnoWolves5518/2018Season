@@ -35,7 +35,7 @@ public class DoLeftAuto extends CommandGroup {
 				// leftToRightSwitchBehind();
 			} else { // If the switch is on the left (our side)
 				//Drive forward, then pivot right to switch.
-				Robot.logger.debug("Drive forward, then pivot right to switch.");
+				Robot.logger.debug("Drive from left pos to left switch");
 				leftToLeftSwitch();
 			}			
 		}
