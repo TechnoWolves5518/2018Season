@@ -1,29 +1,32 @@
-package org.usfirst.frc.team5518.robot.commands;
+package org.usfirst.frc.team5518.robot.commands.autonomous;
 
-import org.usfirst.frc.team5518.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
-import org.usfirst.frc.team5518.robot.Logger;
+import org.usfirst.frc.team5518.robot.Robot;
 
 /**
  *
  */
-public class LeftToLeftSwitch extends Command {
-    double forwardTime1 = 3.0;
-    public LeftToLeftSwitch() {
+public class StrafeDistance extends Command {
+
+	private float distance;
+	private float speed;
+	
+    public StrafeDistance(float m_distance, float m_speed) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-		requires(Robot.driveTrainSub);
+    	requires(Robot.autoDriveSub);
+    	
+    	distance = m_distance;
+    	speed = m_speed;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.logger.info("LeftToLeftSwitch init");
     }
-    
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.logger.debug("LeftToLeftSwitch execute");
-    	
+    	Robot.autoDriveSub.autoStrafe(distance, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

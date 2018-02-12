@@ -4,21 +4,27 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
+/**
+ * This is the robot class
+ */
 package org.usfirst.frc.team5518.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5518.robot.commands.MecanumDriveCom;
-import org.usfirst.frc.team5518.robot.commands.DriveDistance;
-import org.usfirst.frc.team5518.robot.commands.StrafeDistance;
 import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
+import org.usfirst.frc.team5518.robot.commands.autonomous.DoLeftAuto;
+import org.usfirst.frc.team5518.robot.commands.autonomous.DoMiddleAuto;
+import org.usfirst.frc.team5518.robot.commands.autonomous.DoRightAuto;
+import org.usfirst.frc.team5518.robot.commands.autonomous.DriveDistance;
+import org.usfirst.frc.team5518.robot.commands.autonomous.StrafeDistance;
 import org.usfirst.frc.team5518.robot.subsystems.DriveTrainSub;
 import org.usfirst.frc.team5518.robot.subsystems.SpecialFunctionsSub;
 import org.usfirst.frc.team5518.robot.Logger;
@@ -59,30 +65,37 @@ public class Robot extends TimedRobot {
 
 	public static OI m_oi;
 	public static DriverStation ds;
+	//public static SmartDashboard smartDS;
 	
-	// Robot Commands.
-	Command autonomousCommand;
-	CommandGroup autoCommandGroup;
-	Command toLineAndStop;
-	CommandGroup middleToLeftSwitchGroup;
-	Command autoCommand;
+	Command autonomousCommand; // create placeholder for chosen command
 	
 	// DriveStation Custom data
-	private enum AutoFunction {
+	public enum FieldTarget {
 	                kScale,
 	                kSwitch,
 		            kLine,
 	                kChoose,   // Choose best based on gameData.
 	                kDoNothing
 	                }
+	// WHAT IS THIS FOR?
+	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
 	
 	// Custom definitions.
-	private String       gameData;
-	private int          robotLocation;
-	private AutoFunction autoFunction;
+	public static String       gameData;
+	private enum RobotLocation {rl_left, rl_middle, rl_right}
+
 	
+	private FieldTarget autoFunction;
+	//private boolean      isBackPath; // Default: Back=True, Toggle=False (i.e. Front)
+	private SendableChooser<String>        pathChooser;
+	private SendableChooser<RobotLocation> robotLocationChooser;
+	private SendableChooser<FieldTarget> fieldTargetChooser;
 	
-	
+	// Variables we retrieve from the Smart Dashboard
+	private String testGameData  = "Unknown";
+	private String path          = "Unknown";  // This tells whether the robot will cross the field in the front or back
+	private RobotLocation robotLocation;       // This is the ROBOT location on the field (not driver team location)
+	private FieldTarget fieldTarget;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -92,6 +105,33 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
+		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
+		
+		// CHOOSE FRONT OR BACK PATH (only applies to left and right switch paths)
+		pathChooser = new SendableChooser<String>();
+		pathChooser.addDefault("Front","front");
+		pathChooser.addObject("Back","back");
+		SmartDashboard.putData("Path", pathChooser);
+		
+		// CHOOSE ROBOT STARTING POSITION
+		robotLocationChooser = new SendableChooser<RobotLocation>();
+		robotLocationChooser.addDefault("Left", RobotLocation.rl_left);
+		robotLocationChooser.addObject("Middle", RobotLocation.rl_middle);
+		robotLocationChooser.addObject("Right", RobotLocation.rl_right);
+		SmartDashboard.putData("Robot Location", robotLocationChooser);
+		
+		// CHOOSE AUTONOMOUS TARGET
+		fieldTargetChooser = new SendableChooser<FieldTarget>();
+		fieldTargetChooser.addDefault("Line", fieldTarget.kLine);
+		fieldTargetChooser.addObject("Do Nothing", fieldTarget.kDoNothing);
+		fieldTargetChooser.addObject("Switch", fieldTarget.kSwitch);
+		fieldTargetChooser.addObject("Scale", fieldTarget.kScale);
+		fieldTargetChooser.addObject("Choose", fieldTarget.kChoose);
+		SmartDashboard.putData("Field Target", fieldTargetChooser);
+		
+		
+		// Set to FALSE for competition.
+		logger.setDebug(true); //Must be false during competition
 		
 		driveTrainSub = new DriveTrainSub();
 		sfSub = new SpecialFunctionsSub();
@@ -103,15 +143,12 @@ public class Robot extends TimedRobot {
 		
 		// Autonomous data initial.
 		gameData        = "";
-		robotLocation   = -1;
-		autoFunction    = AutoFunction.kSwitch;
-		
-		// Initialize all autonomous commands.
-		toLineAndStop = new ToLineAndStopCom();
-		middleToLeftSwitchGroup = new MiddleToLeftSwitchGroup();
+		//robotLocation   = -1;
+		autoFunction    = FieldTarget.kSwitch;
+		optionalPath    = true;
 		
 		// Default.
-		autonomousCommand = toLineAndStop;
+		autonomousCommand = null;
 	}
 
 	/**
@@ -130,6 +167,21 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 	}
 	
+	public void readDashBoard() {
+		
+		// Define robot data needed only for autonomous.
+		testGameData  = SmartDashboard.getString("Test Game Data", "Nothing Found");
+		//isBackPath    = SmartDashboard.getBoolean("Path_Back", false);
+		path          = pathChooser.getSelected();
+		robotLocation = robotLocationChooser.getSelected();
+		
+		logger.info("testGameData : " + testGameData);
+		//System.out.println("isBackPath   : " + isBackPath);
+		logger.info("path         : " + path);
+		logger.info("location     : " + robotLocation);
+		logger.info("Field Target : " + fieldTarget);
+	}
+	
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
 	 * between different autonomous modes using the dashboard. The sendable
@@ -145,37 +197,33 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 
 		autoDriveSub.resetEncoders();
-
-		logger.debug("Auto init.");
-		/*
+		logger.debug("Auto init.  **** ");
+		readDashBoard();
+		
 		// Define robot data needed only for autonomous.
 		gameData        = ds.getGameSpecificMessage();
-		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kSwitch;		
-		logger.info("gameData = " + gameData + " location = " + robotLocation);
+		robotLocation   = robotLocationChooser.getSelected();
+		autoFunction    = fieldTargetChooser.getSelected();
+		
+		logger.debug("gameData = " + gameData + " Driver Station = " + robotLocation);
+		
 		// Handle autonomous based on starting position.
-		// robotLocation = 1 (Left)
-		if (robotLocation == 1){
-			logger.debug("Auto Position = 1 ");
-			autonomousCommand = doAutoLeft(autoFunction, gameData);
-
+		if (robotLocation == RobotLocation.rl_left){
+			logger.debug("Auto Position = left ");
+			autonomousCommand = new DoLeftAuto(autoFunction, gameData);
 		}
-		// robotLocation = 2 (Middle)
-		else if (robotLocation ==2){
-			logger.debug("Auto Position = 2 ");
-
-			autonomousCommand = doAutoMiddle(autoFunction, gameData);
-			// autoCommandGroup = doAutoMiddle(autoFunction, gameData);
+		else if (robotLocation == RobotLocation.rl_middle){
+			logger.debug("Auto Position = middle ");
+			autonomousCommand = new DoMiddleAuto(autoFunction, gameData);
 		}
-		// robotLocation = 3 (Right)
-		else {
-			logger.debug("Auto Position = 3 ");
-
-			//doAutoRight(autoFunction, gameData);
+		else if (robotLocation == RobotLocation.rl_right){
+			logger.debug("Auto Position = right ");
+			autonomousCommand = new DoRightAuto(autoFunction, gameData);
 		} 
+		else {
+			logger.debug("Auto Position = UNKNOWN ");
+		}
 		autonomousCommand.start();
-		// autoCommandGroup.start();
-    */
 	}
 
 	/**
@@ -184,8 +232,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
-		autoDriveSub.autoDrive(12, 0.3f);
 	}
 
 	@Override
@@ -209,115 +255,5 @@ public class Robot extends TimedRobot {
 	public void testPeriodic() {
 		System.out.println("Running in test mode.");
 	}
-	
-	/**
-	 * doAutoLeft
-	 * This function handles autonomous from the left starting position.
-	 * When autoFunction is:
-	 *   - LINE then drive forward and stop.
-	 *   - SWITCH or SCALE then drive to specified switch/scale.
-	 *   - DONOTHING then do nothing.
-	 *   - CHOOSE then go the best route.
-	 * @param function
-	 * @param gameData
-	 */
-	private Command doAutoLeft(AutoFunction function, String gameData){
-		Command commandToRun = toLineAndStop;
-		
-		if (ds.isAutonomous()){
-			logger.debug("AutoLeft " + function.toString() + " : using gamedata " + gameData);
-		}
-		
-		if (function == AutoFunction.kDoNothing){
-			logger.debug("Do nothing.");
-			return commandToRun;
-		}
-		
-		if (function == AutoFunction.kSwitch){
-			if(gameData.charAt(0) == 'R')
-			{
-				//Forward, right, then pivot right to switch.
-				logger.debug("Forward, right, then pivot right to switch.");
-				//return new MiddleToRightSwitch();
-			} 
-			// gameData(0) == 'L'
-			else {
-				//Drive forward, then pivot right to switch.
-				logger.debug("Drive forward, then pivot right to switch.");
-				return new LeftToLeftSwitch();
-			}
-		}
-		
-		return commandToRun;
-	}
-	
-	/**
-	 * doAutoMiddle
-	 *   This function handles autonomous from the middle starting position.
-	 *   When autoFunction is:
-	 *    - LINE then drive forward and stop.
-	 *    - SWITCH or CHOOSE then drive forward or Left and launch the cube.
-	 *    - SCALE then drive right or left to Scale and launch the cube.
-	 *    - DONOTHING then do nothing.
-	 * @param function
-	 * @param gameData
-	 */
-	private CommandGroup doAutoMiddle(AutoFunction function, String gameData){
-		CommandGroup commandToRun = middleToLeftSwitchGroup;
-		
-		// Send log msg.
-		if (ds.isAutonomous()){
-			logger.debug("AutoMiddle "+function.toString()+" : using gamedata "+gameData);
-			//Gamedata gives the layout of the switches. (Example - LRL - Left Right Left)
-			
-		}
-		
-		// DONOTHING : Do nothing.
-		if (function == AutoFunction.kDoNothing){
-			logger.debug("Do nothing.");
-			// return commandToRun;
-		}
-		
-		// kLINE : Drive forward and stop.
-		if (function == AutoFunction.kLine){
-			logger.debug("Drive forward and stop.");
-			// return toLineAndStop;
-		}
-		
-		// kSWITCH or kCHOOSE : Determine gameData and launch in switch.		
-		if (function == AutoFunction.kSwitch || function == AutoFunction.kChoose){
-			// Check gameData at postion[0] for Switch.
-			if(gameData.charAt(0) == 'R')
-			{
-				//Drive forward and launch.
-				logger.debug("Drive forward and launch.");
-				// return new MiddleToRightSwitch();
-			} 
-			// gameData(0) == 'L'
-			else {
-				//Drive left to Switch and launch.
-				logger.debug("Drive left to switch and launch.");
-				// return new MiddleToLeftSwitch();
-				return middleToLeftSwitchGroup;
-			}
-		}
-		
-		// kSCALE : Determine gameData and launch in scale.
-		if (function == AutoFunction.kScale){
-			// Check gameData position[1] for Scale.
-			if (gameData.charAt(1) == 'R'){
-				// Drive right to Scale and launch.
-				logger.debug("Drive right to scale and launch.");
-				// return new MiddleToRightScale();
-			}
-			// gameData(1) == 'L'
-			else {
-				// Drive left to scale and launch.
-				logger.debug("Drive left to scale and launch.");
-				// return new MiddleToLeftScale();
-			}
-		}
-		return commandToRun;	
-	}//end doAutoMiddle()
 	
 }
