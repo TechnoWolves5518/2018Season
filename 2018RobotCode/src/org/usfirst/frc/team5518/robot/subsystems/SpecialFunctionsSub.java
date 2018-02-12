@@ -1,62 +1,96 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
+import org.usfirst.frc.team5518.robot.RobotMap;
+
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- * [INSERT PURPOSE HERE: WHAT DOES THE CLASS DO & ACHIEVE?]
+ * The Special Functions subsystem serves to operate pneumatics
+ * on the robot for launching the power cube either on a scale or
+ * a switch as well as intaking a power cube for loading it onto
+ * the robot.
  *
- * @author [INSERT NAME OF WHOEVER WROTE THIS CODE]
+ * @author Armaan Syed
+ * @author Taha Bokhari
  */
 public class SpecialFunctionsSub extends Subsystem {
 	
-	/** Define 2 motor controllers for intake */
+	/** The motor controllers for intaking a powercube */
+	private VictorSP leftMotor;
+	private VictorSP rightMotor;
 	
-	/** Define compressor object */
-
-	/** Define 3 (double) solenoids for launcher */
+	/** Pneumatic components */
+	private Compressor compressor;
+	private DoubleSolenoid doubleSolenoid;
+//	private Solenoid solenoid;
 	
-	/**
-	 * Constructor for initializing components
-	 */
+	
 	public SpecialFunctionsSub() {
 		// init components
+		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
+		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
+		compressor = new Compressor(RobotMap.COMPRESSOR);
+		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
+//		solenoid = new Solenoid(RobotMap.SOLENOID);
+		
+		//compressor.setClosedLoopControl(true); // refill compressor automatically
+		compressor.start(); // turn compressor on
+		
+		leftMotor.setInverted(true);
 		
 		// enable safety on motor controllers
-		
-		// turn compressor on
+		leftMotor.setSafetyEnabled(false);
+		rightMotor.setSafetyEnabled(false);
 		
 	}
 	
 	/**
-	 * Shoot the power cube at a target. This method will be called
-	 * upon a button press on the joystick and will also be used
-	 * to fire and immediately retract the pneumatic cylinders.
+	 * Set a default command for the subsystem
 	 */
-	public void shoot() {
-		// extend all the cylinders via solenoids
-		
-		// delay thread to allow time for cylinders to fully extend
-		
-		// retract all the cylinders via solenoids
-	}
-	
-	/**
-	 * Power the two intake motors to get power cubes onto
-	 * the roobit. This method will be called while a button on
-	 * the joystick is held down.
-	 * 
-	 * @param speed Set the speed of the intake motor controllers
-	 * with the speed ranging from -1 and 1. Set positive values to
-	 * enable the motors to spin 'forwards' and negative values to
-	 * enable the motors to spin 'backwards.'
-	 */
-	public void intake(double speed) {
-		// set speed of both motors via the motor controllers
-	}
-
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
+        // No need to set default command
         //setDefaultCommand(new MySpecialCommand());
     }
+    
+	public void shootSwitch() {
+		System.out.println("SHOOT SWITCH");
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+		Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+//		solenoid.set(false);
+		
+	}
+	
+	public void shootScale() {
+		System.out.println("SHOOT SCALE");
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+		Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+//		solenoid.set(false);
+		
+	}
+	
+	public void initNeutral() {
+		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
+	}
+	public void pForward() {
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+	}
+	public void pReverse() {
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	
+	public void intake(double speed) {
+		// set speed of both motors via the motor controllers
+		leftMotor.set(speed);
+		rightMotor.set(speed);
+	}
+
 }
 
