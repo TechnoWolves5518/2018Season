@@ -3,7 +3,8 @@ package org.usfirst.frc.team5518.robot.subsystems;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
-import edu.wpi.first.wpilibj.VictorSP;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
@@ -13,34 +14,38 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 public class DriveTrainSub extends Subsystem {
 	
 	// Construct and define motor controllers
-	private VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
-	private VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
-	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
-	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
+	private WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(RobotMap.FRONT_LEFT);
+	private WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(RobotMap.BACK_LEFT);
+	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
+	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
 	
-	private float expiraton = 0.75f;
+	private float expiraton = 0.3f; // Motor Safety expiration period
 	
 	// Combine all the motor controllers into a drive base
-	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
 	
 	public DriveTrainSub() {
-		
-		// enable deadband elimination
-		frontLeftMotor.enableDeadbandElimination(true);
-		backLeftMotor.enableDeadbandElimination(true);
-		frontRightMotor.enableDeadbandElimination(true);
-		backRightMotor.enableDeadbandElimination(true);
+    		
+		// Create motor controller deadbands
+		frontLeftTalon.configNeutralDeadband(0.1, 0);
+		backLeftTalon.configNeutralDeadband(0.1, 0);
+		frontRightTalon.configNeutralDeadband(0.1, 0);
+		backRightTalon.configNeutralDeadband(0.1, 0);
 		
 		// enable the safety
-		frontLeftMotor.setSafetyEnabled(true);
-		frontLeftMotor.setExpiration(expiraton);
-		backLeftMotor.setSafetyEnabled(true);
-		backLeftMotor.setExpiration(expiraton);
-		frontRightMotor.setSafetyEnabled(true);
-		frontRightMotor.setExpiration(expiraton);
-		backRightMotor.setSafetyEnabled(true);
-		backRightMotor.setExpiration(expiraton);
+		frontLeftTalon.setSafetyEnabled(true);
+		frontLeftTalon.setExpiration(expiraton);
+		backLeftTalon.setSafetyEnabled(true);
+		backLeftTalon.setExpiration(expiraton);
+		frontRightTalon.setSafetyEnabled(true);
+		frontRightTalon.setExpiration(expiraton);
+		backRightTalon.setSafetyEnabled(true);
+		backRightTalon.setExpiration(expiraton);
 		
+		frontLeftTalon.setInverted(false);
+		backLeftTalon.setInverted(false);
+		frontRightTalon.setInverted(false);
+		backRightTalon.setInverted(false);
 	}
 	
     public void initDefaultCommand() {
@@ -49,20 +54,41 @@ public class DriveTrainSub extends Subsystem {
     }
     
     /**
-     * An UNcool Taha method.
+     * Used for tele-operated control of the drive train
      * @author Taha Bokhari
-     * @param ySpeed the y speed (side to side) (-0.3, 0, 0) <-- Left
-     * @param xSpeed the x speed (forward/backward) (0, 0.3, 0) <-- Forward
-     * @param zRot the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
+     * @param drive the y speed (forward/backward) (-0.3, 0, 0) <-- Backwards
+     * @param strafe the x speed (side to side) (0, 0.3, 0) <-- Right
+     * @param rotate the z rotation (rotation) (0, 0, 0.3) <-- Rotate right
      */
-    public void drive(double ySpeed, double xSpeed, double zRot) {
-		driveBase.driveCartesian(ySpeed, xSpeed, zRot);
+    public void drive(double drive, double strafe, double rotate) {
+		
+    		// System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
+		System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
+		
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
+		driveBase.driveCartesian(drive, strafe, rotate);
+		
     }
     
     public void stop() {
-		driveBase.driveCartesian(0, 0, 0);
-		// Stop driving. Failsafe if connection is interrupted or robot code ends.
+    		// Stop driving. Failsafe if connection is interrupted or robot code ends.
+    		driveBase.driveCartesian(0, 0, 0);
+    }
+    
+    public double quadCurve(double val) {
+    		
+    		if (val >= 0) { // Apply a quadratic curve to the inputs of the controller (preserving positive/negative values)
+    			val *= val;
+		} else {
+			val *= val;
+			val = -val;
+		}
+    		
+		if (Math.abs(val) < 0.1) { // Apply custom deadband directly to inputs
+			val = 0;
+		}
+		
+		return val;
     }
 }
 
