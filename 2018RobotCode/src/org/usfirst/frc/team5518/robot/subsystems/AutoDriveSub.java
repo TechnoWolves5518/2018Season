@@ -33,8 +33,8 @@ public class AutoDriveSub extends Subsystem {
         leftEncoder.setMaxPeriod(0.1);
         leftEncoder.setMinRate(10);
         
-//        leftEncoder.setReverseDirection(true);
-//        rightEncoder.setReverseDirection(true);
+//      leftEncoder.setReverseDirection(true);
+//      rightEncoder.setReverseDirection(true);
         
         resetEncoders();
 	}
@@ -45,27 +45,27 @@ public class AutoDriveSub extends Subsystem {
     }
     
     public void autoDrive(float vertDist, float vertSpeed) {
-    		
-    		if (avgEncoderPos() < vertDist) {
-    			
-    			evenDrive(); // First check for any necessary adjustments to speed on either side
-    			
-    			Robot.logger.debug("right:  " + rightEncoder.getDistance() + "  left:  " + leftEncoder.getDistance() + "distance: " + avgEncoderPos()); // For debugging purposes
-    			
-    			Robot.driveTrainSub.drive(vertSpeed, 0 , rotAdjustment);
-    			
-    			isDone = false;
-    		} else {
-    			isDone = true;
-    		}
+		
+		if (avgEncoderDrivePos() < vertDist) {
+			
+			evenDrive(); // First check for any necessary adjustments to speed on either side
+			
+			Robot.logger.debug("right:  " + rightEncoder.getDistance() + "  left:  " + leftEncoder.getDistance() + "distance: " + avgEncoderDrivePos()); // For debugging purposes
+			
+			Robot.driveTrainSub.drive(vertSpeed, 0 , rotAdjustment);
+			
+			isDone = false;
+		} else {
+			isDone = true;
+		}
     }
     
     public void autoStrafe(float strafeDist, float strafeSpeed) {
 
-		if (avgEncoderPos() < strafeDist) {
+		if (avgEncoderDrivePos() < strafeDist) {
 			
 			evenDrive();
-			System.out.println("distance: " + avgEncoderPos());
+			System.out.println("distance: " + avgEncoderDrivePos());
 			// Robot.driveTrainSub.drive(0, strafeSpeed, rotAdjustment);
 			Robot.driveTrainSub.drive(0.0, 0.2, 0.0);
 		}
@@ -73,35 +73,39 @@ public class AutoDriveSub extends Subsystem {
     }
     
     public boolean doneDriving() {
-    		return isDone;
+    	return isDone;
     }
     
     public void autoRotate(float rotateTime, float rotateSpeed) {
-	    	
-	    	if (rotateTime < 50) {
-	    		rotateTime++;
-	    		Robot.driveTrainSub.drive(0.0, 0.0, 0.3);
-	    	}
-	    	
+    	
+    	if (rotateTime < 50) {
+    		rotateTime++;
+    		Robot.driveTrainSub.drive(0.0, 0.0, 0.3);
+    	}
+    	
     }
     
     private void evenDrive() {
-    		
-    		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
+    	
+    	if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
 			rotAdjustment = -0.2f;
 		}
-    		else if (rightEncoder.getDistance() > leftEncoder.getDistance() + 0.3f) {
-    			rotAdjustment = 0.2f;
-    		}
-    		
+		else if (rightEncoder.getDistance() > leftEncoder.getDistance() + 0.3f) {
+			rotAdjustment = 0.2f;
+		}
+    	
     }
     
-    private double avgEncoderPos() {
-    		return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance())) / 2;
+    private double avgEncoderDrivePos() {
+    	return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance()) / 2);
+    }
+    
+    private double avgEncoderStrafePos() {
+    	return 0.0;
     }
     
     public void resetEncoders() {
-    		leftEncoder.reset();
+    	leftEncoder.reset();
         rightEncoder.reset();
     }
     

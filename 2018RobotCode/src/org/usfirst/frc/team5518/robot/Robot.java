@@ -147,37 +147,38 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 
 		autoDriveSub.resetEncoders();
-
+		
+		
 		logger.debug("Auto init.");
-
-		// Define robot data needed only for autonomous.
-		gameData        = ds.getGameSpecificMessage();
-		robotLocation   = ds.getLocation();
-		autoFunction    = AutoFunction.kSwitch;		
-		logger.info("gameData = " + gameData + " location = " + robotLocation);
-		// Handle autonomous based on starting position.
-		// robotLocation = 1 (Left)
-		if (robotLocation == 1){
-			logger.debug("Auto Position = 1 ");
-			autonomousCommand = doAutoLeft(autoFunction, gameData);
-
-		}
-		// robotLocation = 2 (Middle)
-		else if (robotLocation ==2){
-			logger.debug("Auto Position = 2 ");
-
-			autonomousCommand = doAutoMiddle(autoFunction, gameData);
-			// autoCommandGroup = doAutoMiddle(autoFunction, gameData);
-		}
-		// robotLocation = 3 (Right)
-		else {
-			logger.debug("Auto Position = 3 ");
-
-			//doAutoRight(autoFunction, gameData);
-		} 
-		autonomousCommand.start();
-		// autoCommandGroup.start();
-    
+//
+//		// Define robot data needed only for autonomous.
+//		gameData        = ds.getGameSpecificMessage();
+//		robotLocation   = ds.getLocation();
+//		autoFunction    = AutoFunction.kSwitch;		
+//		logger.info("gameData = " + gameData + " location = " + robotLocation);
+//		// Handle autonomous based on starting position.
+//		// robotLocation = 1 (Left)
+//		if (robotLocation == 1){
+//			logger.debug("Auto Position = 1 ");
+//			autonomousCommand = doAutoLeft(autoFunction, gameData);
+//
+//		}
+//		// robotLocation = 2 (Middle)
+//		else if (robotLocation ==2){
+//			logger.debug("Auto Position = 2 ");
+//
+//			autonomousCommand = doAutoMiddle(autoFunction, gameData);
+//			// autoCommandGroup = doAutoMiddle(autoFunction, gameData);
+//		}
+//		// robotLocation = 3 (Right)
+//		else {
+//			logger.debug("Auto Position = 3 ");
+//
+//			//doAutoRight(autoFunction, gameData);
+//		} 
+//		autonomousCommand.start();
+//		// autoCommandGroup.start();
+//    
 	}
 
 	/**
@@ -186,8 +187,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
-		// autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
+		autoDriveSub.autoDrive(32, 0.3f);
 	}
 
 	@Override
