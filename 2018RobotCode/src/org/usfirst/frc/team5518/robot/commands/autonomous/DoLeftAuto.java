@@ -43,11 +43,11 @@ public class DoLeftAuto extends CommandGroup {
 		if (function == FieldTarget.kScale) { // If SCALE is chosen in dashboard
 			if (gameData.charAt(1) == 'R') { // if the scale is on the right (opposite from us)
 				//Drive to right scale
-				Robot.logger.debug("Drive to right scale");
+				Robot.logger.debug("Drive from left pos to right scale");
 				leftToRightScale();
 			} else { // if the scale is on the left side (our side)
 				//Drive to left scale
-				Robot.logger.debug("Drive to left scale");
+				Robot.logger.debug("Drive from left pos to left scale");
 				leftToLeftScale();
 			}
 		}
