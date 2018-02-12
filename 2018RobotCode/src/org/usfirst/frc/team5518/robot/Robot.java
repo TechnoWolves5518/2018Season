@@ -62,7 +62,7 @@ public class Robot extends TimedRobot {
 	public static StrafeDistance strafeDistance;
 	
 	public static Logger logger = new Logger();
-
+	
 	public static OI m_oi;
 	public static DriverStation ds;
 	//public static SmartDashboard smartDS;
