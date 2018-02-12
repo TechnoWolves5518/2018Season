@@ -23,18 +23,18 @@ public class DoRightAuto extends CommandGroup {
 		}
 		
 		if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
-			Robot.logger.debug("Drive forward to line");
+			Robot.logger.debug("Drive forward to line from right pos");
 		}
 		
 		if (function == FieldTarget.kSwitch){ // If SWITCH is chosen in dashboard
 			
 			if(gameData.charAt(0) == 'R') { // If the switch is on the right (our side)
-				Robot.logger.debug("Forward to switch.");
+				Robot.logger.debug("Drive from right pos to right switch");
 				rightToRightSwitch();
 				// leftToRightSwitchBehind();
 			} else { // If the switch is on the left (opposite from us)
 				//Drive forward, then pivot right to switch.
-				Robot.logger.debug("Drive forward, then pivot left to switch.");
+				Robot.logger.debug("Drive from right pos to left switch");
 				rightToLeftSwitch();
 				// rightToLeftSwitchBehind();
 			}			
@@ -43,11 +43,11 @@ public class DoRightAuto extends CommandGroup {
 		if (function == FieldTarget.kScale) { // If SCALE is chosen in dashboard
 			if (gameData.charAt(1) == 'R') { // if the scale is on the right (our side)
 				//Drive to right scale
-				Robot.logger.debug("Drive to right scale");
+				Robot.logger.debug("Drive from right pos to right scale");
 				rightToRightScale();
 			} else { // if the scale is on the left side (opposite from us)
 				//Drive to left scale
-				Robot.logger.debug("Drive to left scale");
+				Robot.logger.debug("Drive from right pos to left scale");
 				rightToLeftScale();
 			}
 		}

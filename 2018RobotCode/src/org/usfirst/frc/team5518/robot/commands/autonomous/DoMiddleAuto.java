@@ -23,19 +23,19 @@ public class DoMiddleAuto extends CommandGroup {
     			}
     			
     			if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
-    				Robot.logger.debug("Drive forward to line");
+    				Robot.logger.debug("Drive forward to line from middle pos");
     				middleToLine();
     			}
     			
     			if (function == FieldTarget.kSwitch){ // If SWITCH is chosen in dashboard
     				
     				if(gameData.charAt(0) == 'R') { // If the switch is on the right
-    					Robot.logger.debug("Forward, right, then pivot right to switch.");
+    					Robot.logger.debug("Drive from middle pos to right switch");
     					middleToRightSwitch();
     					// leftToRightSwitchBehind();
     				} else { // If the switch is on the left
     					//Drive forward, then pivot right to switch.
-    					Robot.logger.debug("Drive forward, then pivot right to switch.");
+    					Robot.logger.debug("Drive from middle pos to left switch");
     					middleToLeftSwitch();
     				}			
     			}
