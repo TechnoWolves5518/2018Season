@@ -69,7 +69,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	public void shootScale() {
 		System.out.println("SHOOT SCALE");
 		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-		Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
+		Timer.delay(.3); // delay thread to allow time for cylinders to fully extend
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
 //		solenoid.set(false);
 		
