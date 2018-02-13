@@ -22,9 +22,9 @@ public class ForwardIntakeCom extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     		
-    	// Make the intake run via the method in the subsystem
-    	Robot.sfSub.intake(RobotMap.INTAKE_SPEED);
-    	
+	    	// Make the intake run via the method in the subsystem
+	    	Robot.sfSub.intake(RobotMap.INTAKE_SPEED);
+	    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -34,12 +34,12 @@ public class ForwardIntakeCom extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.sfSub.intake(0.0);
+    		Robot.sfSub.intake(0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	Robot.sfSub.intake(0.0);
+    		Robot.sfSub.intake(0.0);
     }
 }
