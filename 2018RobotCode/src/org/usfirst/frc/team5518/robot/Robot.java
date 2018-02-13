@@ -217,33 +217,35 @@ public class Robot extends TimedRobot {
 	public void autonomousInit() {
 
 		autoDriveSub.resetEncoders();
+		// autoDriveSub.resetGyro();
+		
 		logger.debug("Auto init.  **** ");
 		readDashBoard();
-		
-		// Define robot data needed only for autonomous.
-		gameData        = ds.getGameSpecificMessage();
-		//robotLocation   = ds.getLocation();
-		autoFunction    = FieldTarget.kSwitch;	
-		
-		logger.debug("gameData = " + gameData + " Driver Station = " + robotLocation);
-		
-		// Handle autonomous based on starting position.
-		if (robotLocation == RobotLocation.rl_left){
-			logger.debug("Auto Position = left ");
-			autonomousCommand = doAutoLeft(autoFunction, gameData);
-		}
-		else if (robotLocation == RobotLocation.rl_middle){
-			logger.debug("Auto Position = middle ");
-			autonomousCommand = doAutoMiddle(autoFunction, gameData);
-		}
-		else if (robotLocation == RobotLocation.rl_right){
-			logger.debug("Auto Position = right ");
-			autonomousCommand = doAutoRight(autoFunction, gameData);
-		} 
-		else {
-			logger.debug("Auto Position = UNKNOWN ");
-		}
-		autonomousCommand.start();
+//		
+//		// Define robot data needed only for autonomous.
+//		gameData        = ds.getGameSpecificMessage();
+//		//robotLocation   = ds.getLocation();
+//		autoFunction    = FieldTarget.kSwitch;	
+//		
+//		logger.debug("gameData = " + gameData + " Driver Station = " + robotLocation);
+//		
+//		// Handle autonomous based on starting position.
+//		if (robotLocation == RobotLocation.rl_left){
+//			logger.debug("Auto Position = left ");
+//			autonomousCommand = doAutoLeft(autoFunction, gameData);
+//		}
+//		else if (robotLocation == RobotLocation.rl_middle){
+//			logger.debug("Auto Position = middle ");
+//			autonomousCommand = doAutoMiddle(autoFunction, gameData);
+//		}
+//		else if (robotLocation == RobotLocation.rl_right){
+//			logger.debug("Auto Position = right ");
+//			autonomousCommand = doAutoRight(autoFunction, gameData);
+//		} 
+//		else {
+//			logger.debug("Auto Position = UNKNOWN ");
+//		}
+//		autonomousCommand.start();
 	}
 
 	/**
@@ -252,14 +254,19 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-
-		// autoDriveSub.autoDrive(12f, 0f, 0f, 0.2f, 0f, 0f);
+		float distance = (float) (69);
+		float angleSetPoint = 180;
+		
+		// autoDriveSub.autoDrive(distance, 0.3f);
+		autoDriveSub.autoStrafe(distance, -0.3f);
+		// autoDriveSub.autoRotate(angleSetPoint, 0.2f);
 	}
 
 	@Override
 	public void teleopInit() {
 		// Cancel autonomous.
 		autonomousCommand.cancel();
+		autoDriveSub.resetEncoders();
 	}
 
 	/**
@@ -268,6 +275,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
@@ -276,6 +284,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void testPeriodic() {
 		System.out.println("Running in test mode.");
+		
 	}
 	
 	/**
