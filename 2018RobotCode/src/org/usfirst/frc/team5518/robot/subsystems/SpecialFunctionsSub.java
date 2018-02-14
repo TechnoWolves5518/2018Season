@@ -29,6 +29,8 @@ public class SpecialFunctionsSub extends Subsystem {
 	private DoubleSolenoid doubleSolenoid;
 //	private Solenoid solenoid;
 	
+	private double start;
+	private double time;
 	
 	public SpecialFunctionsSub() {
 		// init components
@@ -47,6 +49,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		leftMotor.setSafetyEnabled(false);
 		rightMotor.setSafetyEnabled(false);
 		
+		time = 0;
 	}
 	
 	/**
@@ -59,17 +62,25 @@ public class SpecialFunctionsSub extends Subsystem {
     
 	public void shootSwitch() {
 		System.out.println("SHOOT SWITCH");
-		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-		Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
+		time = System.currentTimeMillis() + RobotMap.SWITCH_DELAY;
+		while (System.currentTimeMillis() <= time) {
+			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+			System.out.println("SHOOT SWITCH");
+		}
+		//Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
-//		solenoid.set(false);
-		
+//		solenoid.set(false);		
 	}
 	
 	public void shootScale() {
 		System.out.println("SHOOT SCALE");
-		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-		Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
+		time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
+		while (System.currentTimeMillis() <= time) {
+			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+			//time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
+			System.out.println("SHOOT SCALE");
+		}
+		//Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
 //		solenoid.set(false);
 		
