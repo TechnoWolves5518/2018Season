@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
- *
+ * 
  */
-public class AutoDriveSub extends Subsystem {
+public class AutoDriveSub extends Subsystem implements PIDOutput {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -26,20 +28,30 @@ public class AutoDriveSub extends Subsystem {
 	
     private PIDController pidLeft;
     private PIDController pidRight;
+    private PIDController pidGyro;
     
-    private Encoder leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
-    private Encoder rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+    private Encoder leftEncoder; 
+    private Encoder rightEncoder;
     
     private ADXRS450_Gyro gyro;
     private double angle;
     
     private float rotAdjustment = 0;
+    private double rotateToAngleRate; 
     
 	public AutoDriveSub() {
+		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
+		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+		gyro = new ADXRS450_Gyro();
+		pidGyro = new PIDController(0, 0, 0, gyro, this); //come back to this 
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
         rightEncoder.setDistancePerPulse(kDistancePerPulse);
         
-        gyro = new ADXRS450_Gyro();
+        pidGyro.setInputRange(-180.0f, 180.0f); //Angle Input
+        pidGyro.setOutputRange(-1.0, 1.0); //Left movement and right move 
+        pidGyro.setAbsoluteTolerance(2.0f); //Error range 
+        pidGyro.setContinuous(true); 
+        LiveWindow.add(pidGyro); //Adds to Smart dashboard 
         angle = 0;
         
         leftEncoder.setMaxPeriod(0.1);
@@ -51,6 +63,18 @@ public class AutoDriveSub extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
+    }
+   
+    public void  turn(float dgs){
+    	if (pidGyro.onTarget()){
+    		pidGyro.disable();
+    	}
+    	
+    	else{
+    		pidGyro.setSetpoint(dgs);
+    		pidGyro.enable();
+    		Robot.driveTrainSub.drive(0, 0, rotateToAngleRate);
+    	}
     }
     
     public void autoDrive(float vertDist, float vertSpeed) {
@@ -120,6 +144,11 @@ public class AutoDriveSub extends Subsystem {
     	gyro.reset();
     	gyro.calibrate();
     }
+
+	@Override
+	public void pidWrite(double output) {
+		rotateToAngleRate = output; //Outputs Turning rate from PID 
+	}
     
 }
 
