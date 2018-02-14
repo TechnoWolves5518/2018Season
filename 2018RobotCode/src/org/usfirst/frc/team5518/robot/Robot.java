@@ -258,8 +258,8 @@ public class Robot extends TimedRobot {
 		float angleSetPoint = 180;
 		
 		// autoDriveSub.autoDrive(distance, 0.3f);
-		autoDriveSub.autoStrafe(distance, -0.3f);
-		// autoDriveSub.autoRotate(angleSetPoint, 0.2f);
+		// autoDriveSub.autoStrafe(distance, -0.3f);
+		autoDriveSub.autoRotate(angleSetPoint, 0.2f);
 	}
 
 	@Override
