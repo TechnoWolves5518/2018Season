@@ -8,12 +8,14 @@ import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 /**
- *
+ * 
  */
-public class AutoDriveSub extends Subsystem {
+public class AutoDriveSub extends Subsystem implements PIDOutput {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
@@ -21,36 +23,63 @@ public class AutoDriveSub extends Subsystem {
 	private boolean isDone;
 
 	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumfrence)
-	public static final double kPulsesPerRevolution = 360; // Encoder pulses in one shaft revolution
+	final static double kPulsesPerRevolution = 360; // Encoder pulses in one shaft revolution
 	public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
 
 	private PIDController pidLeft;
 	private PIDController pidRight;
+	private PIDController pidGyro;
 
-	private Encoder leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
-	private Encoder rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+	private Encoder leftEncoder; 
+	private Encoder rightEncoder;
 
 	private ADXRS450_Gyro gyro;
 	private double angle;
 
 	private float rotAdjustment = 0;
+	private double rotateToAngleRate; 
 
 	public AutoDriveSub() {
+		// Construct sensors
+		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
+		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+		gyro = new ADXRS450_Gyro();
+		// Construct PID controllers
+		pidGyro = new PIDController(0, 0, 0, gyro, this); //come back to this
+		
+		// Configure sensors
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
 		rightEncoder.setDistancePerPulse(kDistancePerPulse);
-
-		gyro = new ADXRS450_Gyro();
+		
+		// Configure PID controllers
+		pidGyro.setInputRange(-180.0f, 180.0f); // Angle Input
+		pidGyro.setOutputRange(-1.0, 1.0); // Left movement and right move 
+		pidGyro.setAbsoluteTolerance(2.0f); // Error range 
+		pidGyro.setContinuous(true); 
+		LiveWindow.add(pidGyro); // Adds to Smart dashboard 
 		angle = 0;
 
 		leftEncoder.setMaxPeriod(0.1);
 		// leftEncoder.setMinRate(10);
 
 		resetEncoders();
+
 	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		//setDefaultCommand(new MySpecialCommand());
+	}
+
+	public void turn(float dgs) {
+		if (pidGyro.onTarget()) {
+			pidGyro.disable();
+		}
+		else {
+			pidGyro.setSetpoint(dgs);
+			pidGyro.enable();
+			Robot.driveTrainSub.drive(0, 0, rotateToAngleRate);
+		}
 	}
 
 	public void autoDrive(float vertDist, float vertSpeed) {
@@ -70,7 +99,7 @@ public class AutoDriveSub extends Subsystem {
 	public void autoStrafe(float strafeDist, float strafeSpeed) {
 
 		if (avgAbsEncoderPos() < strafeDist) {
-			//			evenDrive();
+			// evenDrive();
 			System.out.println("distance: " + avgAbsEncoderPos());
 			Robot.driveTrainSub.drive(strafeSpeed, 0, rotAdjustment);
 		}
@@ -80,7 +109,7 @@ public class AutoDriveSub extends Subsystem {
 	public boolean doneDriving() {
 		return isDone;
 	}
-	
+
 	/**
 	 * Used to move to a certain angle in autonomous
 	 * @author Taha Bokhari
@@ -128,6 +157,11 @@ public class AutoDriveSub extends Subsystem {
 	public void resetGyro() {
 		gyro.reset();
 		gyro.calibrate();
+	}
+
+	@Override
+	public void pidWrite(double output) {
+		rotateToAngleRate = output; //Outputs Turning rate from PID
 	}
 
 }
