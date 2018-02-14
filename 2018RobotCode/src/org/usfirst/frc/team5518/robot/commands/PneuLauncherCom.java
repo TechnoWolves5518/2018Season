@@ -27,9 +27,11 @@ public class PneuLauncherCom extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	
+    	isAPressed = false;
+    	wasAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
+    	isXPressed = false;
+    	wasXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
     }
-    
   
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
