@@ -15,10 +15,15 @@ package org.usfirst.frc.team5518.robot;
  */
 public class RobotMap {
 
-	// DRIVE
+	// DRIVE VARIABLES
 	public static double KX = 0.5;
 	public static double KY = 0.5;
 	public static double KZ = 0.5;
+	
+	// SPECIAL FUNCTIONS VARIABLES
+	public static double INTAKE_SPEED = 0.5;
+	public static double SWITCH_DELAY = 500; // extension time for switch shot in milliseconds (60)
+	public static double SCALE_DELAY = 1000; // extension time for scale shot in milliseconds (200)
 	
 	// PORT MAPPING
 	// drive train
@@ -27,10 +32,9 @@ public class RobotMap {
 	public static int FRONT_RIGHT = 2;
 	public static int BACK_RIGHT = 3;
 	
-	//Special Functions 
+	// special Functions 
 	public static int LEFT_INTAKE = 4;
     public static int RIGHT_INTAKE = 5;	
-    public static double INTAKE_SPEED = 0.5;
     public static int COMPRESSOR = 0; //PCM port
     public static int DS_FORWARD = 1; //PCM port 
     public static int DS_BACKWARD = 2; //PCM port 
