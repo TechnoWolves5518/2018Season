@@ -15,10 +15,14 @@ package org.usfirst.frc.team5518.robot;
  */
 public class RobotMap {
 
-	// DRIVE
+	// VARIABLES
+	// drive train
 	public static double KX = 0.75;
 	public static double KY = 0.75;
 	public static double KZ = 0.75;
+	
+	// special functions
+	public static double INTAKE_SPEED = .5;
 	
 	// PORT MAPPING
 	// drive train
@@ -30,7 +34,6 @@ public class RobotMap {
 	// special Functions 
 	public static int LEFT_INTAKE = 4;
     public static int RIGHT_INTAKE = 5;
-    public static double INTAKE_SPEED = .5;
     public static int COMPRESSOR = 0; //PCM port
     public static int DS_FORWARD = 2; //PCM port 
     public static int DS_BACKWARD = 1; //PCM port
