@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
  */
 public class DriveTrainSub extends Subsystem {
 	
-	private boolean isTestBot = true;
+	private boolean isTestBot = false;
 	
 	// Construct and define motor controllers
 	private WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(RobotMap.FRONT_LEFT);
