@@ -14,16 +14,18 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
  */
 public class DriveTrainSub extends Subsystem {
 	
+	private boolean isTestBot = true;
+	
 	// Construct and define motor controllers
 	private WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(RobotMap.FRONT_LEFT);
 	private WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(RobotMap.BACK_LEFT);
 	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
 	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
 	
-//	private VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
-//	private VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
-//	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
-//	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
+	private VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
+	private VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
+	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
+	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 	
 	private float expiraton = 0.3f; // Motor Safety expiration period
 	
@@ -32,15 +34,18 @@ public class DriveTrainSub extends Subsystem {
 	
 	public DriveTrainSub() {
     		
-		setupTalons(frontLeftTalon);
-		setupTalons(backLeftTalon);
-		setupTalons(frontRightTalon);
-		setupTalons(backRightTalon);
-		
-//		setupVictors(frontLeftMotor);
-//		setupVictors(backLeftMotor);
-//		setupVictors(frontRightMotor);
-//		setupVictors(backRightMotor);
+		if (!isTestBot) {
+			setupTalons(frontLeftTalon);
+			setupTalons(backLeftTalon);
+			setupTalons(frontRightTalon);
+			setupTalons(backRightTalon);
+		}
+		else {
+			setupVictors(frontLeftMotor);
+			setupVictors(backLeftMotor);
+			setupVictors(frontRightMotor);
+			setupVictors(backRightMotor);
+		}
 		
 	}
 	
