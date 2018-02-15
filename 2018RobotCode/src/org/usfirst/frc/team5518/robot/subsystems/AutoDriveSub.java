@@ -4,7 +4,6 @@ import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Logger;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
