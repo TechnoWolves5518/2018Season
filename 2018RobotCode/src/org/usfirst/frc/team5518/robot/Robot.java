@@ -103,6 +103,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		sfSub = new SpecialFunctionsSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
 		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
@@ -134,8 +135,8 @@ public class Robot extends TimedRobot {
 		logger.setDebug(true); //Must be false during competition
 		
 		driveTrainSub = new DriveTrainSub();
-		sfSub = new SpecialFunctionsSub();
 		autoDriveSub = new AutoDriveSub();
+		autoDriveSub.calibrateGyro();
 		
 		driveInputCom = new MecanumDriveCom();
 //		driveDistance = new DriveDistance(0, 0);

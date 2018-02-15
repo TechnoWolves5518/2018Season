@@ -154,8 +154,7 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 		rightEncoder.reset();
 	}
 
-	public void resetGyro() {
-		gyro.reset();
+	public void calibrateGyro() {
 		gyro.calibrate();
 	}
 
