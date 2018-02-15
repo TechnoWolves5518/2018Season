@@ -72,8 +72,9 @@ public class DoLeftAuto extends CommandGroup {
     }
     
     private void leftToLeftSwitch() {
-    		// Drive forward 7 inches at 0.4 speed
-    		addSequential(new DriveDistance(7, 0.4f));
+		// Drive forward 7 inches at 0.4 speed
+		addSequential(new DriveDistance(7, 0.4f));
+		addSequential(new StrafeDistance(7, 0.3f));
     }
     
     private void leftToRightScale() {
