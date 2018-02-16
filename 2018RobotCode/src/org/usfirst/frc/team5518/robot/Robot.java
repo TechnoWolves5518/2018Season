@@ -179,9 +179,9 @@ public class Robot extends TimedRobot {
 		path          = pathChooser.getSelected();
 		robotLocation = robotLocationChooser.getSelected();
 
-		logger.info("testGameData : " + testGameData);
 		//System.out.println("isBackPath   : " + isBackPath);
 		// Log information
+		logger.debug("----------READING DASHBOARD DATA----------");
 		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
 		logger.info("path         : " + path);
 		logger.info("Field Target : " + fieldTargetList);
