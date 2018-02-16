@@ -25,9 +25,9 @@ public class SpecialFunctionsSub extends Subsystem {
 	private VictorSP rightMotor;
 	
 	/** Pneumatic components */
-//	private Compressor compressor;
-//	private DoubleSolenoid doubleSolenoid;
-//	private Solenoid solenoid;
+	private Compressor compressor;
+	private DoubleSolenoid doubleSolenoid;
+	private Solenoid solenoid;
 	
 	private double start;
 	private double time;
@@ -36,12 +36,12 @@ public class SpecialFunctionsSub extends Subsystem {
 		// init components
 		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
 		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
-//		compressor = new Compressor(RobotMap.COMPRESSOR);
-//		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
-//		solenoid = new Solenoid(RobotMap.SOLENOID);
+		compressor = new Compressor(RobotMap.COMPRESSOR);
+		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
+		solenoid = new Solenoid(RobotMap.SOLENOID);
 		
-		//compressor.setClosedLoopControl(true); // refill compressor automatically
-//		compressor.start(); // turn compressor on
+		compressor.setClosedLoopControl(true); // refill compressor automatically
+		compressor.start(); // turn compressor on
 		
 		leftMotor.setInverted(true);
 		
@@ -64,11 +64,11 @@ public class SpecialFunctionsSub extends Subsystem {
 		System.out.println("SHOOT SWITCH");
 		time = System.currentTimeMillis() + RobotMap.SWITCH_DELAY;
 		while (System.currentTimeMillis() <= time) {
-//			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
 			System.out.println("SHOOT SWITCH");
 		}
 		//Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
-//		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
 //		solenoid.set(false);		
 	}
 	
@@ -76,24 +76,23 @@ public class SpecialFunctionsSub extends Subsystem {
 		System.out.println("SHOOT SCALE");
 		time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
 		while (System.currentTimeMillis() <= time) {
-//			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-			//time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
+			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
 			System.out.println("SHOOT SCALE");
 		}
 		//Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
-//		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
 //		solenoid.set(false);
 		
 	}
 	
 	public void initNeutral() {
-//		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
+		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 	public void pForward() {
-//		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 	public void pReverse() {
-//		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	
