@@ -85,17 +85,16 @@ public class Robot extends TimedRobot {
 	private enum RobotLocation {rl_left, rl_middle, rl_right}
 
 	
-	private FieldTarget autoFunction;
+	private FieldTarget chosenAutoFunction;
 	//private boolean      isBackPath; // Default: Back=True, Toggle=False (i.e. Front)
 	private SendableChooser<String>        pathChooser;
 	private SendableChooser<RobotLocation> robotLocationChooser;
 	private SendableChooser<FieldTarget> fieldTargetChooser;
 	
 	// Variables we retrieve from the Smart Dashboard
-	private String testGameData  = "Unknown";
 	private String path          = "Unknown";  // This tells whether the robot will cross the field in the front or back
 	private RobotLocation robotLocation;       // This is the ROBOT location on the field (not driver team location)
-	private FieldTarget fieldTarget;
+	private FieldTarget fieldTargetList;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -108,28 +107,30 @@ public class Robot extends TimedRobot {
 		ds            = DriverStation.getInstance();
 		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
-		// CHOOSE FRONT OR BACK PATH (only applies to left and right switch paths)
 		pathChooser = new SendableChooser<String>();
-		pathChooser.addDefault("Front","front");
-		pathChooser.addObject("Back","back");
-		SmartDashboard.putData("Path", pathChooser);
+		robotLocationChooser = new SendableChooser<RobotLocation>();
+		fieldTargetChooser = new SendableChooser<FieldTarget>();
 		
 		// CHOOSE ROBOT STARTING POSITION
-		robotLocationChooser = new SendableChooser<RobotLocation>();
-		robotLocationChooser.addDefault("Left", RobotLocation.rl_left);
-		robotLocationChooser.addObject("Middle", RobotLocation.rl_middle);
+		robotLocationChooser.addDefault("Middle", RobotLocation.rl_middle);
+		robotLocationChooser.addObject("Left", RobotLocation.rl_left);
 		robotLocationChooser.addObject("Right", RobotLocation.rl_right);
-		SmartDashboard.putData("Robot Location", robotLocationChooser);
 		
 		// CHOOSE AUTONOMOUS TARGET
-		fieldTargetChooser = new SendableChooser<FieldTarget>();
-		fieldTargetChooser.addDefault("Line", fieldTarget.kLine);
-		fieldTargetChooser.addObject("Do Nothing", fieldTarget.kDoNothing);
-		fieldTargetChooser.addObject("Switch", fieldTarget.kSwitch);
-		fieldTargetChooser.addObject("Scale", fieldTarget.kScale);
-		fieldTargetChooser.addObject("Choose", fieldTarget.kChoose);
-		SmartDashboard.putData("Field Target", fieldTargetChooser);
+		fieldTargetChooser.addDefault("Line", fieldTargetList.kLine);
+		fieldTargetChooser.addObject("Do Nothing", fieldTargetList.kDoNothing);
+		fieldTargetChooser.addObject("Switch", fieldTargetList.kSwitch);
+		fieldTargetChooser.addObject("Scale", fieldTargetList.kScale);
+		fieldTargetChooser.addObject("Choose", fieldTargetList.kChoose);
 		
+		// CHOOSE FRONT OR BACK PATH (only applies to left and right switch paths)
+		pathChooser.addDefault("Front Path","front");
+		pathChooser.addObject("Back Path","back");
+		
+		// PUT CHOOSER DATA ON THE DASHBOARD
+		SmartDashboard.putData("Robot Location", robotLocationChooser);
+		SmartDashboard.putData("Autonomous Goal", fieldTargetChooser);
+		SmartDashboard.putData("Path to Take", pathChooser);
 		
 		// Set to FALSE for competition.
 		logger.setDebug(true); //Must be false during competition
@@ -145,7 +146,7 @@ public class Robot extends TimedRobot {
 		// Autonomous data initial.
 		gameData        = "";
 		//robotLocation   = -1;
-		autoFunction    = FieldTarget.kSwitch;
+		chosenAutoFunction    = FieldTarget.kSwitch;
 		optionalPath    = true;
 		
 		// Default.
@@ -171,16 +172,19 @@ public class Robot extends TimedRobot {
 	public void readDashBoard() {
 
 		// Define robot data needed only for autonomous.
-		testGameData  = SmartDashboard.getString("Test Game Data", "Nothing Found");
+		gameData        = ds.getGameSpecificMessage();
+		robotLocation   = robotLocationChooser.getSelected();
+		chosenAutoFunction    = fieldTargetChooser.getSelected();
 		//isBackPath    = SmartDashboard.getBoolean("Path_Back", false);
 		path          = pathChooser.getSelected();
 		robotLocation = robotLocationChooser.getSelected();
 
 		logger.info("testGameData : " + testGameData);
 		//System.out.println("isBackPath   : " + isBackPath);
+		// Log information
+		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
 		logger.info("path         : " + path);
-		logger.info("location     : " + robotLocation);
-		logger.info("Field Target : " + fieldTarget);
+		logger.info("Field Target : " + fieldTargetList);
 	}
 	
 	/**
@@ -201,28 +205,22 @@ public class Robot extends TimedRobot {
 		logger.debug("Auto init.  **** ");
 		readDashBoard();
 		
-		// Define robot data needed only for autonomous.
-		gameData        = ds.getGameSpecificMessage();
-		robotLocation   = robotLocationChooser.getSelected();
-		autoFunction    = fieldTargetChooser.getSelected();
-		
-		logger.debug("gameData = " + gameData + " Driver Station = " + robotLocation);
-		
 		// Handle autonomous based on starting position.
 		if (robotLocation == RobotLocation.rl_left){
 			logger.debug("Auto Position = left ");
-			autonomousCommand = new DoLeftAuto(autoFunction, gameData);
+			autonomousCommand = new DoLeftAuto(chosenAutoFunction, gameData);
 		}
 		else if (robotLocation == RobotLocation.rl_middle){
 			logger.debug("Auto Position = middle ");
-			autonomousCommand = new DoMiddleAuto(autoFunction, gameData);
+			autonomousCommand = new DoMiddleAuto(chosenAutoFunction, gameData);
 		}
 		else if (robotLocation == RobotLocation.rl_right){
 			logger.debug("Auto Position = right ");
-			autonomousCommand = new DoRightAuto(autoFunction, gameData);
+			autonomousCommand = new DoRightAuto(chosenAutoFunction, gameData);
 		} 
 		else {
 			logger.debug("Auto Position = UNKNOWN ");
+			// Include code for this possibility
 		}
 		autonomousCommand.start();
 	}

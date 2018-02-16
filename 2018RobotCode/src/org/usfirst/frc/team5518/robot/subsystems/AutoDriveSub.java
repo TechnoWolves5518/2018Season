@@ -22,7 +22,7 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 
 	private boolean isDone;
 
-	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumfrence)
+	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumference)
 	final static double kPulsesPerRevolution = 360; // Encoder pulses in one shaft revolution
 	public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
 
@@ -132,11 +132,11 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 
 	private void evenDrive() {
 
-		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
-			rotAdjustment = -0.2f;
+		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.6f) {
+			rotAdjustment = -0.35f;
 		}
-		else if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.3f) {
-			rotAdjustment = 0.2f;
+		else if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.6f) {
+			rotAdjustment = 0.35f;
 		}
 
 	}

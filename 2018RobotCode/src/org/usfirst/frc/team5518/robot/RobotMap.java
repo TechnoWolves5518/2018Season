@@ -32,12 +32,13 @@ public class RobotMap {
 	public static int FRONT_RIGHT = 2;
 	public static int BACK_RIGHT = 3;
 	
-	// special Functions 
+	// special functions 
 	public static int LEFT_INTAKE = 4;
     public static int RIGHT_INTAKE = 5;	
     public static int COMPRESSOR = 0; //PCM port
     public static int DS_FORWARD = 1; //PCM port 
     public static int DS_BACKWARD = 2; //PCM port 
+    public static int SOLENOID = 3; //PCM port 
 	
 	// WINGMAN STUFF RIPOFF
 	// axes
