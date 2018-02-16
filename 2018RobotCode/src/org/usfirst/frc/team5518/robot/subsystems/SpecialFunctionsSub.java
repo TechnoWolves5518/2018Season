@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
+import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
@@ -61,12 +62,14 @@ public class SpecialFunctionsSub extends Subsystem {
     }
     
 	public void shootSwitch() {
-		System.out.println("SHOOT SWITCH");
+		Robot.logger.debug("SHOOT SWITCH");
 		time = System.currentTimeMillis() + RobotMap.SWITCH_DELAY;
 		while (System.currentTimeMillis() <= time) {
 //			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-			System.out.println("SHOOT SWITCH");
+//			System.out.println("SHOOT SWITCH");
+		
 		}
+		Robot.logger.debug("Exited shoot switch loop");
 		//Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
 //		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
 //		solenoid.set(false);		

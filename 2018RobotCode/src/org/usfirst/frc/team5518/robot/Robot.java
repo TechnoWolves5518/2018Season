@@ -169,13 +169,13 @@ public class Robot extends TimedRobot {
 	}
 	
 	public void readDashBoard() {
-		
+
 		// Define robot data needed only for autonomous.
 		testGameData  = SmartDashboard.getString("Test Game Data", "Nothing Found");
 		//isBackPath    = SmartDashboard.getBoolean("Path_Back", false);
 		path          = pathChooser.getSelected();
 		robotLocation = robotLocationChooser.getSelected();
-		
+
 		logger.info("testGameData : " + testGameData);
 		//System.out.println("isBackPath   : " + isBackPath);
 		logger.info("path         : " + path);

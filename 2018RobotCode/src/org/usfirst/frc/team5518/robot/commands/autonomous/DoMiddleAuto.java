@@ -2,6 +2,8 @@ package org.usfirst.frc.team5518.robot.commands.autonomous;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
+import org.usfirst.frc.team5518.robot.RobotMap;
+import org.usfirst.frc.team5518.robot.commands.PneuLauncherCom;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -61,11 +63,15 @@ public class DoMiddleAuto extends CommandGroup {
     }
     
     private void middleToRightSwitch() {
-    		
+    	// Add to the command group
+    	// Drive (inches, speed)
+		addSequential(new DriveDistance(36, 0.2f));
+		addSequential(new AutoLauncher(true, RobotMap.SWITCH_DELAY)); // true --> switch 
+		
     }
     
     private void middleToLeftSwitch() {
-    		
+    	//addSequential(new StrafeDistance(7, 0.3f));	
     }
     
 }
