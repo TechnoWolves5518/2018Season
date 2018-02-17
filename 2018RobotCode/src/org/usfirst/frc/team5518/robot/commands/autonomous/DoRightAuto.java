@@ -80,7 +80,12 @@ public class DoRightAuto extends CommandGroup {
     }
     
     private void rightToLeftScale() {
-    		
+    	addSequential(new DriveDistance(8, 0.3f));
+    	//addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
+    	addSequential(new DriveDistance(7, 0.3f));
+    	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
+    	addSequential(new DriveDistance(7, 0.3f));
+    	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
     }
     
 }

@@ -9,6 +9,10 @@ public class Logger {
 		isDebug = status;
 	}
 	
+	public void setVerbose(boolean s) {
+		isVerbose = s;
+	}
+	
 	public void info(String s){
 		if (isInfo){
 			System.out.println(s);
