@@ -35,8 +35,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
 	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 
-	private boolean isDone;
-
 	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumference)
 	final static double kPulsesPerRevolution = 360; // Encoder pulses in one shaft revolution
 	public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
@@ -54,7 +52,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private float rotAdjustment = 0;
 	private double rotateToAngleRate;
 	
-	private static final int kAngleTolerance = 3;
+	private static final float kAngleTolerance = 0.5f;
 	
 	private float expiraton = 0.2f; // Motor Safety expiration period
 
@@ -82,8 +80,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		// Configure PID controllers
 		pidGyro.setInputRange(-180.0f, 180.0f); // Angle Input
-		pidGyro.setOutputRange(-0.2, 0.2); // Left movement and right move 
-		pidGyro.setAbsoluteTolerance(2.0f); // Error range 
+		pidGyro.setOutputRange(-0.3, 0.3); // Left movement and right move 
+		pidGyro.setAbsoluteTolerance(kAngleTolerance); // Error range 
 		pidGyro.setContinuous(true); 
 		LiveWindow.add(pidGyro); // Adds to Smart dashboard 
 		angle = 0;
@@ -101,7 +99,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	}
 
 	/**
-	 * Used for tele-operated control of the drive train
+	 * Used for teleoperated control of the drive train
 	 * @author Taha Bokhari
 	 * @param drive the y speed (forward/backward) (-0.3, 0, 0) <-- Backwards
 	 * @param strafe the x speed (side to side) (0, 0.3, 0) <-- Right
@@ -115,34 +113,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		driveBase.driveCartesian(drive, strafe, rotate);
 
-	}
-
-	public void stop() {
-		// Stop driving. Failsafe if connection is interrupted or robot code ends.
-		driveBase.driveCartesian(0, 0, 0);
-	}
-	
-	public double quadCurve(double val) {
-
-		if (val >= 0) { // Apply a quadratic curve to the inputs of the controller (preserving positive/negative values)
-			val *= val;
-		} else {
-			val *= val;
-			val = -val;
-		}
-
-		if (Math.abs(val) < 0.1) { // Apply custom deadband directly to inputs
-			val = 0;
-		}
-
-		return val;
-	}
-
-	public double applySpeedCap(double speed, double cap) {
-		if (speed > cap) {
-			speed = cap;
-		}
-		return speed;
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {
@@ -187,6 +157,34 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		}
 	}
 
+	public void stop() {
+		// Stop driving. Failsafe if connection is interrupted or robot code ends.
+		driveBase.driveCartesian(0, 0, 0);
+	}
+	
+	public double quadCurve(double val) {
+
+		if (val >= 0) { // Apply a quadratic curve to the inputs of the controller (preserving positive/negative values)
+			val *= val;
+		} else {
+			val *= val;
+			val = -val;
+		}
+
+		if (Math.abs(val) < 0.1) { // Apply custom deadband directly to inputs
+			val = 0;
+		}
+
+		return val;
+	}
+
+	public double applySpeedCap(double speed, double cap) {
+		if (speed > cap) {
+			speed = cap;
+		}
+		return speed;
+	}
+	
 	private void evenDrive() {
 
 		if (leftEncoder.getDistance() > rightEncoder.getDistance() + 0.6f) {
@@ -212,10 +210,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
 		Robot.driveTrainSub.drive(0, 0, rotateToAngleRate);
 		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
-	}
-	
-	public boolean doneDriving() {
-		return isDone;
 	}
 	
 	public void resetEncoders() {
