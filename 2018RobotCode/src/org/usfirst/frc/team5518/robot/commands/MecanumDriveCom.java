@@ -33,27 +33,26 @@ public class MecanumDriveCom extends Command {
     protected void execute() {
 		
 		// ------------------------- XBOX CONTROLS ------------------------- //
-		// Get controller inputs
-		driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Vertical movement
-		zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Pivotal rotation
-		strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Strafing movement
+		// Forwards/Backwards movement
+		driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick Y axis
+		driveSpeed = Robot.driveTrainSub.quadCurve(driveSpeed); // Apply squared inputs
+		driveSpeed *= RobotMap.KY; // Apply speed caps
+		
+		zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Set pivot rotations to right stick
+		zRotation = Robot.driveTrainSub.quadCurve(zRotation); // Apply squared inputs
+		zRotation *= RobotMap.KZ; // Apply speed caps
+		
+		strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Set strafe movement to left stick X axis
+		strafeSpeed = Robot.driveTrainSub.quadCurve(strafeSpeed); // Apply squared inputs
+		strafeSpeed *= RobotMap.KX; // Apply speed caps
+		
 		nos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
-		
-		// Apply squared inputs
-		driveSpeed = Robot.driveTrainSub.quadCurve(driveSpeed);
-		zRotation = Robot.driveTrainSub.quadCurve(zRotation);
-		strafeSpeed = Robot.driveTrainSub.quadCurve(strafeSpeed);
-		
-		// Limit speed if it is too high
-		Robot.driveTrainSub.applySpeedCap(driveSpeed, RobotMap.KY);
-		Robot.driveTrainSub.applySpeedCap(zRotation, RobotMap.KZ);
-		Robot.driveTrainSub.applySpeedCap(strafeSpeed, RobotMap.KX);
 		
 		if (!nos) {
 			driveSpeed *= 0.66f; // If the speed button isn't pressed, move at 2/3 speed
 		}
 		
-    		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
+    		// Robot.logger.debug("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
 		
 		// Call the drive() function from the driveTrainSubsystem, pass in collected speed values
 		Robot.driveTrainSub.drive(driveSpeed, strafeSpeed, zRotation); 
@@ -76,12 +75,5 @@ public class MecanumDriveCom extends Command {
     		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 }
-
-
-
-
-
-
-
 
 
