@@ -106,12 +106,10 @@ public class SpecialFunctionsSub extends Subsystem {
 	}
 	
 	
-	public void intake(double speed, double speed2) {
+	public void intake(double speed) {
 		// set speed of both motors via the motor controllers
 		leftMotor.set(speed);
 		rightMotor.set(speed);
-		leftSecondaryMotor.set(speed2);
-		rightSecondaryMotor.set(speed2);
 	}
 
 }

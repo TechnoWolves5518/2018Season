@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5518.robot.commands;
 
+import org.usfirst.frc.team5518.robot.OI;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
@@ -23,23 +24,23 @@ public class ForwardIntakeCom extends Command {
     protected void execute() {
     		
 	    	// Make the intake run via the method in the subsystem
-	    	Robot.sfSub.intake(RobotMap.INTAKE_SPEED, RobotMap.SECONDARY_INTAKE_SPEED);
+	    	Robot.sfSub.intake(RobotMap.INTAKE_SPEED);
 	    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return !OI.sfController.getRawButton(RobotMap.XBOX_BBTN);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    		Robot.sfSub.intake(0.0, 0.0);
+    		Robot.sfSub.intake(0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    		Robot.sfSub.intake(0.0, 0.0);
+    		Robot.sfSub.intake(0.0);
     }
 }
