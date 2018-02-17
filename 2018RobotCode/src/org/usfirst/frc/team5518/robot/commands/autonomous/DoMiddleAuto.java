@@ -71,8 +71,6 @@ public class DoMiddleAuto extends CommandGroup {
 		// Add to the command group
 		// Drive (inches, speed)
 		addSequential(new DriveDistance(12, 0.2f));
-		addSequential(new DriveDistance(12, -0.2f));
-		addSequential(new RotateDistance(360, 0.2f));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}
