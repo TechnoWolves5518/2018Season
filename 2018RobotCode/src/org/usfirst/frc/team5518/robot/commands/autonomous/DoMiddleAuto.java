@@ -43,13 +43,8 @@ public class DoMiddleAuto extends CommandGroup {
 		}
 
 		if (function == FieldTarget.kScale) { // If SCALE is chosen in dashboard
-			if(gameData.charAt(1) == 'R') { // If the scale is on the right
-				Robot.logger.debug("Drive from middle pos to right scale");
-				middleToRightScale();
-			} else { // If the scale is on the left
-				Robot.logger.debug("Drive from middle pos to left scale");
-				middleToLeftScale();
-			}			
+			Robot.logger.debug("Scale chosen from middle, not doing anything");
+			autoNothing();
 		}
 
 		if (function == FieldTarget.kChoose) { // If CHOOSE BEST is chosen in dashboard
@@ -64,7 +59,7 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToLine() {
-		addSequential(new DriveDistance(9, 0.3f));
+
 	}
 
 	private void middleToRightSwitch() {
@@ -78,25 +73,7 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToLeftSwitch() {
-		addSequential(new DriveDistance(10, 0.3f));
-		addSequential(new StrafeDistance(7, 0.2f));	
-		addSequential(new DriveDistance(10, 0.1f));
-		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
+		//addSequential(new StrafeDistance(7, 0.3f));	
 	}
-	
-    private void middleToRightScale() {
-    	addSequential(new DriveDistance(10, 0.3f));
-    	addSequential(new StrafeDistance(3, 0.2f));
-    	addSequential(new DriveDistance(15, 0.1f));
-    	//addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
-		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 
-    }
-    
-    private void middleToLeftScale() {
-    	addSequential(new DriveDistance(10, 0.3f));
-    	addSequential(new StrafeDistance(-10, 0.2f)); //hope we go left bois
-    	addSequential(new DriveDistance(15, 0.3f));
-    	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
-    }
 }
