@@ -23,6 +23,9 @@ public class SpecialFunctionsSub extends Subsystem {
 	/** The motor controllers for intaking a powercube */
 	private VictorSP leftMotor;
 	private VictorSP rightMotor;
+
+	private VictorSP leftSecondaryMotor;
+	private VictorSP rightSecondaryMotor;
 	
 	/** Pneumatic components */
 	private Compressor compressor;
@@ -94,11 +97,12 @@ public class SpecialFunctionsSub extends Subsystem {
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 	
-	
-	public void intake(double speed) {
+	public void intake(double speed, double speed2) {
 		// set speed of both motors via the motor controllers
 		leftMotor.set(speed);
 		rightMotor.set(speed);
+		leftSecondaryMotor.set(speed2);
+		rightSecondaryMotor.set(speed2);
 	}
 
 }
