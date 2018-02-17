@@ -5,6 +5,7 @@ import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -23,11 +24,11 @@ public class SpecialFunctionsSub extends Subsystem {
 	/** The motor controllers for intaking a powercube */
 	private VictorSP leftMotor;
 	private VictorSP rightMotor;
-
+	
 	private VictorSP leftSecondaryMotor;
 	private VictorSP rightSecondaryMotor;
 	
-	/** Pneumatic components */
+	// Pneumatic Components
 	private Compressor compressor;
 	private DoubleSolenoid doubleSolenoid;
 	
@@ -84,7 +85,7 @@ public class SpecialFunctionsSub extends Subsystem {
 			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
 			System.out.println("SHOOT SCALE");
 		}
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)		
 	}
 	
 	public void initNeutral() {
@@ -96,6 +97,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	public void pReverse() {
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
+	
 	
 	public void intake(double speed, double speed2) {
 		// set speed of both motors via the motor controllers
