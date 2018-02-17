@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	
 	public static Joystick driveController = new Joystick(0); // Create XBOX controller from USB port 0
-	public static Joystick sfController = new Joystick(1); // Create XBOX controller from USB port 0
+	public static Joystick sfController = new Joystick(1); // Create XBOX controller from USB port 1
 	// public static Joystick flight = new Joystick(0); // Create flight controller from USB port 0
 	
 	private Button lBumper = new JoystickButton(sfController, RobotMap.XBOX_LBUMPER);

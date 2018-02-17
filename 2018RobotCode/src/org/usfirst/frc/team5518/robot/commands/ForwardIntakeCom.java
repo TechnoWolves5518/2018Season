@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5518.robot.commands;
 
+import org.usfirst.frc.team5518.robot.OI;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
@@ -29,7 +30,7 @@ public class ForwardIntakeCom extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return !OI.sfController.getRawButton(RobotMap.XBOX_BBTN);
     }
 
     // Called once after isFinished returns true

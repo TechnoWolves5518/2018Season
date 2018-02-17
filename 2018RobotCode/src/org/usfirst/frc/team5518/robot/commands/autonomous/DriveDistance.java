@@ -34,11 +34,12 @@ public class DriveDistance extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.autoDriveSub.doneDriving();
+		return !(Robot.autoDriveSub.avgAbsEncoderPos() < distance);
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.autoDriveSub.resetEncoders();
 	}
 
 	// Called when another command which requires one or more of the same

@@ -6,12 +6,12 @@ import org.usfirst.frc.team5518.robot.Robot;
 /**
  *
  */
-public class StrafeDistance extends Command {
+public class RotateDistance extends Command {
 
 	private float distance;
 	private float speed;
 
-	public StrafeDistance(float m_distance, float m_speed) {
+	public RotateDistance(float m_distance, float m_speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.autoDriveSub);
@@ -22,23 +22,23 @@ public class StrafeDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.autoDriveSub.resetEncoders();
+		Robot.autoDriveSub.resetGyro();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		Robot.logger.debug("running strafeDistance");
-		Robot.autoDriveSub.autoStrafe(distance, speed);
+		Robot.logger.debug("running rotateDistance");
+		Robot.autoDriveSub.autoRotate(distance, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return !(Robot.autoDriveSub.avgAbsEncoderPos() < distance);
+		return Robot.autoDriveSub.angle == distance;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.autoDriveSub.resetEncoders();
+		Robot.autoDriveSub.resetGyro();
 	}
 
 	// Called when another command which requires one or more of the same

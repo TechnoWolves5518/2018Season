@@ -34,10 +34,12 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 	private Encoder rightEncoder;
 
 	private ADXRS450_Gyro gyro;
-	private double angle;
+	public double angle;
 
 	private float rotAdjustment = 0;
-	private double rotateToAngleRate; 
+	private double rotateToAngleRate;
+	
+	private static final int kAngleTolerance = 3;
 
 	public AutoDriveSub() {
 		// Construct sensors
@@ -61,7 +63,7 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 
 		leftEncoder.setMaxPeriod(0.1);
 		// leftEncoder.setMinRate(10);
-
+		
 		resetEncoders();
 
 	}
@@ -84,47 +86,30 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 
 	public void autoDrive(float vertDist, float vertSpeed) {
 
-		if (avgEncoderPos() < vertDist) {
-			// evenDrive();
-			Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
-			Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
-			Robot.driveTrainSub.drive(0, vertSpeed, 0);
-			isDone = false;
-		}
-		else {
-			isDone = true;
-		}
+		// evenDrive();
+		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
+		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
+		Robot.driveTrainSub.drive(0, vertSpeed, 0);
+
 	}
 
 	public void autoStrafe(float strafeDist, float strafeSpeed) {
 
-		if (avgAbsEncoderPos() < strafeDist) {
-			// evenDrive();
-			System.out.println("distance: " + avgAbsEncoderPos());
-			Robot.driveTrainSub.drive(strafeSpeed, 0, rotAdjustment);
-		}
-
+		Robot.logger.debug("distance: " + avgAbsEncoderPos());
+		Robot.driveTrainSub.drive(strafeSpeed, 0, rotAdjustment);
+		
 	}
 
-	public boolean doneDriving() {
-		return isDone;
-	}
-
-	/**
-	 * Used to move to a certain angle in autonomous
-	 * @author Taha Bokhari
-	 * @param rotatePoint How far to move (always positive)
-	 * @param rotateSpeed What speed to move at (positive right, negative left)
-	 */
 	public void autoRotate(float rotatePoint, float rotateSpeed) {
-
+		
 		angle = gyro.getAngle();
-		// angle -= 0.002;
-		System.out.println("Gyro value: " + angle);
-		if (angle < rotatePoint) {
+		
+		Robot.logger.debug("Gyro value: " + angle);
+		
+		if (angle < rotatePoint - kAngleTolerance) {
 			Robot.driveTrainSub.drive(0.0, 0.0, rotateSpeed);
 		}
-		else if (angle > rotatePoint) {
+		else if (angle > rotatePoint + kAngleTolerance) {
 			Robot.driveTrainSub.drive(0.0, 0.0, -rotateSpeed);
 		}
 
@@ -141,19 +126,27 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 
 	}
 
-	private double avgEncoderPos() {
+	public double avgEncoderPos() {
 		return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
 	}
 
-	private double avgAbsEncoderPos() {
+	public double avgAbsEncoderPos() {
 		return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance())) / 2;
 	}
 
+	public boolean doneDriving() {
+		return isDone;
+	}
+	
 	public void resetEncoders() {
 		leftEncoder.reset();
 		rightEncoder.reset();
 	}
 
+	public void resetGyro() {
+		gyro.reset();
+	}
+	
 	public void calibrateGyro() {
 		gyro.calibrate();
 	}

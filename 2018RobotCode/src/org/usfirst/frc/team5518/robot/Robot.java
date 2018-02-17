@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
+import org.usfirst.frc.team5518.robot.commands.autonomous.AutoLauncherCom;
 import org.usfirst.frc.team5518.robot.commands.autonomous.DoLeftAuto;
 import org.usfirst.frc.team5518.robot.commands.autonomous.DoMiddleAuto;
 import org.usfirst.frc.team5518.robot.commands.autonomous.DoRightAuto;
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
 	 */
 	public static DriveTrainSub driveTrainSub;
 	public static MecanumDriveCom driveInputCom;
+	public static AutoLauncherCom autoLauncher;
 	
 	public static SpecialFunctionsSub sfSub;
 	
@@ -69,21 +71,20 @@ public class Robot extends TimedRobot {
 	
 	Command autonomousCommand; // create placeholder for chosen command
 	
-	// DriveStation Custom data
-	public enum FieldTarget {
-	                kScale,
-	                kSwitch,
-		            kLine,
-	                kChoose,   // Choose best based on gameData.
-	                kDoNothing
-	                }
 	// WHAT IS THIS FOR?
 	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
 	
-	// Custom definitions.
+	// Needed information to know which auto path to do
 	public static String       gameData;
 	private enum RobotLocation {rl_left, rl_middle, rl_right}
 
+	public enum FieldTarget {
+        kScale,
+        kSwitch,
+        kLine,
+        kChoose,   // Choose best based on gameData.
+        kDoNothing
+        }
 	
 	private FieldTarget chosenAutoFunction;
 	//private boolean      isBackPath; // Default: Back=True, Toggle=False (i.e. Front)
@@ -117,8 +118,8 @@ public class Robot extends TimedRobot {
 		robotLocationChooser.addObject("Right", RobotLocation.rl_right);
 		
 		// CHOOSE AUTONOMOUS TARGET
-		fieldTargetChooser.addDefault("Line", fieldTargetList.kLine);
-		fieldTargetChooser.addObject("Do Nothing", fieldTargetList.kDoNothing);
+		fieldTargetChooser.addDefault("Do Nothing", fieldTargetList.kDoNothing);
+		fieldTargetChooser.addObject("Line", fieldTargetList.kLine);
 		fieldTargetChooser.addObject("Switch", fieldTargetList.kSwitch);
 		fieldTargetChooser.addObject("Scale", fieldTargetList.kScale);
 		fieldTargetChooser.addObject("Choose", fieldTargetList.kChoose);
@@ -146,7 +147,7 @@ public class Robot extends TimedRobot {
 		// Autonomous data initial.
 		gameData        = "";
 		//robotLocation   = -1;
-		chosenAutoFunction    = FieldTarget.kSwitch;
+		chosenAutoFunction    = FieldTarget.kDoNothing;
 		optionalPath    = true;
 		
 		// Default.
@@ -184,7 +185,7 @@ public class Robot extends TimedRobot {
 		logger.debug("----------READING DASHBOARD DATA----------");
 		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
 		logger.info("path         : " + path);
-		logger.info("Field Target : " + fieldTargetList);
+		logger.info("Field Target : " + chosenAutoFunction);
 	}
 	
 	/**

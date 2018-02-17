@@ -9,37 +9,33 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 
-public class AutoLauncher extends Command {
+public class AutoLauncherCom extends Command {
 	
-	private boolean m_Switch;
-	private boolean isDone = false;
+	private double seconds;
 	
-    public AutoLauncher(boolean isSwitch, double secs) {
+    public AutoLauncherCom(double secs) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	this.m_Switch = isSwitch;
-    	this.setTimeout(secs);	 
+        requires(Robot.sfSub);
+        seconds = secs;
+    	this.setTimeout(secs);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (m_Switch) {
-    		Robot.sfSub.shootSwitch(); // Shoot-Switch
-    	}
-    	else {
-    		Robot.sfSub.shootScale(); // Shoot-Scale
-    	}
+		Robot.logger.debug("AutoLaunch, activate! " + seconds);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	// Move the subsystem shooting here
+    	// Put the solenoid on forwards
+    	Robot.sfSub.pForward();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     	if (this.isTimedOut()) {
     		Robot.logger.debug("AutoLauncher timed out");
+    		Robot.sfSub.pReverse();
     	}
         return this.isTimedOut();
     }
