@@ -121,7 +121,6 @@ public class DoRightAuto extends CommandGroup {
     	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
     	addSequential(new DriveDistance(8, 0.4f)); //For lining up
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
-
     }
     
 }

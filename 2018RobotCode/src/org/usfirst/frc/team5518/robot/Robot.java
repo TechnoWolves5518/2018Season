@@ -135,7 +135,6 @@ public class Robot extends TimedRobot {
 		
 		// Set to FALSE for competition.
 		logger.setDebug(true); //Must be false during competition
-		logger.setVerbose(false);
 		
 		driveTrainSub = new DriveTrainSub();
 		autoDriveSub = new AutoDriveSub();

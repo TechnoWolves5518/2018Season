@@ -34,20 +34,12 @@ public class DriveTrainSub extends Subsystem {
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
 
 	public DriveTrainSub() {
-
-		if (!isTestBot) {
-			//			setupTalons(frontLeftTalon);
-			//			setupTalons(backLeftTalon);
-			//			setupTalons(frontRightTalon);
-			//			setupTalons(backRightTalon);
-		}
-		else {
-			setupVictors(frontLeftMotor);
-			setupVictors(backLeftMotor);
-			setupVictors(frontRightMotor);
-			setupVictors(backRightMotor);
-		}
-
+		
+		setupVictors(frontLeftMotor);
+		setupVictors(backLeftMotor);
+		setupVictors(frontRightMotor);
+		setupVictors(backRightMotor);
+		
 	}
 
 	public void initDefaultCommand() {
