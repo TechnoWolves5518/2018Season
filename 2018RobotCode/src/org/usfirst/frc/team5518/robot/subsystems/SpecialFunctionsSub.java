@@ -41,8 +41,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
 		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
 		
-		leftSecondaryMotor = new VictorSP(RobotMap.LEFT_SECONDARY_INTAKE);
-		rightSecondaryMotor = new VictorSP(RobotMap.RIGHT_SECONDARY_INTAKE);
+//		leftSecondaryMotor = new VictorSP(RobotMap.LEFT_SECONDARY_INTAKE);
+//		rightSecondaryMotor = new VictorSP(RobotMap.RIGHT_SECONDARY_INTAKE);
 		
 //		compressor = new Compressor(RobotMap.COMPRESSOR);
 //		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
