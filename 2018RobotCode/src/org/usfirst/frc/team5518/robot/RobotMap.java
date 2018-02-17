@@ -21,9 +21,10 @@ public class RobotMap {
 	public static double KZ = 0.5;
 	
 	// SPECIAL FUNCTIONS VARIABLES
-	public static double INTAKE_SPEED = 0.5;
-	public static double SWITCH_DELAY = 60; // extension time for switch shot in milliseconds (60)
-	public static double SCALE_DELAY = 250; // extension time for scale shot in milliseconds (200)
+	public static double INTAKE_SPEED = 1;
+	public static double SECONDARY_INTAKE_SPEED = 0.3;
+	public static double SWITCH_DELAY = 50; // extension time for switch shot in milliseconds (60)
+	public static double SCALE_DELAY = 125; // extension time for scale shot in milliseconds (200)
 	
 	// PORT MAPPING
 	// drive train
@@ -34,7 +35,9 @@ public class RobotMap {
 	
 	// special Functions 
 	public static int LEFT_INTAKE = 4;
-    public static int RIGHT_INTAKE = 5;	
+    public static int RIGHT_INTAKE = 5;
+    public static int LEFT_SECONDARY_INTAKE = 0;
+    public static int RIGHT_SECONDARY_INTAKE = 1;
     public static int COMPRESSOR = 0; //PCM port
     public static int DS_FORWARD = 1; //PCM port 
     public static int DS_BACKWARD = 2; //PCM port 

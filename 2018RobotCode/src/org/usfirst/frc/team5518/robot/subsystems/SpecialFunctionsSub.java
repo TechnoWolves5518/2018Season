@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5518.robot.subsystems;
+package org.usfirst.frc.team5518.robot.subsystems; 
 
 import org.usfirst.frc.team5518.robot.RobotMap;
 
@@ -23,6 +23,8 @@ public class SpecialFunctionsSub extends Subsystem {
 	/** The motor controllers for intaking a powercube */
 	private VictorSP leftMotor;
 	private VictorSP rightMotor;
+	private VictorSP leftSecondaryMotor;
+	private VictorSP rightSecondaryMotor;
 	
 	/** Pneumatic components */
 	private Compressor compressor;
@@ -36,6 +38,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		// init components
 		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
 		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
+		leftSecondaryMotor = new VictorSP(RobotMap.LEFT_SECONDARY_INTAKE);
+		rightSecondaryMotor = new VictorSP(RobotMap.RIGHT_SECONDARY_INTAKE);
 		compressor = new Compressor(RobotMap.COMPRESSOR);
 		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
 //		solenoid = new Solenoid(RobotMap.SOLENOID);
@@ -43,7 +47,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		//compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
 		
-		leftMotor.setInverted(true);
+		leftSecondaryMotor.setInverted(true);
 		
 		// enable safety on motor controllers
 		leftMotor.setSafetyEnabled(false);
@@ -97,10 +101,12 @@ public class SpecialFunctionsSub extends Subsystem {
 	}
 	
 	
-	public void intake(double speed) {
+	public void intake(double speed, double speed2) {
 		// set speed of both motors via the motor controllers
 		leftMotor.set(speed);
 		rightMotor.set(speed);
+		leftSecondaryMotor.set(speed2);
+		rightSecondaryMotor.set(speed2);
 	}
 
 }
