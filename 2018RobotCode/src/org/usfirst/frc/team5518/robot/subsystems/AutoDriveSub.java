@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * 
@@ -47,7 +48,7 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0, 0, 0, gyro, this); //come back to this
+		pidGyro = new PIDController(0, 0, 0, gyro, this); // tune kP, kI, kD values here
 		
 		// Configure sensors
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
@@ -55,7 +56,7 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 		
 		// Configure PID controllers
 		pidGyro.setInputRange(-180.0f, 180.0f); // Angle Input
-		pidGyro.setOutputRange(-1.0, 1.0); // Left movement and right move 
+		pidGyro.setOutputRange(-0.2, 0.2); // Left movement and right move 
 		pidGyro.setAbsoluteTolerance(2.0f); // Error range 
 		pidGyro.setContinuous(true); 
 		LiveWindow.add(pidGyro); // Adds to Smart dashboard 
@@ -154,6 +155,9 @@ public class AutoDriveSub extends Subsystem implements PIDOutput {
 	@Override
 	public void pidWrite(double output) {
 		rotateToAngleRate = output; //Outputs Turning rate from PID
+		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
+		Robot.driveTrainSub.drive(0, 0, rotateToAngleRate);
+		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
 	}
 
 }
