@@ -73,7 +73,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
 		pidGyro = new PIDController(0, 0, 0, gyro, this); // tune kP, kI, kD values here
-
+		pidLeft = new PIDController(0, 0, 0, leftEncoder, backLeftMotor);
+		
 		// Configure sensors
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
 		rightEncoder.setDistancePerPulse(kDistancePerPulse);
@@ -83,7 +84,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		pidGyro.setOutputRange(-0.3, 0.3); // Left movement and right move 
 		pidGyro.setAbsoluteTolerance(kAngleTolerance); // Error range 
 		pidGyro.setContinuous(true); 
-		LiveWindow.add(pidGyro); // Adds to Smart dashboard 
+		LiveWindow.add(pidLeft); // Adds to Smart dashboard 
 		angle = 0;
 
 		leftEncoder.setMaxPeriod(0.1);
