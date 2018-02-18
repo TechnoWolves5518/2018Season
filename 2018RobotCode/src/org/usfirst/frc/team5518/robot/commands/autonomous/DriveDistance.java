@@ -11,6 +11,8 @@ public class DriveDistance extends Command {
 
 	private float distance;
 	private float speed;
+	
+	private boolean firstTime;
 
 	public DriveDistance(float m_distance, float m_speed) {
 		// Use requires() here to declare subsystem dependencies
@@ -19,6 +21,7 @@ public class DriveDistance extends Command {
 
 		distance = m_distance;
 		speed = m_speed;
+		firstTime = true;
 	}
 
 	// Called just before this Command runs the first time
@@ -28,6 +31,10 @@ public class DriveDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+		if (firstTime) {
+			Robot.driveTrainSub.resetEncoders();
+			firstTime = false;
+		}
 		Robot.logger.debug("running driveDistance");
 		Robot.driveTrainSub.autoDrive(distance, speed);
 	}

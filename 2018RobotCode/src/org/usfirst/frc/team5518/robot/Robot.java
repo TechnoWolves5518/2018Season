@@ -105,7 +105,7 @@ public class Robot extends TimedRobot {
 		sfSub = new SpecialFunctionsSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
-		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
+		// CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();
@@ -252,7 +252,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		System.out.println("Running in test mode.");
+//		System.out.println("Running in test mode.");
 	}
 	
 }

@@ -41,10 +41,12 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 	private PIDController pidLeft;
 	private PIDController pidRight;
-	private PIDController pidGyro;
+	public PIDController pidGyro;
 
 	private Encoder leftEncoder; 
 	private Encoder rightEncoder;
+	
+	private double wheelOutputRate;
 
 	private ADXRS450_Gyro gyro;
 	public double angle;
@@ -53,6 +55,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private double rotateToAngleRate;
 	
 	private static final float kAngleTolerance = 0.5f;
+	private static final float kSpeedTolerance = 0.01f;
 	
 	private float expiraton = 0.2f; // Motor Safety expiration period
 
@@ -72,8 +75,9 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0, 0, 0, gyro, this); // tune kP, kI, kD values here
-		pidLeft = new PIDController(0, 0, 0, leftEncoder, backLeftMotor);
+		pidGyro = new PIDController(0.05, 0, 0, gyro, this); // tune kP, kI, kD values here
+		pidLeft = new PIDController(0, 0, 0, leftEncoder, this);
+		pidRight = new PIDController(0, 0, 0, rightEncoder, this);
 		
 		// Configure sensors
 		leftEncoder.setDistancePerPulse(kDistancePerPulse);
@@ -84,11 +88,24 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		pidGyro.setOutputRange(-0.3, 0.3); // Left movement and right move 
 		pidGyro.setAbsoluteTolerance(kAngleTolerance); // Error range 
 		pidGyro.setContinuous(true); 
-		LiveWindow.add(pidLeft); // Adds to Smart dashboard 
 		angle = 0;
-
+		
+		pidLeft.setInputRange(-1, 1);
+		pidLeft.setOutputRange(-1, 1);
+		pidLeft.setAbsoluteTolerance(kSpeedTolerance);
+		pidLeft.setContinuous(false);
+		
+		pidRight.setInputRange(-1, 1);
+		pidRight.setOutputRange(-1, 1);
+		pidRight.setAbsoluteTolerance(kSpeedTolerance);
+		pidRight.setContinuous(false);
+		
+		LiveWindow.add(pidGyro); // Adds to Smart dashboard
+		LiveWindow.add(pidLeft);
+		LiveWindow.add(pidRight);
+		
 		leftEncoder.setMaxPeriod(0.1);
-		// leftEncoder.setMinRate(10);
+		rightEncoder.setMaxPeriod(0.1);
 
 		resetEncoders();
 
@@ -121,14 +138,14 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// evenDrive();
 		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
-		Robot.driveTrainSub.drive(0, vertSpeed, 0);
+		drive(0, vertSpeed, 0);
 
 	}
 
 	public void autoStrafe(float strafeDist, float strafeSpeed) {
 
 		Robot.logger.debug("distance: " + avgAbsEncoderPos());
-		Robot.driveTrainSub.drive(strafeSpeed, 0, rotAdjustment);
+		drive(strafeSpeed, 0, rotAdjustment);
 		
 	}
 
@@ -139,22 +156,27 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		Robot.logger.debug("Gyro value: " + angle);
 		
 		if (angle < rotatePoint - kAngleTolerance) {
-			Robot.driveTrainSub.drive(0.0, 0.0, rotateSpeed);
+			drive(0.0, 0.0, rotateSpeed);
 		}
 		else if (angle > rotatePoint + kAngleTolerance) {
-			Robot.driveTrainSub.drive(0.0, 0.0, -rotateSpeed);
+			drive(0.0, 0.0, -rotateSpeed);
 		}
 
 	}
 	
-	public void turn(float dgs) {
-		if (pidGyro.onTarget()) {
-			pidGyro.disable();
+	public void pidTurn(float dgs) {
+		Robot.logger.debug("Running PID TURN");
+		pidGyro.setSetpoint(dgs);
+	}
+	
+	public void pidDrive(float dist) {
+		if (pidLeft.onTarget()) {
+			pidLeft.disable();
 		}
 		else {
-			pidGyro.setSetpoint(dgs);
-			pidGyro.enable();
-			Robot.driveTrainSub.drive(0, 0, rotateToAngleRate);
+			pidLeft.setSetpoint(dist);
+			pidLeft.enable();
+			
 		}
 	}
 
@@ -207,10 +229,14 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-		rotateToAngleRate = output; //Outputs Turning rate from PID
-		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
-		Robot.driveTrainSub.drive(0, 0, rotateToAngleRate);
-		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
+//		rotateToAngleRate = output; //Outputs Turning rate from PID
+//		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
+//		drive(0, 0, rotateToAngleRate);
+//		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
+		
+		wheelOutputRate = output;
+		backLeftMotor.set(output);
+		
 	}
 	
 	public void resetEncoders() {

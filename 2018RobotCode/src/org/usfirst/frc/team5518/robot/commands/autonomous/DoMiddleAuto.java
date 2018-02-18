@@ -65,15 +65,18 @@ public class DoMiddleAuto extends CommandGroup {
 	private void middleToRightSwitch() {
 		// Add to the command group
 		// Drive (inches, speed)
-		addSequential(new DriveDistance(12, 0.2f));
-		addSequential(new DriveDistance(12, -0.2f));
-		addSequential(new RotateDistance(360, 0.2f));
+		addSequential(new RotateDistance(90, 0.2f));
+		addSequential(new DriveDistance(10, 0.2f));
+//		addSequential(new StrafeDistance(6, -0.16f));
+//		addSequential(new DriveDistance(6, -0.16f));
+//		addSequential(new StrafeDistance(6, 0.16f));
+		
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}
 
 	private void middleToLeftSwitch() {
-		//addSequential(new StrafeDistance(7, 0.3f));	
+		
 	}
 
 }
