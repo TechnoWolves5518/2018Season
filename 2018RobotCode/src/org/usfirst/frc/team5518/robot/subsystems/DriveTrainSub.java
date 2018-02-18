@@ -21,7 +21,7 @@ public class DriveTrainSub extends Subsystem {
 	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
 	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
 	
-	private float expiraton = 0.1f; // Motor Safety expiration period
+	private float expiraton = 0.5f; // Motor Safety expiration period
 
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
@@ -35,13 +35,13 @@ public class DriveTrainSub extends Subsystem {
 		backRightTalon.configNeutralDeadband(0.1, 0);
 
 		// enable the safety
-		frontLeftTalon.setSafetyEnabled(true);
+		frontLeftTalon.setSafetyEnabled(false);
 		frontLeftTalon.setExpiration(expiraton);
-		backLeftTalon.setSafetyEnabled(true);
+		backLeftTalon.setSafetyEnabled(false);
 		backLeftTalon.setExpiration(expiraton);
-		frontRightTalon.setSafetyEnabled(true);
+		frontRightTalon.setSafetyEnabled(false);
 		frontRightTalon.setExpiration(expiraton);
-		backRightTalon.setSafetyEnabled(true);
+		backRightTalon.setSafetyEnabled(false);
 		backRightTalon.setExpiration(expiraton);
 
 		frontLeftTalon.setInverted(false);
