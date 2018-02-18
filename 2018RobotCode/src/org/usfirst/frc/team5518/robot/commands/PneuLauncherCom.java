@@ -41,6 +41,7 @@ public class PneuLauncherCom extends Command {
 		isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
 		if (isAPressed != wasAPressed && isAPressed == true) {
 			// Robot.sfSub.shootSwitch();
+			System.out.println("shot switch");
 			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SWITCH_DELAY);
 		}
 		wasAPressed = isAPressed;
@@ -48,6 +49,7 @@ public class PneuLauncherCom extends Command {
 		isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
 		if (isXPressed != wasXPressed && isXPressed == true) {
 			// Robot.sfSub.shootScale();
+			System.out.println("shot scale");
 			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SCALE_DELAY);
 		}
 		wasXPressed = isXPressed;
