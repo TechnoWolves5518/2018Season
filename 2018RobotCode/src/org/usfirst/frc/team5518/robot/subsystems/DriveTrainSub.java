@@ -21,7 +21,7 @@ public class DriveTrainSub extends Subsystem {
 	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
 	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
 	
-	private float expiraton = 0.3f; // Motor Safety expiration period
+	private float expiraton = 0.1f; // Motor Safety expiration period
 
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
