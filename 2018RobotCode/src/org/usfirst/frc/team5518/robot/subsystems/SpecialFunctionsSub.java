@@ -2,6 +2,7 @@ package org.usfirst.frc.team5518.robot.subsystems;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
+import org.usfirst.frc.team5518.robot.commands.autonomous.AutoLauncherCom;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -67,35 +68,14 @@ public class SpecialFunctionsSub extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     }
     
-	public void shootSwitch() {
-		Robot.logger.debug("SHOOT SWITCH");
-		time = System.currentTimeMillis() + RobotMap.SWITCH_DELAY;
-		while (System.currentTimeMillis() <= time) {
-			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-			Robot.logger.debug("SHOOT SWITCH");
-		}
-		Robot.logger.debug("Exited shoot switch loop");
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
-	}
-	
-	public void shootScale() {
-		System.out.println("SHOOT SCALE");
-		time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
-		while (System.currentTimeMillis() <= time) {
-			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-			System.out.println("SHOOT SCALE");
-		}
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)		
-	}
-	
 	public void initNeutral() {
-		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
+		doubleSolenoid.set(DoubleSolenoid.Value.kOff); // turn off all signals to solenoid
 	}
 	public void pForward() {
-		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
+		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // set solenoid to forward (called in exec of AutoLauncherCom)
 	}
 	public void pReverse() {
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // set solenoid to reverse (called in end of AutoLauncherCom, doesn't actually do anything, not wired)
 	}
 	
 	
