@@ -33,11 +33,10 @@ public class PneuLauncherCom extends Command {
 		wasXPressed = false;
 		Robot.sfSub.initNeutral();
 	}
-
-
+	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-
+		
 		isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
 		if (isAPressed != wasAPressed && isAPressed == true) {
 			Robot.logger.debug("Got switch button");
@@ -45,7 +44,7 @@ public class PneuLauncherCom extends Command {
 			Robot.autoLauncher.start();
 		}
 		wasAPressed = isAPressed;
-
+		
 		isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
 		if (isXPressed != wasXPressed && isXPressed == true) {
 			Robot.logger.debug("Got scale button");
@@ -53,7 +52,7 @@ public class PneuLauncherCom extends Command {
 			Robot.autoLauncher.start();
 		}
 		wasXPressed = isXPressed;
-
+		
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -2,12 +2,9 @@ package org.usfirst.frc.team5518.robot.subsystems;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
-import org.usfirst.frc.team5518.robot.commands.autonomous.AutoLauncherCom;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -33,9 +30,6 @@ public class SpecialFunctionsSub extends Subsystem {
 	private Compressor compressor;
 	private DoubleSolenoid doubleSolenoid;
 	
-	private double start;
-	private double time;
-	
 	public SpecialFunctionsSub() {
 		// init components
 		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
@@ -57,7 +51,6 @@ public class SpecialFunctionsSub extends Subsystem {
 		leftMotor.setSafetyEnabled(false);
 		rightMotor.setSafetyEnabled(false);
 		
-		time = 0;
 	}
 	
 	/**

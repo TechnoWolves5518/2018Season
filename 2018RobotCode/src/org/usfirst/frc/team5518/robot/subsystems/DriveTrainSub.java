@@ -5,8 +5,6 @@ import org.usfirst.frc.team5518.robot.RobotMap;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
@@ -20,39 +18,19 @@ public class DriveTrainSub extends Subsystem {
 	private WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(RobotMap.BACK_LEFT);
 	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
 	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
-	
-	private float expiraton = 0.5f; // Motor Safety expiration period
+
+	private float expiraton = 0.3f; // Motor Safety expiration period
 
 	// Combine all the motor controllers into a drive base
 	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
 
 	public DriveTrainSub() {
-
-		// Create motor controller deadbands
-		frontLeftTalon.configNeutralDeadband(0.1, 0);
-		backLeftTalon.configNeutralDeadband(0.1, 0);
-		frontRightTalon.configNeutralDeadband(0.1, 0);
-		backRightTalon.configNeutralDeadband(0.1, 0);
-
-		// enable the safety
-		frontLeftTalon.setSafetyEnabled(false);
-		frontLeftTalon.setExpiration(expiraton);
-		backLeftTalon.setSafetyEnabled(false);
-		backLeftTalon.setExpiration(expiraton);
-		frontRightTalon.setSafetyEnabled(false);
-		frontRightTalon.setExpiration(expiraton);
-		backRightTalon.setSafetyEnabled(false);
-		backRightTalon.setExpiration(expiraton);
-
-		frontLeftTalon.setInverted(false);
-		backLeftTalon.setInverted(false);
-		frontRightTalon.setInverted(false);
-		backRightTalon.setInverted(false);
 		
-		frontLeftTalon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
-		backLeftTalon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
-		frontRightTalon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
-		backRightTalon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+		setupTalons(frontLeftTalon);
+		setupTalons(backLeftTalon);
+		setupTalons(frontRightTalon);
+		setupTalons(backRightTalon);
+		
 	}
 
 	public void initDefaultCommand() {
@@ -69,9 +47,9 @@ public class DriveTrainSub extends Subsystem {
 	 */
 	public void drive(double drive, double strafe, double rotate) {
 
-		Robot.logger.debug("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
-		// Robot.logger.debug("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
-		
+		System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
+		// System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
+
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		driveBase.driveCartesian(drive, strafe, rotate);
 
@@ -97,5 +75,15 @@ public class DriveTrainSub extends Subsystem {
 
 		return val;
 	}
+	
+	public void setupTalons(WPI_TalonSRX talon) {
+		talon.setSafetyEnabled(true);
+		talon.setExpiration(expiraton);
+		talon.setInverted(false);
+		talon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+	}
+	
 }
+
+
 
