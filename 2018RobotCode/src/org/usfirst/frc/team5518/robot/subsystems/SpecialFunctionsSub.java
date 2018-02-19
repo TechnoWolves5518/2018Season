@@ -5,6 +5,7 @@ import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -25,6 +26,9 @@ public class SpecialFunctionsSub extends Subsystem {
 	
 	private VictorSP leftSecondaryMotor;
 	private VictorSP rightSecondaryMotor;
+	
+	private Servo leftWingServo;
+	private Servo rightWingServo;
 	
 	// Pneumatic Components
 	private Compressor compressor;
@@ -71,6 +75,15 @@ public class SpecialFunctionsSub extends Subsystem {
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // set solenoid to reverse (called in end of AutoLauncherCom, doesn't actually do anything, not wired)
 	}
 	
+	public void turnServosLeft() {
+		leftWingServo.set(0);
+		rightWingServo.set(0);
+	}
+	
+	public void turnServosRight() {
+		leftWingServo.set(1);
+		rightWingServo.set(1);
+	}
 	
 	public void intake(double speed, double speed2) {
 		// set speed of both motors via the motor controllers

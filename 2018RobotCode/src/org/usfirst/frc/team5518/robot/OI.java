@@ -26,8 +26,11 @@ public class OI {
 	// public static Joystick flight = new Joystick(0); // Create flight controller from USB port 0
 	
 	private Button lBumper = new JoystickButton(sfController, RobotMap.XBOX_LBUMPER);
+	
 	private Button bButton = new JoystickButton(sfController, RobotMap.XBOX_BBTN);
 	private Button yButton = new JoystickButton(sfController, RobotMap.XBOX_YBTN);
+	
+	
 	
 	public OI() {
 		lBumper.whileHeld(new PneuLauncherCom());
