@@ -41,6 +41,8 @@ public class RobotMap {
     public static int COMPRESSOR = 0; //PCM port
     public static int DS_FORWARD = 1; //PCM port 
     public static int DS_BACKWARD = 2; //PCM port 
+    public static int LEFT_SERVO = 3;
+    public static int RIGHT_SERVO = 2;
 	
 	// WINGMAN STUFF RIPOFF
 	// axes

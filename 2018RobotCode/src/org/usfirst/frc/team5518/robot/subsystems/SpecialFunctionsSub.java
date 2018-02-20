@@ -36,6 +36,11 @@ public class SpecialFunctionsSub extends Subsystem {
 	
 	public SpecialFunctionsSub() {
 		// init components
+		
+		leftWingServo = new Servo(RobotMap.LEFT_SERVO);
+		rightWingServo = new Servo(RobotMap.RIGHT_SERVO);
+
+		
 		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);
 		rightMotor = new VictorSP(RobotMap.RIGHT_INTAKE);
 		
@@ -62,7 +67,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	 */
     public void initDefaultCommand() {
         // No need to set default command
-        //setDefaultCommand(new MySpecialCommand());
+        setDefaultCommand(Robot.deployWingsCom);
     }
     
 	public void initNeutral() {
@@ -77,12 +82,12 @@ public class SpecialFunctionsSub extends Subsystem {
 	
 	public void turnServosLeft() {
 		leftWingServo.set(0);
-		rightWingServo.set(0);
+		rightWingServo.set(1);
 	}
 	
 	public void turnServosRight() {
 		leftWingServo.set(1);
-		rightWingServo.set(1);
+		rightWingServo.set(0);
 	}
 	
 	public void intake(double speed, double speed2) {

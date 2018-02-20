@@ -52,6 +52,7 @@ public class Robot extends TimedRobot {
 	public static AutoLauncherCom autoLauncher;
 	
 	public static SpecialFunctionsSub sfSub;
+	public static ReleaseWingsCom deployWingsCom;
 	
 	public static AutoDriveSub autoDriveSub;
 	public static DriveDistance driveDistance;
@@ -138,6 +139,8 @@ public class Robot extends TimedRobot {
 		driveInputCom = new MecanumDriveCom();
 //		driveDistance = new DriveDistance(0, 0);
 //		strafeDistance = new StrafeDistance(0, 0);
+		
+		deployWingsCom = new ReleaseWingsCom();
 		
 		// Autonomous data initial.
 		gameData        = "";
@@ -232,7 +235,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		// Cancel autonomous.
-		autonomousCommand.cancel();
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
 	}
 
 	/**

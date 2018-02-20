@@ -30,11 +30,12 @@ public class ReleaseWingsCom extends Command {
 //    			Robot.sfSub.turnServosRight();
 //    		}
 //		}
-		if (OI.sfController.getRawAxis(RobotMap.XBOX_RTRIGGER) == 1 && OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER)) {
-			Robot.sfSub.turnServosLeft();
-		}
-		else if (OI.sfController.getRawAxis(RobotMap.XBOX_LTRIGGER) == 1 && OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER)) {
+    	
+		if (OI.sfController.getRawAxis(RobotMap.XBOX_RTRIGGER) > 0.7 && OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER)) {
 			Robot.sfSub.turnServosRight();
+		}
+		else if (OI.sfController.getRawAxis(RobotMap.XBOX_LTRIGGER) > 0.7 && OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER)) {
+			Robot.sfSub.turnServosLeft();
 		}
     }
 
