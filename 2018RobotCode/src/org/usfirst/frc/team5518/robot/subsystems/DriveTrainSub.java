@@ -57,7 +57,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private static final float kAngleTolerance = 0.5f;
 	private static final float kSpeedTolerance = 0.01f;
 	
-	private float expiraton = 0.2f; // Motor Safety expiration period
+	private float expiraton = 0.5f; // Motor Safety expiration period
 
 	// Combine all the motor controllers into a drive base
 	//	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
@@ -127,10 +127,10 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
 		//		System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
-
+		angle = gyro.getAngle();
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
-		driveBase.driveCartesian(drive, strafe, rotate);
-
+		// driveBase.driveCartesian(strafe, drive, rotate, gyro.getAngle());
+		driveBase.driveCartesian(strafe, drive, rotate);
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {
@@ -165,7 +165,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	}
 	
 	public void pidTurn(float dgs) {
-		Robot.logger.debug("Running PID TURN");
+		// Robot.logger.debug("Running PID TURN");
 		pidGyro.enable();
 	}
 	
