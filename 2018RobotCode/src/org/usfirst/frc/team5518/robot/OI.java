@@ -10,6 +10,7 @@ package org.usfirst.frc.team5518.robot;
 import org.usfirst.frc.team5518.robot.commands.ForwardIntakeCom;
 import org.usfirst.frc.team5518.robot.commands.PneuLauncherCom;
 import org.usfirst.frc.team5518.robot.commands.ReverseIntakeCom;
+import org.usfirst.frc.team5518.robot.commands.autonomous.RotateDistance;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -25,18 +26,28 @@ public class OI {
 	public static Joystick sfController = new Joystick(1); // Create XBOX controller from USB port 1
 	// public static Joystick flight = new Joystick(0); // Create flight controller from USB port 0
 	
-	private Button lBumper = new JoystickButton(sfController, RobotMap.XBOX_LBUMPER);
+	private Button lBumperSF = new JoystickButton(sfController, RobotMap.XBOX_LBUMPER);
 	
-	private Button bButton = new JoystickButton(sfController, RobotMap.XBOX_BBTN);
-	private Button yButton = new JoystickButton(sfController, RobotMap.XBOX_YBTN);
+	private Button bButtonSF = new JoystickButton(sfController, RobotMap.XBOX_BBTN);
+	private Button yButtonSF = new JoystickButton(sfController, RobotMap.XBOX_YBTN);
 	
-	
+	private Button aButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_ABTN);
+	private Button bButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_BBTN);
 	
 	public OI() {
-		lBumper.whileHeld(new PneuLauncherCom());
-		bButton.whileHeld(new ForwardIntakeCom());
-		yButton.whileHeld(new ReverseIntakeCom());
+		
+		lBumperSF.whileHeld(new PneuLauncherCom());
+		bButtonSF.whileHeld(new ForwardIntakeCom());
+		yButtonSF.whileHeld(new ReverseIntakeCom());
+		
+		aButtonDrive.whenPressed(new RotateDistance(-90f, 0.3f));
+		bButtonDrive.whenPressed(new RotateDistance(90f, 0.3f));
+		
 	}
 	
 	
 }
+
+
+
+
