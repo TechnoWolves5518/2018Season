@@ -75,7 +75,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0.05, 0, 0, gyro, this); // tune kP, kI, kD values here
+		pidGyro = new PIDController(0.06, 0, 0, gyro, this); // tune kP, kI, kD values here
 		pidLeft = new PIDController(0, 0, 0, leftEncoder, this);
 		pidRight = new PIDController(0, 0, 0, rightEncoder, this);
 		
@@ -85,7 +85,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		// Configure PID controllers
 		pidGyro.setInputRange(-180.0f, 180.0f); // Angle Input
-		pidGyro.setOutputRange(-0.3, 0.3); // Left movement and right move 
+		pidGyro.setOutputRange(-0.2, 0.2); // Left movement and right move 
 		pidGyro.setAbsoluteTolerance(kAngleTolerance); // Error range 
 		pidGyro.setContinuous(true); 
 		angle = 0;
@@ -166,7 +166,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	
 	public void pidTurn(float dgs) {
 		Robot.logger.debug("Running PID TURN");
-		pidGyro.setSetpoint(dgs);
 		pidGyro.enable();
 	}
 	
@@ -232,7 +231,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	public void pidWrite(double output) {
 		rotateToAngleRate = output; //Outputs Turning rate from PID
 		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
-		// drive(0, 0, rotateToAngleRate);
+		drive(0, 0, rotateToAngleRate);
 		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
 		
 //		wheelOutputRate = output;

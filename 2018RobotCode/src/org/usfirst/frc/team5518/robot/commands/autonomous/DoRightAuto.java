@@ -70,8 +70,10 @@ public class DoRightAuto extends CommandGroup {
     
     private void rightToLeftSwitch() {
     	addSequential(new DriveDistance(36, 0.2f));
+    	Robot.driveTrainSub.resetGyro();
     	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
     	addSequential(new DriveDistance(36, 0.2f));
+    	Robot.driveTrainSub.resetGyro();
     	addSequential(new RotateDistance(90, 0.2f)); //clockwise
     	addSequential(new DriveDistance(36, 0.2f));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
