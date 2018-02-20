@@ -39,7 +39,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	
 	private double wheelOutputRate;
 
-	private ADXRS450_Gyro gyro;
+	public ADXRS450_Gyro gyro;
 	public double angle;
 
 	private float rotAdjustment = 0;
