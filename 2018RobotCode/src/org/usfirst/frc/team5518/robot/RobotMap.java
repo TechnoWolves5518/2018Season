@@ -39,12 +39,12 @@ public class RobotMap {
     public static int LEFT_SECONDARY_INTAKE = 0;
     public static int RIGHT_SECONDARY_INTAKE = 1;
     public static int COMPRESSOR = 0; //PCM port
-    public static int DS_FORWARD = 1; //PCM port 
-    public static int DS_BACKWARD = 2; //PCM port 
+    public static int DS_FORWARD = 1; //PCM port  
+    public static int SS_BACKWARD = 4; //PCM port
     public static int LEFT_SERVO = 3;
     public static int RIGHT_SERVO = 2;
 	
-	// WINGMAN STUFF RIPOFF
+	// WINGMAN STUFF RIPOFFz
 	// axes
 	public static int JOYSTICK_XAXIS = 0;
 	public static int JOYSTICK_YAXIS = 1;

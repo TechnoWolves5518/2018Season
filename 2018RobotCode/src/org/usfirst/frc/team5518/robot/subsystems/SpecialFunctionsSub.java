@@ -53,7 +53,6 @@ public class SpecialFunctionsSub extends Subsystem {
 		compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
 		
-		leftMotor.setInverted(true);
 		leftSecondaryMotor.setInverted(true);
 		
 		// enable safety on motor controllers
