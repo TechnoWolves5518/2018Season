@@ -167,6 +167,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	public void pidTurn(float dgs) {
 		Robot.logger.debug("Running PID TURN");
 		pidGyro.setSetpoint(dgs);
+		pidGyro.enable();
 	}
 	
 	public void pidDrive(float dist) {
@@ -229,13 +230,13 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-//		rotateToAngleRate = output; //Outputs Turning rate from PID
-//		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
-//		drive(0, 0, rotateToAngleRate);
-//		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
+		rotateToAngleRate = output; //Outputs Turning rate from PID
+		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
+		// drive(0, 0, rotateToAngleRate);
+		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
 		
-		wheelOutputRate = output;
-		backLeftMotor.set(output);
+//		wheelOutputRate = output;
+//		backLeftMotor.set(output);
 		
 	}
 	

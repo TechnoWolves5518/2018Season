@@ -2,6 +2,7 @@ package org.usfirst.frc.team5518.robot.commands.autonomous;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
+import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -64,11 +65,16 @@ public class DoRightAuto extends CommandGroup {
     }
     
     private void rightToRightSwitch() {
-    		
+    	addSequential(new RotateDistance(90, 0.2f));
     }
     
     private void rightToLeftSwitch() {
-    		
+    	addSequential(new DriveDistance(36, 0.2f));
+    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
+    	addSequential(new DriveDistance(36, 0.2f));
+    	addSequential(new RotateDistance(90, 0.2f)); //clockwise
+    	addSequential(new DriveDistance(36, 0.2f));
+		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
     }
     
     private void rightToLeftSwitchBehind() {
