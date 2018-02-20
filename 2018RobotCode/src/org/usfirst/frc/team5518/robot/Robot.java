@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
+//import org.usfirst.frc.team5518.robot.subsystems.AutoDriveSub;
 import org.usfirst.frc.team5518.robot.commands.*;
 import org.usfirst.frc.team5518.robot.commands.autonomous.AutoLauncherCom;
 import org.usfirst.frc.team5518.robot.commands.autonomous.DoLeftAuto;
@@ -54,7 +54,7 @@ public class Robot extends TimedRobot {
 	public static SpecialFunctionsSub sfSub;
 	public static ReleaseWingsCom deployWingsCom;
 	
-	public static AutoDriveSub autoDriveSub;
+//	public static AutoDriveSub autoDriveSub;
 	public static DriveDistance driveDistance;
 	public static StrafeDistance strafeDistance;
 	
@@ -133,8 +133,8 @@ public class Robot extends TimedRobot {
 		logger.setVerbose(false);
 		
 		driveTrainSub = new DriveTrainSub();
-		autoDriveSub = new AutoDriveSub();
-		autoDriveSub.calibrateGyro();
+//		autoDriveSub = new AutoDriveSub();
+		driveTrainSub.calibrateGyro();
 		
 		driveInputCom = new MecanumDriveCom();
 //		driveDistance = new DriveDistance(0, 0);
@@ -200,7 +200,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
-		autoDriveSub.resetEncoders();
+		driveTrainSub.resetEncoders();
 		logger.debug("Auto init.  **** ");
 		readDashBoard();
 		

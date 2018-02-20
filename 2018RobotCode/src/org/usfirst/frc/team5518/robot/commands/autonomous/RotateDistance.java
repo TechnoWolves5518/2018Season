@@ -14,7 +14,7 @@ public class RotateDistance extends Command {
 	public RotateDistance(float m_distance, float m_speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
-		requires(Robot.autoDriveSub);
+		requires(Robot.driveTrainSub);
 
 		distance = m_distance;
 		speed = m_speed;
@@ -22,23 +22,23 @@ public class RotateDistance extends Command {
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-		Robot.autoDriveSub.resetGyro();
+		Robot.driveTrainSub.resetGyro();
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		Robot.logger.debug("running rotateDistance");
-		Robot.autoDriveSub.autoRotate(distance, speed);
+		Robot.driveTrainSub.autoRotate(distance, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return Robot.autoDriveSub.angle == distance;
+		return Robot.driveTrainSub.angle == distance;
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
-		Robot.autoDriveSub.resetGyro();
+		Robot.driveTrainSub.resetGyro();
 	}
 
 	// Called when another command which requires one or more of the same
