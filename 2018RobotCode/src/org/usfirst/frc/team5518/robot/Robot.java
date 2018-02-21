@@ -99,6 +99,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		sfSub = new SpecialFunctionsSub();
+		driveTrainSub = new DriveTrainSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
 		// CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
@@ -132,7 +133,7 @@ public class Robot extends TimedRobot {
 		logger.setDebug(true); //Must be false during competition
 		logger.setVerbose(false);
 		
-		driveTrainSub = new DriveTrainSub();
+//		driveTrainSub = new DriveTrainSub();
 //		autoDriveSub = new AutoDriveSub();
 		driveTrainSub.calibrateGyro();
 		
@@ -160,6 +161,7 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 		gameData = "";
+		
 		// Also set DriverStation gameData to ""
 	}
 

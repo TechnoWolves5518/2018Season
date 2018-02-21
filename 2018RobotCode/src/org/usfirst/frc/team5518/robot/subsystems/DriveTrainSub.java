@@ -65,7 +65,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0.06, 0, 0, gyro, this); // tune kP, kI, kD values here
+		pidGyro = new PIDController(0.04, 0, 0.05, gyro, this); // tune kP, kI, kD values here
 		pidLeft = new PIDController(0, 0, 0, leftEncoder, this);
 		pidRight = new PIDController(0, 0, 0, rightEncoder, this);
 
@@ -75,7 +75,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		// Configure PID controllers
 		pidGyro.setInputRange(-180.0f, 180.0f); // Angle Input
-		pidGyro.setOutputRange(-0.2, 0.2); // Left movement and right move 
+		pidGyro.setOutputRange(-0.4, 0.4); // Left movement and right move 
 		pidGyro.setAbsoluteTolerance(kAngleTolerance); // Error range 
 		pidGyro.setContinuous(true); 
 		angle = 0;
@@ -121,7 +121,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		angle = gyro.getAngle();
 		
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
-		driveBase.driveCartesian(drive, strafe, rotate);
+		driveBase.driveCartesian(drive, strafe, rotate, angle);
 
 	}
 	
@@ -179,13 +179,15 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 	public double quadCurve(double val) {
 
-		if (val >= 0) { // Apply a quadratic curve to the inputs of the controller (preserving positive/negative values)
-			val *= val;
-		} else {
-			val *= val;
-			val = -val;
-		}
-
+//		if (val >= 0) { // Apply a quadratic curve to the inputs of the controller (preserving positive/negative values)
+//			val *= val;
+//		} else {
+//			val *= val;
+//			val = -val;
+//		}
+		
+		val = Math.pow(val, 3);
+		
 		if (Math.abs(val) < 0.1) { // Apply custom deadband directly to inputs
 			val = 0;
 		}

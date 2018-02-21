@@ -59,6 +59,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		leftMotor.setSafetyEnabled(false);
 		rightMotor.setSafetyEnabled(false);
 		
+		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	/**

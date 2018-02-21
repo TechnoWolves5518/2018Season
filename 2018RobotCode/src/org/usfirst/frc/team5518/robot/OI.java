@@ -31,8 +31,9 @@ public class OI {
 	private Button bButtonSF = new JoystickButton(sfController, RobotMap.XBOX_BBTN);
 	private Button yButtonSF = new JoystickButton(sfController, RobotMap.XBOX_YBTN);
 	
-	private Button aButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_ABTN);
+	private Button xButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_XBTN);
 	private Button bButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_BBTN);
+	private Button yButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_YBTN);
 	
 	public OI() {
 		
@@ -40,8 +41,9 @@ public class OI {
 		bButtonSF.whileHeld(new ForwardIntakeCom());
 		yButtonSF.whileHeld(new ReverseIntakeCom());
 		
-		aButtonDrive.whenPressed(new RotateDistance(-90f, 0.3f));
+		xButtonDrive.whenPressed(new RotateDistance(-90f, 0.3f));
 		bButtonDrive.whenPressed(new RotateDistance(90f, 0.3f));
+		yButtonDrive.whenPressed(new RotateDistance(90f, 0.3f));
 		
 	}
 	
