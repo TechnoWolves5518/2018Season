@@ -70,6 +70,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		setupVictors(frontRightMotor);
 		setupVictors(backRightMotor);
 		
+		driveBase.setSafetyEnabled(true);
 		driveBase.setExpiration(expiration);
 		
 		// Construct sensors
@@ -132,7 +133,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		angle = gyro.getAngle();
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		// driveBase.driveCartesian(strafe, drive, rotate, gyro.getAngle());
-		driveBase.driveCartesian(strafe, drive, rotate);
+		driveBase.driveCartesian(strafe, -drive, rotate);
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {

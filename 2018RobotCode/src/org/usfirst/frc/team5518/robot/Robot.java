@@ -150,7 +150,7 @@ public class Robot extends TimedRobot {
 		optionalPath    = true;
 		
 		// Default.
-		autonomousCommand = null;
+		autonomousCommand = new DoMiddleAuto(chosenAutoFunction, gameData);
 	}
 
 	/**
@@ -236,7 +236,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopInit() {
 		// Cancel autonomous.
-		autonomousCommand.cancel();
+		if (autonomousCommand.isRunning()) {
+			autonomousCommand.cancel();
+		}
 	}
 
 	/**
