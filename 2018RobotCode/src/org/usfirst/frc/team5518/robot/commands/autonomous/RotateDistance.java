@@ -24,7 +24,8 @@ public class RotateDistance extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.driveTrainSub.resetGyro();
-		Robot.driveTrainSub.pidGyro.enable();
+//		Robot.driveTrainSub.pidGyro.enable();
+		Robot.driveTrainSub.pidGyro.setSetpoint(distance);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

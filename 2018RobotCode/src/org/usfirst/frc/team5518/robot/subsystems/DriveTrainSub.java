@@ -77,7 +77,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0.05, 0, 0, gyro, this); // tune kP, kI, kD values here
+		pidGyro = new PIDController(0.06, 0, 0, gyro, this); // tune kP, kI, kD values here
 		pidLeft = new PIDController(0, 0, 0, leftEncoder, this);
 		pidRight = new PIDController(0, 0, 0, rightEncoder, this);
 		
@@ -87,7 +87,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		// Configure PID controllers
 		pidGyro.setInputRange(-180.0f, 180.0f); // Angle Input
-		pidGyro.setOutputRange(-0.3, 0.3); // Left movement and right move 
+		pidGyro.setOutputRange(-0.2, 0.2); // Left movement and right move 
 		pidGyro.setAbsoluteTolerance(kAngleTolerance); // Error range 
 		pidGyro.setContinuous(true); 
 		angle = 0;
@@ -129,10 +129,10 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
 		//		System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
-
+		angle = gyro.getAngle();
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
-		driveBase.driveCartesian(drive, strafe, rotate);
-
+		// driveBase.driveCartesian(strafe, drive, rotate, gyro.getAngle());
+		driveBase.driveCartesian(strafe, drive, rotate);
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {
@@ -167,8 +167,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	}
 	
 	public void pidTurn(float dgs) {
-		Robot.logger.debug("Running PID TURN");
-		pidGyro.setSetpoint(dgs);
+		// Robot.logger.debug("Running PID TURN");
+		pidGyro.enable();
 	}
 	
 	public void pidDrive(float dist) {
@@ -231,13 +231,13 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	
 	@Override
 	public void pidWrite(double output) {
-//		rotateToAngleRate = output; //Outputs Turning rate from PID
-//		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
-//		drive(0, 0, rotateToAngleRate);
-//		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
+		rotateToAngleRate = output; //Outputs Turning rate from PID
+		Robot.logger.debug("AngleRate (PID OUTPUT)" + rotateToAngleRate);
+		drive(0, 0, rotateToAngleRate);
+		SmartDashboard.putNumber("PID Value", rotateToAngleRate);
 		
-		wheelOutputRate = output;
-		backLeftMotor.set(output);
+//		wheelOutputRate = output;
+//		backLeftMotor.set(output);
 		
 	}
 	
