@@ -9,6 +9,7 @@
  */
 package org.usfirst.frc.team5518.robot;
 
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -102,7 +103,7 @@ public class Robot extends TimedRobot {
 		driveTrainSub = new DriveTrainSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
-		// CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
+		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();
@@ -151,6 +152,9 @@ public class Robot extends TimedRobot {
 		
 		// Default.
 		autonomousCommand = null;
+		
+		sfSub.pReverse();
+		sfSub.undoWings();
 	}
 
 	/**
@@ -223,7 +227,11 @@ public class Robot extends TimedRobot {
 			logger.debug("Auto Position = UNKNOWN ");
 			// Include code for this possibility
 		}
+		
+		sfSub.pReverse();
+		
 		autonomousCommand.start();
+		
 	}
 
 	/**
@@ -240,6 +248,8 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		sfSub.pReverse();
+		sfSub.undoWings();
 	}
 
 	/**

@@ -38,31 +38,33 @@ public class PneuLauncherCom extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
+//		
+//		isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
+//		if (isAPressed != wasAPressed && isAPressed == true) {
+//			Robot.logger.debug("Got switch button");
+//			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SWITCH_DELAY);
+//			Robot.autoLauncher.start();
+//		}
+//		wasAPressed = isAPressed;
+//		   
+//		isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
+//		if (isXPressed != wasXPressed && isXPressed == true) {
+//			Robot.logger.debug("Got scale button");
+//			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SCALE_DELAY);
+//			Robot.autoLauncher.start();
+//		}
+//		wasXPressed = isXPressed;
 		
-		isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
-		if (isAPressed != wasAPressed && isAPressed == true) {
-			Robot.logger.debug("Got switch button");
-			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SWITCH_DELAY);
-			Robot.autoLauncher.start();
-		}
-		wasAPressed = isAPressed;
-		   
-		isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
-		if (isXPressed != wasXPressed && isXPressed == true) {
-			Robot.logger.debug("Got scale button");
-			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SCALE_DELAY);
-			Robot.autoLauncher.start();
-		}
-		wasXPressed = isXPressed;
-		
-		activateWings = OI.sfController.getRawButton(RobotMap.XBOX_LSTICK);
+		activateWings = OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER);
 		
 		if (activateWings) {
 			Robot.sfSub.activateWings();
+			System.out.println("Activate wings");
 		}
-		else {
-			Robot.sfSub.undoWings();
-		}
+//		else {
+//			Robot.sfSub.undoWings();
+//			System.out.println("Don't activate wings");
+//		}
 		
 	}
 

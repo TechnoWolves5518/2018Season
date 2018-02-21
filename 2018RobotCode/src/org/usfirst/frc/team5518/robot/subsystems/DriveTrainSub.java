@@ -121,8 +121,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		angle = gyro.getAngle();
 		
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
-		driveBase.driveCartesian(drive, strafe, rotate, angle);
-
+		// driveBase.driveCartesian(drive, strafe, rotate, angle);
+		driveBase.driveCartesian(drive, strafe, rotate);
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {

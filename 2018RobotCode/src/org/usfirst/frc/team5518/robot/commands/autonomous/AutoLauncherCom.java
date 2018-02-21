@@ -29,6 +29,7 @@ public class AutoLauncherCom extends Command {
 	protected void execute() {
 		// Put the solenoid on forwards
 		Robot.sfSub.pForward();
+		this.isFinished();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -36,6 +37,9 @@ public class AutoLauncherCom extends Command {
 		if (this.isTimedOut()) {
 			Robot.logger.debug("AutoLauncher timed out");
 			Robot.sfSub.pReverse();
+		}
+		else {
+			Robot.logger.debug("AutoLauncher not finished");
 		}
 		return this.isTimedOut();
 	}

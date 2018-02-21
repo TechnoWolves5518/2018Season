@@ -50,7 +50,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		
 		compressor = new Compressor(RobotMap.COMPRESSOR);
 		doubleSolenoidShooter = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
-		doubleSolenoidWing = new DoubleSolenoid(7, 8);
+		doubleSolenoidWing = new DoubleSolenoid(RobotMap.WINGS_FORWARD, RobotMap.WINGS_BACKWARD);
 		
 		compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
@@ -99,10 +99,22 @@ public class SpecialFunctionsSub extends Subsystem {
 		rightWingServo.set(0);
 	}
 	
-	public void intake(double speed, double speed2) {
+	public void intake(double speed, double speed2, double adjust) {
 		// set speed of both motors via the motor controllers
-		leftMotor.set(speed);
-		rightMotor.set(speed);
+		if (adjust > 0.01) {
+			leftMotor.set(speed - adjust);
+			rightMotor.set(speed);
+		}
+		else if (adjust < -0.01) {
+			leftMotor.set(speed);
+			rightMotor.set(speed + adjust);
+		}
+		else {
+			leftMotor.set(speed);
+			rightMotor.set(speed);
+		}
+//		leftMotor.set(speed);
+//		rightMotor.set(speed);
 		leftSecondaryMotor.set(speed2);
 		rightSecondaryMotor.set(speed2);
 	}

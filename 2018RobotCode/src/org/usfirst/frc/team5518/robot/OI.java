@@ -10,6 +10,7 @@ package org.usfirst.frc.team5518.robot;
 import org.usfirst.frc.team5518.robot.commands.ForwardIntakeCom;
 import org.usfirst.frc.team5518.robot.commands.PneuLauncherCom;
 import org.usfirst.frc.team5518.robot.commands.ReverseIntakeCom;
+import org.usfirst.frc.team5518.robot.commands.autonomous.AutoLauncherCom;
 import org.usfirst.frc.team5518.robot.commands.autonomous.RotateDistance;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -30,6 +31,8 @@ public class OI {
 	
 	private Button bButtonSF = new JoystickButton(sfController, RobotMap.XBOX_BBTN);
 	private Button yButtonSF = new JoystickButton(sfController, RobotMap.XBOX_YBTN);
+	private Button aButtonSF = new JoystickButton(sfController, RobotMap.XBOX_ABTN);
+	private Button xButtonSF = new JoystickButton(sfController, RobotMap.XBOX_XBTN);
 	
 	private Button xButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_XBTN);
 	private Button bButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_BBTN);
@@ -38,6 +41,10 @@ public class OI {
 	public OI() {
 		
 		lBumperSF.whileHeld(new PneuLauncherCom());
+		
+		aButtonSF.whenPressed(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		xButtonSF.whenPressed(new AutoLauncherCom(RobotMap.SCALE_DELAY));
+		
 		bButtonSF.whileHeld(new ForwardIntakeCom());
 		yButtonSF.whileHeld(new ReverseIntakeCom());
 		
