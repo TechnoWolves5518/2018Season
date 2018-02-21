@@ -57,7 +57,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private static final float kAngleTolerance = 0.5f;
 	private static final float kSpeedTolerance = 0.01f;
 	
-	private float expiraton = 0.2f; // Motor Safety expiration period
+	private float expiration = 0.5f; // Motor Safety expiration period
 
 	// Combine all the motor controllers into a drive base
 	//	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
@@ -69,7 +69,9 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		setupVictors(backLeftMotor);
 		setupVictors(frontRightMotor);
 		setupVictors(backRightMotor);
-
+		
+		driveBase.setExpiration(expiration);
+		
 		// Construct sensors
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
@@ -256,8 +258,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		System.out.println("SETTING UP VICTORS");
 
 		victor.enableDeadbandElimination(true);
-		victor.setSafetyEnabled(true);
-		victor.setExpiration(expiraton);
+		victor.setSafetyEnabled(false);
+		victor.setExpiration(expiration);
 		victor.setInverted(false);
 	}
 

@@ -68,32 +68,32 @@ public class SpecialFunctionsSub extends Subsystem {
         // No need to set default command
         //setDefaultCommand(new MySpecialCommand());
     }
-    
-	public void shootSwitch() {
-		Robot.logger.debug("SHOOT SWITCH");
-		time = System.currentTimeMillis() + RobotMap.SWITCH_DELAY;
-		while (System.currentTimeMillis() <= time) {
-//			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-//			System.out.println("SHOOT SWITCH");
-		}
-		Robot.logger.debug("Exited shoot switch loop");
-		//Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
-//		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
-//		solenoid.set(false);		
-	}
-	
-	public void shootScale() {
-		System.out.println("SHOOT SCALE");
-		time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
-		while (System.currentTimeMillis() <= time) {
-//			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
-			System.out.println("SHOOT SCALE");
-		}
+//    
+//	public void shootSwitch() {
+//		Robot.logger.debug("SHOOT SWITCH");
+//		time = System.currentTimeMillis() + RobotMap.SWITCH_DELAY;
+//		while (System.currentTimeMillis() <= time) {
+////			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+////			System.out.println("SHOOT SWITCH");
+//		}
+//		Robot.logger.debug("Exited shoot switch loop");
+//		//Timer.delay(.06); // delay thread to allow time for cylinders to half extend (for switch)
+////		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
+////		solenoid.set(false);		
+//	}
+//	
+//	public void shootScale() {
+//		System.out.println("SHOOT SCALE");
+//		time = System.currentTimeMillis() + RobotMap.SCALE_DELAY;
+//		while (System.currentTimeMillis() <= time) {
+////			doubleSolenoid.set(DoubleSolenoid.Value.kForward); // extend all the cylinders via solenoids
+//			System.out.println("SHOOT SCALE");
+//		}
 		//Timer.delay(.25); // delay thread to allow time for cylinders to fully extend
 //		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // retract all the cylinders via solenoids (or NULL)
 //		solenoid.set(false);
-		
-	}
+//		
+//	}
 	
 	public void initNeutral() {
 //		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
