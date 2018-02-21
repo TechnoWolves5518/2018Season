@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PneuLauncherCom extends Command {
 
 	public boolean isAPressed, wasAPressed, isXPressed, wasXPressed;
+	public boolean activateWings;
 
 	public PneuLauncherCom() {
 		// Use requires() here to declare subsystem dependencies
@@ -31,6 +32,7 @@ public class PneuLauncherCom extends Command {
 		wasAPressed = false;
 		isXPressed = false;
 		wasXPressed = false;
+		activateWings = false;
 		Robot.sfSub.initNeutral();
 	}
 	
@@ -44,7 +46,7 @@ public class PneuLauncherCom extends Command {
 			Robot.autoLauncher.start();
 		}
 		wasAPressed = isAPressed;
-		
+		   
 		isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
 		if (isXPressed != wasXPressed && isXPressed == true) {
 			Robot.logger.debug("Got scale button");
@@ -52,6 +54,15 @@ public class PneuLauncherCom extends Command {
 			Robot.autoLauncher.start();
 		}
 		wasXPressed = isXPressed;
+		
+		activateWings = OI.sfController.getRawButton(RobotMap.XBOX_LSTICK);
+		
+		if (activateWings) {
+			Robot.sfSub.activateWings();
+		}
+		else {
+			Robot.sfSub.undoWings();
+		}
 		
 	}
 

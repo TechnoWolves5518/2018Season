@@ -32,7 +32,8 @@ public class SpecialFunctionsSub extends Subsystem {
 	
 	// Pneumatic Components
 	private Compressor compressor;
-	private DoubleSolenoid doubleSolenoid;
+	private DoubleSolenoid doubleSolenoidShooter;
+	private DoubleSolenoid doubleSolenoidWing;
 	
 	public SpecialFunctionsSub() {
 		// init components
@@ -48,7 +49,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		rightSecondaryMotor = new VictorSP(RobotMap.RIGHT_SECONDARY_INTAKE);
 		
 		compressor = new Compressor(RobotMap.COMPRESSOR);
-		doubleSolenoid = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
+		doubleSolenoidShooter = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
+		doubleSolenoidWing = new DoubleSolenoid(7, 8);
 		
 		compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
@@ -59,7 +61,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		leftMotor.setSafetyEnabled(false);
 		rightMotor.setSafetyEnabled(false);
 		
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+		doubleSolenoidShooter.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	/**
@@ -71,13 +73,20 @@ public class SpecialFunctionsSub extends Subsystem {
     }
     
 	public void initNeutral() {
-		doubleSolenoid.set(DoubleSolenoid.Value.kOff); // turn off all signals to solenoid
+		doubleSolenoidShooter.set(DoubleSolenoid.Value.kOff); // turn off all signals to solenoid
 	}
 	public void pForward() {
-		doubleSolenoid.set(DoubleSolenoid.Value.kForward); // set solenoid to forward (called in exec of AutoLauncherCom)
+		doubleSolenoidShooter.set(DoubleSolenoid.Value.kForward); // set solenoid to forward (called in exec of AutoLauncherCom)
 	}
 	public void pReverse() {
-		doubleSolenoid.set(DoubleSolenoid.Value.kReverse); // set solenoid to reverse (called in end of AutoLauncherCom, doesn't actually do anything, not wired)
+		doubleSolenoidShooter.set(DoubleSolenoid.Value.kReverse); // set solenoid to reverse (called in end of AutoLauncherCom, doesn't actually do anything, not wired)
+	}
+	
+	public void activateWings() {
+		doubleSolenoidWing.set(DoubleSolenoid.Value.kForward);
+	}
+	public void undoWings() {
+		doubleSolenoidWing.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void turnServosLeft() {
