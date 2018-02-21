@@ -23,8 +23,8 @@ public class RobotMap {
 	// SPECIAL FUNCTIONS VARIABLES
 	public static double INTAKE_SPEED = 1;
 	public static double SECONDARY_INTAKE_SPEED = 1;
-	public static double SWITCH_DELAY = .07; // extension time for switch shot in milliseconds (60)
-	public static double SCALE_DELAY = .3; // extension time for scale shot in milliseconds (200)
+	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (70 ms)
+	public static double SCALE_DELAY = .3; // extension time for scale shot in seconds (300 ms)
 	
 	// PORT MAPPING
 	// drive train
