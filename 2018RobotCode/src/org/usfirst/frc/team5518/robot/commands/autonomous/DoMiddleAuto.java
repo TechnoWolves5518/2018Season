@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5518.robot.commands.autonomous;
 
+import org.usfirst.frc.team5518.robot.Logger;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
 import org.usfirst.frc.team5518.robot.RobotMap;
@@ -11,39 +12,43 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class DoMiddleAuto extends CommandGroup {
+	
+	private Logger logger;
 
-	public DoMiddleAuto(Robot.FieldTarget function, String gameData) {
+	public DoMiddleAuto(FieldTarget function, String gameData) {
+		// get logger instance
+    	logger = Logger.getInstance();
 
 		// Check if DS is in autonomous mode, print destination and gamedata to console
 		if ( Robot.ds.isAutonomous() ) {
-			Robot.logger.debug("MiddleAuto " + function.toString() + " : using gamedata " + Robot.gameData);
+			logger.debug("MiddleAuto " + function.toString() + " : using gamedata " + gameData);
 		}
 
 		if (function == FieldTarget.kDoNothing) { // If DO NOTHING is chosen in dashboard
-			Robot.logger.debug("Do nothing.");
+			logger.debug("Do nothing.");
 			autoNothing();
 		}
 
 		if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
-			Robot.logger.debug("Drive forward to line from middle pos");
+			logger.debug("Drive forward to line from middle pos");
 			middleToLine();
 		}
 
 		if (function == FieldTarget.kSwitch){ // If SWITCH is chosen in dashboard
 
 			if(gameData.charAt(0) == 'R') { // If the switch is on the right
-				Robot.logger.debug("Drive from middle pos to right switch");
+				logger.debug("Drive from middle pos to right switch");
 				middleToRightSwitch();
 				// leftToRightSwitchBehind();
 			} else { // If the switch is on the left
 				//Drive forward, then pivot right to switch.
-				Robot.logger.debug("Drive from middle pos to left switch");
+				logger.debug("Drive from middle pos to left switch");
 				middleToLeftSwitch();
 			}			
 		}
 
 		if (function == FieldTarget.kScale) { // If SCALE is chosen in dashboard
-			Robot.logger.debug("Scale chosen from middle, not doing anything");
+			logger.debug("Scale chosen from middle, not doing anything");
 			autoNothing();
 		}
 
@@ -65,7 +70,7 @@ public class DoMiddleAuto extends CommandGroup {
 	private void middleToRightSwitch() {
 		// Add to the command group
 		// Drive (inches, speed)
-		addSequential(new RotateDistance(90, 0.2f));
+		addSequential(new Rotate(90, 0.2f));
 		addSequential(new DriveDistance(10, 0.2f));
 //		addSequential(new StrafeDistance(6, -0.16f));
 //		addSequential(new DriveDistance(6, -0.16f));

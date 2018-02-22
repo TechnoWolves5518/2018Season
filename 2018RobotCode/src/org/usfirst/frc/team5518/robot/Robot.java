@@ -49,52 +49,46 @@ public class Robot extends TimedRobot {
 	// Scheduler.getInstance().run() it basically calls the SubSystems command execute() 
 	// method of every SubSystem registered.
 	
-	/**
-	 * Subsystems
-	 */
+	/** Subsystems */
 	public static DriveTrainSub driveTrainSub;
-	public static MecanumDriveCom driveInputCom;
-	public static AutoLauncherCom autoLauncher;
-	
 	public static SpecialFunctionsSub sfSub;
-	
-//	public static AutoDriveSub autoDriveSub;
-	public static DriveDistance driveDistance;
-	public static StrafeDistance strafeDistance;
-	
-	public static Logger logger = new Logger();
-	
-	public static OI m_oi;
-	public static DriverStation ds;
-	//public static SmartDashboard smartDS;
-	
-	Command autonomousCommand; // create placeholder for chosen command
-	
-	// WHAT IS THIS FOR?
-	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
-	
-	// Needed information to know which auto path to do
-	public static String       gameData;
-	private enum RobotLocation {rl_left, rl_middle, rl_right}
 
+	/** Logger class */
+	private Logger logger;
+	
+	/** Operator interface and driver station */
+	public static OI oi;
+	public static DriverStation ds;
+	
+	/** Command to execute in autonomous */
+	private Command autonomousCommand;
+	
+	/** Location choices in autonomous */
+	public enum RobotLocation {
+		rl_left, 
+		rl_middle, 
+		rl_right
+	}
+
+	/** Target choices in autonomous */
 	public enum FieldTarget {
         kScale,
         kSwitch,
         kLine,
         kChoose,   // Choose best based on gameData.
         kDoNothing
-        }
+    }
 	
-	private FieldTarget chosenAutoFunction;
-	//private boolean      isBackPath; // Default: Back=True, Toggle=False (i.e. Front)
-	private SendableChooser<String>        pathChooser;
+	/** Autonomous choice and choosers */
+	private SendableChooser<String> pathChooser;
 	private SendableChooser<RobotLocation> robotLocationChooser;
 	private SendableChooser<FieldTarget> fieldTargetChooser;
 	
-	// Variables we retrieve from the Smart Dashboard
-	private String path          = "Unknown";  // This tells whether the robot will cross the field in the front or back
+	/** Data retrieved from the SmartDashboard and DriverStation */
+	private static String gameData;
 	private RobotLocation robotLocation;       // This is the ROBOT location on the field (not driver team location)
-	private FieldTarget fieldTargetList;
+	private FieldTarget chosenAutoFunction;
+	private String path = "Unknown";  // This tells whether the robot will cross the field in the front or back
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -102,28 +96,34 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
+		// init subsystem
+		driveTrainSub = new DriveTrainSub();
 		sfSub = new SpecialFunctionsSub();
-		m_oi          = new OI();
-		ds            = DriverStation.getInstance();
+		
+		// init other tools
+		oi = new OI();
+		ds = DriverStation.getInstance();
+		logger = Logger.getInstance();
 		// CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
+		// init sendable choosers
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();
 		fieldTargetChooser = new SendableChooser<FieldTarget>();
 		
-		// CHOOSE ROBOT STARTING POSITION
+		// ADD ROBOT STARTING POSITION
 		robotLocationChooser.addDefault("Middle", RobotLocation.rl_middle);
 		robotLocationChooser.addObject("Left", RobotLocation.rl_left);
 		robotLocationChooser.addObject("Right", RobotLocation.rl_right);
 		
-		// CHOOSE AUTONOMOUS TARGET
-		fieldTargetChooser.addDefault("Do Nothing", fieldTargetList.kDoNothing);
-		fieldTargetChooser.addObject("Line", fieldTargetList.kLine);
-		fieldTargetChooser.addObject("Switch", fieldTargetList.kSwitch);
-		fieldTargetChooser.addObject("Scale", fieldTargetList.kScale);
-		fieldTargetChooser.addObject("Choose", fieldTargetList.kChoose);
+		// ADD AUTONOMOUS TARGET
+		fieldTargetChooser.addDefault("Do Nothing", FieldTarget.kDoNothing);
+		fieldTargetChooser.addObject("Line", FieldTarget.kLine);
+		fieldTargetChooser.addObject("Switch", FieldTarget.kSwitch);
+		fieldTargetChooser.addObject("Scale", FieldTarget.kScale);
+		fieldTargetChooser.addObject("Choose", FieldTarget.kChoose);
 		
-		// CHOOSE FRONT OR BACK PATH (only applies to left and right switch paths)
+		// ADD FRONT OR BACK PATH (only applies to left and right switch paths)
 		pathChooser.addDefault("Front Path","front");
 		pathChooser.addObject("Back Path","back");
 		
@@ -135,22 +135,12 @@ public class Robot extends TimedRobot {
 		// Set to FALSE for competition.
 		logger.setDebug(true); //Must be false during competition
 		
-		driveTrainSub = new DriveTrainSub();
-//		autoDriveSub = new AutoDriveSub();
+		// Set initial autonomous data
+		gameData = "";
+		chosenAutoFunction = FieldTarget.kDoNothing;
+		
+		// calibrate gyro (ALWAYS DO LAST)
 		driveTrainSub.calibrateGyro();
-		
-		driveInputCom = new MecanumDriveCom();
-//		driveDistance = new DriveDistance(0, 0);
-//		strafeDistance = new StrafeDistance(0, 0);
-		
-		// Autonomous data initial.
-		gameData        = "";
-		//robotLocation   = -1;
-		chosenAutoFunction    = FieldTarget.kDoNothing;
-		optionalPath    = true;
-		
-		// Default.
-		autonomousCommand = new DoMiddleAuto(chosenAutoFunction, gameData);
 	}
 
 	/**
@@ -160,31 +150,13 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-		gameData = "";
 		// Also set DriverStation gameData to ""
+		gameData = "";
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-	}
-	
-	public void readDashBoard() {
-
-		// Define robot data needed only for autonomous.
-		gameData        = ds.getGameSpecificMessage();
-		robotLocation   = robotLocationChooser.getSelected();
-		chosenAutoFunction    = fieldTargetChooser.getSelected();
-		//isBackPath    = SmartDashboard.getBoolean("Path_Back", false);
-		path          = pathChooser.getSelected();
-		robotLocation = robotLocationChooser.getSelected();
-
-		//System.out.println("isBackPath   : " + isBackPath);
-		// Log information
-		logger.debug("----------READING DASHBOARD DATA----------");
-		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
-		logger.info("path         : " + path);
-		logger.info("Field Target : " + chosenAutoFunction);
 	}
 	
 	/**
@@ -200,10 +172,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
-		driveTrainSub.resetEncoders();
+		// reset encoders and get data
 		logger.debug("Auto init.  **** ");
-		readDashBoard();
+		driveTrainSub.resetEncoders();
+		readDashboard();
 		
 		// Handle autonomous based on starting position.
 		if (robotLocation == RobotLocation.rl_left){
@@ -222,6 +194,7 @@ public class Robot extends TimedRobot {
 			logger.debug("Auto Position = UNKNOWN ");
 			// Include code for this possibility
 		}
+		
 		autonomousCommand.start();
 	}
 
@@ -254,7 +227,24 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-//		System.out.println("Running in test mode.");
+	}
+	
+	/**
+	 * Helper method to read info from dashboard
+	 * at the beginning of autonomous
+	 */
+	private void readDashboard() {
+		// Get data needed only for autonomous.
+		gameData = ds.getGameSpecificMessage();
+		robotLocation = robotLocationChooser.getSelected();
+		chosenAutoFunction = fieldTargetChooser.getSelected();
+		path = pathChooser.getSelected();
+
+		// Log information
+		logger.debug("----------READING DASHBOARD DATA----------");
+		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
+		logger.info("path         : " + path);
+		logger.info("Field Target : " + chosenAutoFunction);
 	}
 	
 }

@@ -14,6 +14,7 @@ public class ReverseIntakeCom extends Command {
     public ReverseIntakeCom() {
         // Make this subsystem dependent on the special functions subsystem (hint: use Robot.java)
         // eg. requires(chassis);
+    	requires(Robot.sfSub);
     }
 
     // Called just before this Command runs the first time
@@ -23,24 +24,24 @@ public class ReverseIntakeCom extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     		
-	    	// Make the intake run via the method in the subsystem
-	    	Robot.sfSub.intake(-RobotMap.INTAKE_SPEED);
+    	// Make the intake run via the method in the subsystem
+    	Robot.sfSub.intake(-RobotMap.INTAKE_SPEED);
 	    	
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !OI.sfController.getRawButton(RobotMap.XBOX_YBTN);
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    		Robot.sfSub.intake(0.0);
+		Robot.sfSub.intake(0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    		Robot.sfSub.intake(0.0);
+    	end();
     }
 }

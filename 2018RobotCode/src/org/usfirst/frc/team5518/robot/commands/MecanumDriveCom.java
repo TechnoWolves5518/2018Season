@@ -11,32 +11,31 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class MecanumDriveCom extends Command {
 	
-	public double strafeSpeed, driveSpeed, zRotation;
-	public double ltValue, rtValue;
 	public boolean nos;
 	
     public MecanumDriveCom() {
-
-    		requires(Robot.driveTrainSub); // Declare subsystem dependencies
+		requires(Robot.driveTrainSub); // Declare subsystem dependency
     		
-		strafeSpeed = 0; driveSpeed = 0; zRotation = 0; // Give default values to declared variables
+		// Give default values to declared variables
 		nos = false;
-		
 	}
     
-    // Called just before this Command runs the first time
+    /**
+     * Called just before this Command runs the first time
+     */
     protected void initialize() {
-    		System.out.println("START DOING"); // For logging purposes
+		System.out.println("START DOING"); // For logging purposes
     }
     
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Called repeatedly when this Command is scheduled to run
+     */
     protected void execute() {
-		
 		// ------------------------- XBOX CONTROLS ------------------------- //
 		// Get controller inputs
-		driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Vertical movement
-		zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Pivotal rotation
-		strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Strafing movement
+		double driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Vertical movement
+		double zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Pivotal rotation
+		double strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Strafing movement
 		nos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
 		
 		// Apply squared inputs
@@ -53,27 +52,32 @@ public class MecanumDriveCom extends Command {
 			driveSpeed *= 0.66f; // If the speed button isn't pressed, move at 2/3 speed
 		}
 		
-    		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
+		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
 		
 		// Call the drive() function from the driveTrainSubsystem, pass in collected speed values
 		Robot.driveTrainSub.drive(driveSpeed, strafeSpeed, zRotation); 
-		
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Make this return true when this Command no longer needs to run execute()
+     */
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
+    /**
+     * Called once after isFinished returns true
+     */
     protected void end() {
 		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 
-    // Called when another command which requires one or more of the same subsystems is scheduled to run
+    /**
+     * Called when another command which requires one or more of the same subsystems is scheduled to run
+     */
     protected void interrupted() {
 		System.out.println("ROBOT INTERRUPTED");
-    		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
+		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 }
 

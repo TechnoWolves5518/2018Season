@@ -1,6 +1,8 @@
 package org.usfirst.frc.team5518.robot.commands.autonomous;
 
 import edu.wpi.first.wpilibj.command.Command;
+
+import org.usfirst.frc.team5518.robot.Logger;
 import org.usfirst.frc.team5518.robot.Robot;
 
 /**
@@ -8,20 +10,25 @@ import org.usfirst.frc.team5518.robot.Robot;
  */
 public class StrafeDistance extends Command {
 
+	/** The distance to strafe */
 	private float distance;
+	
+	/** The speed to strafe at */
 	private float speed;
 	
-	private boolean firstTime;
-
-	public StrafeDistance(float m_distance, float m_speed) {
+	/**
+	 * Construct a new command to strafe
+	 * 
+	 * @param distance The distance to strafe at
+	 * @param speed The speed to strafe at
+	 */
+	public StrafeDistance(float distance, float speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 
-		distance = m_distance;
-		speed = m_speed;
-		
-		firstTime = true;
+		this.distance = distance;
+		this.speed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -31,12 +38,8 @@ public class StrafeDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (firstTime) {
-			Robot.driveTrainSub.resetEncoders();
-			firstTime = false;
-		}
-		Robot.logger.debug("running strafeDistance");
-		Robot.driveTrainSub.autoStrafe(distance, speed);
+		Logger.getInstance().debug("running strafeDistance");
+		Robot.driveTrainSub.strafe(distance, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

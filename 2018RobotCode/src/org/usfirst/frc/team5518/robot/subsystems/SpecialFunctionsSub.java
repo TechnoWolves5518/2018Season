@@ -36,6 +36,9 @@ public class SpecialFunctionsSub extends Subsystem {
 	private double start;
 	private double time;
 	
+	/**
+	 * Construct a new special functions subsystem
+	 */
 	public SpecialFunctionsSub() {
 		// init components
 		leftMotor = new VictorSP(RobotMap.LEFT_INTAKE);

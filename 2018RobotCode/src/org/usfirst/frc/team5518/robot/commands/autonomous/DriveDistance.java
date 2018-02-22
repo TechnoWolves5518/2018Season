@@ -9,19 +9,25 @@ import org.usfirst.frc.team5518.robot.Logger;
  */
 public class DriveDistance extends Command {
 
+	/** The distance to drive */
 	private float distance;
+	
+	/** The speed to drive at */
 	private float speed;
 	
-	private boolean firstTime;
-
-	public DriveDistance(float m_distance, float m_speed) {
+	/**
+	 * Construct a new command to drive a distance
+	 * 
+	 * @param distance The distance to drive in inches
+	 * @param speed The speed to drive at
+	 */
+	public DriveDistance(float distance, float speed) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 
-		distance = m_distance;
-		speed = m_speed;
-		firstTime = true;
+		this.distance = distance;
+		this.speed = speed;
 	}
 
 	// Called just before this Command runs the first time
@@ -31,12 +37,8 @@ public class DriveDistance extends Command {
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		if (firstTime) {
-			Robot.driveTrainSub.resetEncoders();
-			firstTime = false;
-		}
-		Robot.logger.debug("running driveDistance");
-		Robot.driveTrainSub.autoDrive(distance, speed);
+		Logger.getInstance().debug("running driveDistance");
+		Robot.driveTrainSub.drive(distance, speed);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
