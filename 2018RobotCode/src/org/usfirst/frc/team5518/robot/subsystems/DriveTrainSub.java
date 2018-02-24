@@ -32,7 +32,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
 	
 	/** Constants for driving and tolerances */
-	public static final float kExpiration = 0.5f; // Motor Safety expiration period
+	public static final float kExpiration = 0.3f; // Motor Safety expiration period
 	public static final float kAngleTolerance = 0.5f;
 	public static final float kSpeedTolerance = 0.01f;
 
@@ -88,7 +88,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
 		
 		// set up drivetrain
-		driveBase.setSafetyEnabled(true);
+		driveBase.setSafetyEnabled(false);
 		driveBase.setExpiration(kExpiration);
 		
 		// Construct sensors

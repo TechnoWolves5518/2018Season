@@ -52,7 +52,7 @@ public class MecanumDriveCom extends Command {
 			driveSpeed *= 0.66f; // If the speed button isn't pressed, move at 2/3 speed
 		}
 		
-		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
+		System.out.println("forward move:   " + driveSpeed + "   strafe:   " + strafeSpeed + "   zRotation:   " + zRotation);
 		
 		// Call the drive() function from the driveTrainSubsystem, pass in collected speed values
 		Robot.driveTrainSub.drive(driveSpeed, strafeSpeed, zRotation); 
