@@ -16,9 +16,9 @@ package org.usfirst.frc.team5518.robot;
 public class RobotMap {
 
 	// DRIVE VARIABLES
-	public static double KX = 0.5;
-	public static double KY = 0.5;
-	public static double KZ = 0.5;
+	public static double KX = 0.3;
+	public static double KY = 0.3;
+	public static double KZ = 0.3;
 	
 	// SPECIAL FUNCTIONS VARIABLES
 	public static double INTAKE_SPEED = 0.5;
