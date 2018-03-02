@@ -40,6 +40,8 @@ public class DriveTrainSub extends Subsystem {
 		setupVictors(frontRightMotor);
 		setupVictors(backRightMotor);
 		
+		driveBase.setSafetyEnabled(false);
+		
 	}
 
 	public void initDefaultCommand() {
@@ -60,7 +62,7 @@ public class DriveTrainSub extends Subsystem {
 		//		System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
 
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
-		driveBase.driveCartesian(drive, strafe, rotate);
+		driveBase.driveCartesian(-strafe, drive, rotate);
 
 	}
 
@@ -105,7 +107,7 @@ public class DriveTrainSub extends Subsystem {
 		System.out.println("SETTING UP VICTORS");
 
 		victor.enableDeadbandElimination(true);
-		victor.setSafetyEnabled(true);
+		victor.setSafetyEnabled(false);
 		victor.setExpiration(expiraton);
 		victor.setInverted(false);
 	}

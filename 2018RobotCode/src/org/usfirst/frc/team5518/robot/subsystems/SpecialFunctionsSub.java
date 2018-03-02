@@ -25,8 +25,8 @@ public class SpecialFunctionsSub extends Subsystem {
 	private VictorSP leftMotor;
 	private VictorSP rightMotor;
 	
-	private VictorSP leftSecondaryMotor;
-	private VictorSP rightSecondaryMotor;
+//	private VictorSP leftSecondaryMotor;
+//	private VictorSP rightSecondaryMotor;
 	
 	/** Pneumatic components */
 //	private Compressor compressor;
@@ -52,7 +52,7 @@ public class SpecialFunctionsSub extends Subsystem {
 //		compressor.start(); // turn compressor on
 		
 		leftMotor.setInverted(true);
-		leftSecondaryMotor.setInverted(true);
+//		leftSecondaryMotor.setInverted(true);
 		
 		// enable safety on motor controllers
 		leftMotor.setSafetyEnabled(false);
