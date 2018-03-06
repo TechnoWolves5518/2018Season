@@ -115,12 +115,12 @@ public class DoRightAuto extends CommandGroup {
 	 */
 	private void rightToLeftSwitchBehind() {
 		/*
-    	addSequential(new DriveDistance(8, 0.1f));
-    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
-    	addSequential(new DriveDistance(8, 0.2f));
-    	addSequential(new RotateDistance(-180, 0.2f)); //	COMPLETE 180	
-    	addSequential(new StrafeDistance(8, 0.3f)); //Strafes into position rather than turning.
-    	addSequential(new DriveDistance(8, 0.4f)); //For lining up
+	    	addSequential(new DriveDistance(8, 0.1f));
+	    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
+	    	addSequential(new DriveDistance(8, 0.2f));
+	    	addSequential(new RotateDistance(-180, 0.2f)); //	COMPLETE 180	
+	    	addSequential(new StrafeDistance(8, 0.3f)); //Strafes into position rather than turning.
+	    	addSequential(new DriveDistance(8, 0.4f)); //For lining up
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 		 */
 	}

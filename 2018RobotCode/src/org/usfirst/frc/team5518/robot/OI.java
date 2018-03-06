@@ -8,7 +8,7 @@
 package org.usfirst.frc.team5518.robot;
 
 import org.usfirst.frc.team5518.robot.commands.ForwardIntakeCom;
-import org.usfirst.frc.team5518.robot.commands.PneuLauncherCom;
+import org.usfirst.frc.team5518.robot.commands.WingReleaseCom;
 import org.usfirst.frc.team5518.robot.commands.ReverseIntakeCom;
 import org.usfirst.frc.team5518.robot.commands.autonomous.AutoLauncherCom;
 import org.usfirst.frc.team5518.robot.commands.autonomous.RotateDistance;
@@ -40,7 +40,7 @@ public class OI {
 	
 	public OI() {
 		
-		lBumperSF.whileHeld(new PneuLauncherCom());
+		lBumperSF.whileHeld(new WingReleaseCom());
 		
 		aButtonSF.whenPressed(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		xButtonSF.whenPressed(new AutoLauncherCom(RobotMap.SCALE_DELAY));

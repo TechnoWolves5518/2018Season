@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
 	public static AutoLauncherCom autoLauncher;
 	
 	public static SpecialFunctionsSub sfSub;
-	public static ReleaseWingsCom deployWingsCom;
 	
 //	public static AutoDriveSub autoDriveSub;
 	public static DriveDistance driveDistance;
@@ -141,8 +140,6 @@ public class Robot extends TimedRobot {
 //		driveDistance = new DriveDistance(0, 0);
 //		strafeDistance = new StrafeDistance(0, 0);
 		
-		deployWingsCom = new ReleaseWingsCom();
-		
 		// Autonomous data initial.
 		gameData        = "";
 		//robotLocation   = -1;
@@ -153,7 +150,7 @@ public class Robot extends TimedRobot {
 		autonomousCommand = null;
 		
 		sfSub.pReverse();
-		sfSub.undoWings();
+		sfSub.lockWings();
 		
 		driveTrainSub.calibrateGyro();
 	}
@@ -250,7 +247,7 @@ public class Robot extends TimedRobot {
 			autonomousCommand.cancel();
 		}
 		sfSub.pReverse();
-		sfSub.undoWings();
+		sfSub.lockWings();
 	}
 
 	/**

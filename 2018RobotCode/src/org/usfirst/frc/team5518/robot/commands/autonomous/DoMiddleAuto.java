@@ -3,7 +3,7 @@ package org.usfirst.frc.team5518.robot.commands.autonomous;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
 import org.usfirst.frc.team5518.robot.RobotMap;
-import org.usfirst.frc.team5518.robot.commands.PneuLauncherCom;
+import org.usfirst.frc.team5518.robot.commands.WingReleaseCom;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -68,7 +68,7 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void autoNothing() {
-
+		
 	}
 
 	private void middleToLine() {

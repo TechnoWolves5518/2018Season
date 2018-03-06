@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 
-public class PneuLauncherCom extends Command {
+public class WingReleaseCom extends Command {
 
 	public boolean isAPressed, wasAPressed, isXPressed, wasXPressed;
 	public boolean activateWings;
 
-	public PneuLauncherCom() {
+	public WingReleaseCom() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		// System.out.println("SUBSYSTEM NAME: " + Robot.sfSub.getName());
@@ -38,22 +38,6 @@ public class PneuLauncherCom extends Command {
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-//		
-//		isAPressed = OI.sfController.getRawButton(RobotMap.XBOX_ABTN);
-//		if (isAPressed != wasAPressed && isAPressed == true) {
-//			Robot.logger.debug("Got switch button");
-//			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SWITCH_DELAY);
-//			Robot.autoLauncher.start();
-//		}
-//		wasAPressed = isAPressed;
-//		   
-//		isXPressed = OI.sfController.getRawButton(RobotMap.XBOX_XBTN);
-//		if (isXPressed != wasXPressed && isXPressed == true) {
-//			Robot.logger.debug("Got scale button");
-//			Robot.autoLauncher = new AutoLauncherCom(RobotMap.SCALE_DELAY);
-//			Robot.autoLauncher.start();
-//		}
-//		wasXPressed = isXPressed;
 		
 		activateWings = OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER);
 		
@@ -61,10 +45,6 @@ public class PneuLauncherCom extends Command {
 			Robot.sfSub.activateWings();
 			System.out.println("Activate wings");
 		}
-//		else {
-//			Robot.sfSub.undoWings();
-//			System.out.println("Don't activate wings");
-//		}
 		
 	}
 

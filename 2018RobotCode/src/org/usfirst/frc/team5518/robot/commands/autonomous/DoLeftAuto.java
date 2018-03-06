@@ -84,7 +84,7 @@ public class DoLeftAuto extends CommandGroup {
 	}
 
 	private void autoNothing() {
-
+		
 	}
 
 	private void leftToLine() { // done
