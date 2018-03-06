@@ -3,6 +3,8 @@ package org.usfirst.frc.team5518.robot.subsystems;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.VictorSP;
@@ -17,28 +19,33 @@ public class DriveTrainSub extends Subsystem {
 	private boolean isTestBot = true;
 
 	//	// Construct and define motor controllers
-	//	private WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(RobotMap.FRONT_LEFT);
-	//	private WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(RobotMap.BACK_LEFT);
-	//	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
-	//	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
+	private WPI_TalonSRX frontLeftTalon = new WPI_TalonSRX(RobotMap.FRONT_LEFT);
+	private WPI_TalonSRX backLeftTalon = new WPI_TalonSRX(RobotMap.BACK_LEFT);
+	private WPI_TalonSRX frontRightTalon = new WPI_TalonSRX(RobotMap.FRONT_RIGHT);
+	private WPI_TalonSRX backRightTalon = new WPI_TalonSRX(RobotMap.BACK_RIGHT);
 
-	private VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
-	private VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
-	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
-	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
+//	private VictorSP frontLeftMotor = new VictorSP(RobotMap.FRONT_LEFT);
+//	private VictorSP backLeftMotor = new VictorSP(RobotMap.BACK_LEFT);
+//	private VictorSP frontRightMotor = new VictorSP(RobotMap.FRONT_RIGHT);
+//	private VictorSP backRightMotor = new VictorSP(RobotMap.BACK_RIGHT);
 
 	private float expiraton = 0.2f; // Motor Safety expiration period
 
 	// Combine all the motor controllers into a drive base
-	//	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
-	private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
+	private MecanumDrive driveBase = new MecanumDrive(frontLeftTalon, backLeftTalon, frontRightTalon, backRightTalon);
+	// private MecanumDrive driveBase = new MecanumDrive(frontLeftMotor, backLeftMotor, frontRightMotor, backRightMotor);
 
 	public DriveTrainSub() {
 		
-		setupVictors(frontLeftMotor);
-		setupVictors(backLeftMotor);
-		setupVictors(frontRightMotor);
-		setupVictors(backRightMotor);
+//		setupVictors(frontLeftMotor);
+//		setupVictors(backLeftMotor);
+//		setupVictors(frontRightMotor);
+//		setupVictors(backRightMotor);
+		
+		setupTalons(frontLeftTalon);
+		setupTalons(backLeftTalon);
+		setupTalons(frontRightTalon);
+		setupTalons(backRightTalon);
 		
 		driveBase.setSafetyEnabled(false);
 		
@@ -58,8 +65,8 @@ public class DriveTrainSub extends Subsystem {
 	 */
 	public void drive(double drive, double strafe, double rotate) {
 
-		System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
-		//		System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
+		// Robot.logger.debug("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
+		Robot.logger.debug("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
 
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		driveBase.driveCartesian(-strafe, drive, rotate);
@@ -94,15 +101,6 @@ public class DriveTrainSub extends Subsystem {
 		return speed;
 	}
 
-	//    public void setupTalons(WPI_TalonSRX talon) {
-	//    		System.out.println("SETTING UP TALONS");
-	//    		
-	//    		talon.configNeutralDeadband(0.1, 0);
-	//    		talon.setSafetyEnabled(true);
-	//    		talon.setExpiration(expiraton);
-	//    		talon.setInverted(false);
-	//    }
-
 	public void setupVictors(VictorSP victor) {
 		System.out.println("SETTING UP VICTORS");
 
@@ -110,6 +108,15 @@ public class DriveTrainSub extends Subsystem {
 		victor.setSafetyEnabled(false);
 		victor.setExpiration(expiraton);
 		victor.setInverted(false);
+	}
+	
+	public void setupTalons(WPI_TalonSRX talon) {
+		System.out.println("SETTING UP TALONS");
+
+		talon.configNeutralDeadband(0.1, 0);
+		talon.setSafetyEnabled(false);
+		talon.setExpiration(expiraton);
+		talon.setInverted(false);
 	}
 
 }
