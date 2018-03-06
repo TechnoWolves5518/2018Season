@@ -76,16 +76,16 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToRightSwitch() {
-		addSequential(new DriveDistance(70, 0.4f));
+		addSequential(new DriveDistance(50, 0.4f));
 		addSequential(new StrafeDistance(44, 0.3f));
-		addSequential(new DriveDistance(80, 0.4f));
+		addSequential(new DriveDistance(100, 0.4f));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
 	private void middleToLeftSwitch() {
-		addSequential(new DriveDistance(70, 0.4f));
+		addSequential(new DriveDistance(50, 0.4f));
 		addSequential(new StrafeDistance(85, -0.3f));
-		addSequential(new DriveDistance(80, 0.4f));
+		addSequential(new DriveDistance(100, 0.4f));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
