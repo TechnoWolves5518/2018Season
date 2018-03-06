@@ -67,34 +67,33 @@ public class DoRightAuto extends CommandGroup {
     }
     
     
-    private void rightToLine() {
-		addSequential(new DriveDistance(9, 0.3f));
+    private void rightToLine() { // done
+		addSequential(new DriveDistance(100, 0.3f));
 	}
     
-    private void rightToRightSwitch() {
-    	addSequential(new DriveDistance(8, 0.1f));
-    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise	
-    	addSequential(new DriveDistance(8, 0.2f));
+    private void rightToRightSwitch() { // done
+    	addSequential(new DriveDistance(152, 0.3f));
+    	addSequential(new RotateDistance(-90, 0.2f)); //clockwise		
+    	addSequential(new DriveDistance(30, 0.2f)); // drive up to fence
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
-
-
     }
     
     private void rightToLeftSwitch() {
-
-    	addSequential(new DriveDistance(36, 0.2f));
-    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
-    	addSequential(new DriveDistance(36, 0.2f));
-    	addSequential(new RotateDistance(90, 0.2f)); //clockwise
-    	addSequential(new DriveDistance(36, 0.2f));
+    	addSequential(new DriveDistance(220, 0.4f)); // First leg gets us past the left side of switch
+    	addSequential(new RotateDistance(-90, 0.3f));
+    	addSequential(new DriveDistance(224, 0.4f)); // Second leg drives across field to right side
+    	addSequential(new RotateDistance(-90, 0.3f));
+    	addSequential(new DriveDistance(68, 0.4f)); // Third leg gets us even with switch
+    	addSequential(new RotateDistance(-90, 0.3f));
+    	addSequential(new DriveDistance(30, 0.4f)); // Fourth leg drives up to the fence of the switch
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
-
     }
     
    /* 
     * The boxes lined up behind the switch would impede its path, which is why we changed the path.
     */
     private void rightToLeftSwitchBehind() {
+    	/*
     	addSequential(new DriveDistance(8, 0.1f));
     	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
     	addSequential(new DriveDistance(8, 0.2f));
@@ -102,18 +101,17 @@ public class DoRightAuto extends CommandGroup {
     	addSequential(new StrafeDistance(8, 0.3f)); //Strafes into position rather than turning.
     	addSequential(new DriveDistance(8, 0.4f)); //For lining up
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
-		
-		    }
+		*/
+	}
     
     private void rightToRightScale() {
-    	addSequential(new DriveDistance(8, 0.3f));
-    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise	
-    	addSequential(new DriveDistance(8, 0.3f)); //For lining up
+    	addSequential(new DriveDistance(300, 0.4f));
+    	addSequential(new RotateDistance(-90, 0.2f));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
-		
     }
     
     private void rightToLeftScale() {
+    	/*
     	addSequential(new DriveDistance(8, 0.1f));
     	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
     	addSequential(new DriveDistance(7, 0.2f));
@@ -122,6 +120,7 @@ public class DoRightAuto extends CommandGroup {
     	addSequential(new RotateDistance(90, 0.2f)); //clockwise
     	addSequential(new DriveDistance(8, 0.4f)); //For lining up
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+		*/
     }
     
 }

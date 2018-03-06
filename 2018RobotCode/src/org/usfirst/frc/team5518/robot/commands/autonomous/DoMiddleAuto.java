@@ -64,7 +64,7 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 	
 	private void middleToLine() {
-		addSequential(new DriveDistance(9, 0.3f));
+		addSequential(new DriveDistance(100, 0.3f));
 	}
 
 	private void middleToRightSwitch() {

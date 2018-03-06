@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5518.robot.commands.autonomous;
 
 import org.usfirst.frc.team5518.robot.Robot;
+import org.usfirst.frc.team5518.robot.RobotMap;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -60,29 +61,61 @@ public class DoLeftAuto extends CommandGroup {
     }
     
     private void autoNothing() {
-    		
+    	
     }
     
-    private void leftToRightSwitch() {
-    		
+    private void leftToLine() { // done
+		addSequential(new DriveDistance(100, 0.3f));
+	}
+    
+    private void leftToRightSwitch() { // done
+    	addSequential(new DriveDistance(220, 0.4f)); // First leg gets us past the left side of switch
+    	addSequential(new RotateDistance(90, 0.3f));
+    	addSequential(new DriveDistance(224, 0.4f)); // Second leg drives across field to right side
+    	addSequential(new RotateDistance(90, 0.3f));
+    	addSequential(new DriveDistance(68, 0.4f)); // Third leg gets us even with switch
+    	addSequential(new RotateDistance(90, 0.3f));
+    	addSequential(new DriveDistance(30, 0.4f)); // Fourth leg drives up to the fence of the switch
+		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
     }
     
+    private void leftToLeftSwitch() { // done
+
+    	addSequential(new DriveDistance(152, 0.3f));
+    	addSequential(new RotateDistance(90, 0.2f)); //clockwise		
+    	addSequential(new DriveDistance(30, 0.2f)); // drive up to fence
+		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
+
+    }
+    
+   /* 
+    * The boxes lined up behind the switch would impede its path, which is why we changed the path.
+    */
     private void leftToRightSwitchBehind() {
-    		
-    }
-    
-    private void leftToLeftSwitch() {
-		// Drive forward 7 inches at 0.4 speed
-		addSequential(new DriveDistance(7, 0.4f));
-		addSequential(new StrafeDistance(7, 0.3f));
-    }
+    	/*
+    	addSequential(new DriveDistance(8, 0.1f));
+    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise		
+    	addSequential(new DriveDistance(8, 0.2f));
+    	addSequential(new RotateDistance(-180, 0.2f)); //	COMPLETE 180	
+    	addSequential(new StrafeDistance(8, 0.3f)); //Strafes into position rather than turning.
+    	addSequential(new DriveDistance(8, 0.4f)); //For lining up
+		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
+		*/
+	}
     
     private void leftToRightScale() {
-    		
+    	/*
+    	addSequential(new DriveDistance(8, 0.3f));
+    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise	
+    	addSequential(new DriveDistance(8, 0.3f)); //For lining up
+		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+		*/
     }
     
     private void leftToLeftScale() {
-    		
+    	addSequential(new DriveDistance(300, 0.4f));
+    	addSequential(new RotateDistance(90, 0.2f));
+		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
     }
     
 }
