@@ -16,15 +16,21 @@ package org.usfirst.frc.team5518.robot;
 public class RobotMap {
 	
 	// DRIVE VARIABLES
-	public static double KX = 0.7;
-	public static double KY = 0.7;
-	public static double KZ = 0.7;
+//	public static double KX = 0.7;
+//	public static double KY = 0.7;
+//	public static double KZ = 0.7;
+	
+	// Decreased speeds for DEMO PURPOSES
+	public static double KX = 0.5;
+	public static double KY = 0.5;
+	public static double KZ = 0.5;
 	
 	// SPECIAL FUNCTIONS VARIABLES
 	public static double INTAKE_SPEED = 1;
 	public static double SECONDARY_INTAKE_SPEED = 1;
-	public static double SWITCH_DELAY = .07; // extension time for switch shot in milliseconds (60)
-	public static double SCALE_DELAY = .3; // extension time for scale shot in milliseconds (200)
+//	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (70 ms)
+	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
+	public static double SCALE_DELAY = .3; // extension time for scale shot in seconds (300 ms)
 	
 	// PORT MAPPING
 	// drive train
