@@ -2,6 +2,7 @@ package org.usfirst.frc.team5518.robot.commands.autonomous;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
+import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -78,14 +79,15 @@ public class DoRightAuto extends CommandGroup {
     private void rightToRightScale() {
     		
     }
-    
+    //path 1, values rounded to nearest whole numbers
     private void rightToLeftScale() {
-    	addSequential(new DriveDistance(8, 0.3f));
-    	//addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
-    	addSequential(new DriveDistance(7, 0.3f));
-    	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
-    	addSequential(new DriveDistance(7, 0.3f));
-    	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
+    	addSequential(new DriveDistance(159, 0.3f));
+    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
+    	addSequential(new DriveDistance(220, 0.3f));
+    	addSequential(new RotateDistance(90, 0.2f)); //clockwise
+    	addSequential(new DriveDistance(89, 0.3f));
+    	addSequential(new RotateDistance(90, 0.2f)); //clockwise
+    	addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY) ); //shoot stuff
     }
     
 }

@@ -17,7 +17,7 @@ public class DriveDistance extends Command {
 		// eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 
-		distance = m_distance;
+		distance = m_distance; //measurements in inches
 		speed = m_speed;
 	}
 
