@@ -136,7 +136,6 @@ public class Robot extends TimedRobot {
 		
 //		driveTrainSub = new DriveTrainSub();
 //		autoDriveSub = new AutoDriveSub();
-		driveTrainSub.calibrateGyro();
 		
 		driveInputCom = new MecanumDriveCom();
 //		driveDistance = new DriveDistance(0, 0);
@@ -155,6 +154,8 @@ public class Robot extends TimedRobot {
 		
 		sfSub.pReverse();
 		sfSub.undoWings();
+		
+		driveTrainSub.calibrateGyro();
 	}
 
 	/**

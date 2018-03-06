@@ -68,18 +68,13 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToRightSwitch() {
-		// Add to the command group
-		// Drive (inches, speed)
-		addSequential(new DriveDistance(12, 0.2f));
-		addSequential(new DriveDistance(12, -0.2f));
-		addSequential(new RotateDistance(360, 0.2f));
-		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
-
+		addSequential(new DriveDistance(20, 0.3f));
+		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
 	private void middleToLeftSwitch() {
 		addSequential(new DriveDistance(10, 0.3f));
-		addSequential(new StrafeDistance(7, 0.2f));	
+		addSequential(new StrafeDistance(7, -0.2f));	
 		addSequential(new DriveDistance(10, 0.1f));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
@@ -88,15 +83,15 @@ public class DoMiddleAuto extends CommandGroup {
     	addSequential(new DriveDistance(10, 0.3f));
     	addSequential(new StrafeDistance(3, 0.2f));
     	addSequential(new DriveDistance(15, 0.1f));
-    	//addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
+    	addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 
     }
     
     private void middleToLeftScale() {
     	addSequential(new DriveDistance(10, 0.3f));
-    	addSequential(new StrafeDistance(-10, 0.2f)); //hope we go left bois
+    	addSequential(new StrafeDistance(10, -0.2f)); //hope we go left bois
     	addSequential(new DriveDistance(15, 0.3f));
-    	//addSequential(new RotateDistance(90, 0.2f)); //clockwise
+    	addSequential(new RotateDistance(90, 0.2f)); //clockwise
     }
 }
