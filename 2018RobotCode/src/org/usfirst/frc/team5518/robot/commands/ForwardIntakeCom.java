@@ -27,7 +27,6 @@ public class ForwardIntakeCom extends Command {
 	protected void execute() {
 		
 		intakeAdjustment = OI.sfController.getRawAxis(RobotMap.XBOX_RSTICKX) * 0.1;
-		// intakeAdjustment = Math.abs(intakeAdjustment);
 		
 		// Make the intake run via the method in the subsystem
 		Robot.sfSub.intake(RobotMap.INTAKE_SPEED, RobotMap.SECONDARY_INTAKE_SPEED, intakeAdjustment);
@@ -36,7 +35,7 @@ public class ForwardIntakeCom extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return !Robot.m_oi.sfController.getRawButton(RobotMap.XBOX_BBTN);
 	}
 
 	// Called once after isFinished returns true

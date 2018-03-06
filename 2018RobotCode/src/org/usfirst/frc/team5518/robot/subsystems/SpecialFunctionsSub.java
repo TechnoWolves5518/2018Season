@@ -27,9 +27,6 @@ public class SpecialFunctionsSub extends Subsystem {
 	private VictorSP leftSecondaryMotor;
 	private VictorSP rightSecondaryMotor;
 	
-	private Servo leftWingServo;
-	private Servo rightWingServo;
-	
 	// Pneumatic Components
 	private Compressor compressor;
 	private DoubleSolenoid doubleSolenoidShooter;
