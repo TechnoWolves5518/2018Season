@@ -2,6 +2,7 @@ package org.usfirst.frc.team5518.robot.commands.autonomous;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
+import org.usfirst.frc.team5518.robot.commands.TimedIntakeCom;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -14,7 +15,7 @@ public class DoRightAuto extends CommandGroup {
 	private char switchPos;
 	private char scalePos;
 	
-	public DoRightAuto(Robot.FieldTarget function, String gameData) {
+	public DoRightAuto(Robot.FieldTarget function, String gameData, String cubes) {
 
 		// Check if DS is in autonomous mode, print destination and gamedata to console
 		if ( Robot.ds.isAutonomous() ) {
@@ -51,7 +52,7 @@ public class DoRightAuto extends CommandGroup {
 			if (scalePos == 'R') { // if the scale is on the right (our side)
 				//Drive to right scale
 				Robot.logger.debug("Drive from right pos to right scale");
-				rightToRightScale();
+				rightToRightScale(cubes);
 			} else { // if the scale is on the left side (opposite from us)
 				//Drive to left scale
 				Robot.logger.debug("Drive from right pos to left scale");
@@ -63,7 +64,7 @@ public class DoRightAuto extends CommandGroup {
 			// only pick 'choose' path if you are sure that the middle bot can take the switch
 			// this is because the 'choose' path will prioritize scale over switch
 			if (scalePos == 'R') {
-				rightToRightScale();
+				rightToRightScale(cubes);
 			}
 			else if (switchPos == 'R') {
 				rightToRightSwitch();
@@ -125,10 +126,22 @@ public class DoRightAuto extends CommandGroup {
 		 */
 	}
 
-	private void rightToRightScale() {
+	private void rightToRightScale(String numCubes) {
 		addSequential(new DriveDistance(288, 0.4f));
 		addSequential(new RotateDistance(-65, 0.3f));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+		// Initiate two cube auto after this point
+		if (numCubes.equals("two")) {
+			addSequential(new RotateDistance(-115, 0.3f));
+			addSequential(new DriveDistance(50, 0.4f));
+			addSequential(new StrafeDistance(41, 0.4f));
+			addSequential(new TimedIntakeCom(10));
+			addSequential(new DriveDistance(42, 0.4f));
+			addSequential(new DriveDistance(42, -0.4f));
+			addSequential(new StrafeDistance(41, -0.4f));
+			addSequential(new DriveDistance(50, -0.4f));
+			addSequential(new RotateDistance(115, 0.3f));
+		}
 	}
 
 	private void rightToLeftScale() {
