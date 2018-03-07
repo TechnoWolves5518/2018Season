@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DoMiddleAuto extends CommandGroup {
 
-	public DoMiddleAuto(Robot.FieldTarget function, String gameData) {
+	public DoMiddleAuto(Robot.FieldTarget function, String gameData, String cubes) {
 
 		// Check if DS is in autonomous mode, print destination and gamedata to console
 		if ( Robot.ds.isAutonomous() ) {
@@ -22,7 +22,7 @@ public class DoMiddleAuto extends CommandGroup {
 
 		if (function == FieldTarget.kDoNothing) { // If DO NOTHING is chosen in dashboard
 			Robot.logger.debug("Do nothing.");
-			autoNothing();
+			autoNothing(cubes);
 		}
 
 		if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
@@ -68,8 +68,11 @@ public class DoMiddleAuto extends CommandGroup {
 
 	}
 
-	private void autoNothing() {
+	private void autoNothing(String numCubes) {
 		// test group for a two cube autonomous (not for field use)
+		if (numCubes == "two") {
+			
+		}
 		addSequential(new DriveDistance(36, 0.4f));
 		addSequential(new RotateDistance(-90, 0.3f));
 		addSequential(new DriveDistance(12, 0.4f));

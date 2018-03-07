@@ -66,7 +66,6 @@ public class Robot extends TimedRobot {
 	
 	Command autonomousCommand; // create placeholder for chosen command
 	
-	// WHAT IS THIS FOR?
 	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
 	
 	// Needed information to know which auto path to do
@@ -86,11 +85,13 @@ public class Robot extends TimedRobot {
 	private SendableChooser<String>        pathChooser;
 	private SendableChooser<RobotLocation> robotLocationChooser;
 	private SendableChooser<FieldTarget> fieldTargetChooser;
+	private SendableChooser<String> twoCube;
 	
 	// Variables we retrieve from the Smart Dashboard
 	private String path          = "Unknown";  // This tells whether the robot will cross the field in the front or back
 	private RobotLocation robotLocation;       // This is the ROBOT location on the field (not driver team location)
 	private FieldTarget fieldTargetList;
+	private String numCubes;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -124,10 +125,15 @@ public class Robot extends TimedRobot {
 		pathChooser.addDefault("Front Path","front");
 		pathChooser.addObject("Back Path","back");
 		
+		// CHOOSE ONE OR TWO CUBE AUTO
+		twoCube.addDefault("One Cube", "one");
+		twoCube.addDefault("Two Cubes", "two");
+		
 		// PUT CHOOSER DATA ON THE DASHBOARD
 		SmartDashboard.putData("Robot Location", robotLocationChooser);
 		SmartDashboard.putData("Autonomous Goal", fieldTargetChooser);
 		SmartDashboard.putData("Path to Take", pathChooser);
+		SmartDashboard.putData("Number of Cubes", twoCube);
 		
 		// Set to FALSE for competition.
 		logger.setDebug(true); //Must be false during competition
@@ -145,6 +151,7 @@ public class Robot extends TimedRobot {
 		//robotLocation   = -1;
 		chosenAutoFunction    = FieldTarget.kDoNothing;
 		optionalPath    = true;
+		numCubes = "one";
 		
 		// Default.
 		autonomousCommand = null;
@@ -181,6 +188,7 @@ public class Robot extends TimedRobot {
 		//isBackPath    = SmartDashboard.getBoolean("Path_Back", false);
 		path          = pathChooser.getSelected();
 		robotLocation = robotLocationChooser.getSelected();
+		numCubes = twoCube.getSelected();
 
 		//System.out.println("isBackPath   : " + isBackPath);
 		// Log information
@@ -188,6 +196,7 @@ public class Robot extends TimedRobot {
 		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
 		logger.info("path         : " + path);
 		logger.info("Field Target : " + chosenAutoFunction);
+		logger.info("Number of Cubes : " + numCubes);
 	}
 	
 	/**
@@ -211,15 +220,15 @@ public class Robot extends TimedRobot {
 		// Handle autonomous based on starting position.
 		if (robotLocation == RobotLocation.rl_left){
 			logger.debug("Auto Position = left ");
-			autonomousCommand = new DoLeftAuto(chosenAutoFunction, gameData);
+			autonomousCommand = new DoLeftAuto(chosenAutoFunction, gameData, numCubes);
 		}
 		else if (robotLocation == RobotLocation.rl_middle){
 			logger.debug("Auto Position = middle ");
-			autonomousCommand = new DoMiddleAuto(chosenAutoFunction, gameData);
+			autonomousCommand = new DoMiddleAuto(chosenAutoFunction, gameData, numCubes);
 		}
 		else if (robotLocation == RobotLocation.rl_right){
 			logger.debug("Auto Position = right ");
-			autonomousCommand = new DoRightAuto(chosenAutoFunction, gameData);
+			autonomousCommand = new DoRightAuto(chosenAutoFunction, gameData, numCubes);
 		} 
 		else {
 			logger.debug("Auto Position = UNKNOWN ");
