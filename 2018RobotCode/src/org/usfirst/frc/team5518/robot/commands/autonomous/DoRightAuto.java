@@ -131,7 +131,7 @@ public class DoRightAuto extends CommandGroup {
 		addSequential(new RotateDistance(-65, 0.3f));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		// Initiate two cube auto after this point
-		if (numCubes == "two") {
+		if (numCubes.equals("two")) {
 			addSequential(new RotateDistance(-115, 0.3f));
 			addSequential(new DriveDistance(50, 0.4f));
 			addSequential(new StrafeDistance(41, 0.4f));
