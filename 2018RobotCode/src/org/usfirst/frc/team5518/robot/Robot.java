@@ -108,6 +108,7 @@ public class Robot extends TimedRobot {
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();
 		fieldTargetChooser = new SendableChooser<FieldTarget>();
+		twoCube = new SendableChooser<String>();
 		
 		// CHOOSE ROBOT STARTING POSITION
 		robotLocationChooser.addDefault("Middle", RobotLocation.rl_middle);
@@ -127,7 +128,7 @@ public class Robot extends TimedRobot {
 		
 		// CHOOSE ONE OR TWO CUBE AUTO
 		twoCube.addDefault("One Cube", "one");
-		twoCube.addDefault("Two Cubes", "two");
+		twoCube.addObject("Two Cubes", "two");
 		
 		// PUT CHOOSER DATA ON THE DASHBOARD
 		SmartDashboard.putData("Robot Location", robotLocationChooser);
