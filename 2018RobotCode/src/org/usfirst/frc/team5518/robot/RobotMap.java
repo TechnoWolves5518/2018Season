@@ -25,12 +25,13 @@ public class RobotMap {
 //	public static double KY = 0.5;
 //	public static double KZ = 0.5;
 	
-	// SPECIAL FUNCTIONS VARIABLES
+	// SPEED VARIABLES
 	public static double INTAKE_SPEED = 1;
 	public static double SECONDARY_INTAKE_SPEED = 1;
-//	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (70 ms)
-	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
+	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (70 ms)
+//	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
 	public static double SCALE_DELAY = .3; // extension time for scale shot in seconds (300 ms)
+	public static float AUTO_DRIVE_SPEED = 0.4f;
 	
 	// PORT MAPPING
 	// drive train
