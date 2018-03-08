@@ -71,36 +71,36 @@ public class DoMiddleAuto extends CommandGroup {
 	private void autoNothing(String numCubes) {
 		// test group for a two cube autonomous (not for field use)
 		if (numCubes.equals("two")) {
-			addSequential(new DriveDistance(36, 0.4f));
+			addSequential(new DriveDistance(36, RobotMap.AUTO_DRIVE_SPEED));
 			addSequential(new RotateDistance(-90, 0.3f));
-			addSequential(new DriveDistance(12, 0.4f));
+			addSequential(new DriveDistance(12, RobotMap.AUTO_DRIVE_SPEED));
 			addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
-			addSequential(new DriveDistance(-12, 0.4f));
+			addSequential(new DriveDistance(12, -RobotMap.AUTO_DRIVE_SPEED));
 			addSequential(new RotateDistance(180, 0.3f));
 			addParallel(new TimedIntakeCom(10));
-			addSequential(new DriveDistance(24, 0.4f));
-			addSequential(new DriveDistance(-24, 0.4f));
+			addSequential(new DriveDistance(24, RobotMap.AUTO_DRIVE_SPEED));
+			addSequential(new DriveDistance(24, -RobotMap.AUTO_DRIVE_SPEED));
 			addSequential(new RotateDistance(180, 0.3f));
-			addSequential(new DriveDistance(12, 0.4f));
+			addSequential(new DriveDistance(12, RobotMap.AUTO_DRIVE_SPEED));
 			addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		}
 	}
 
 	private void middleToLine() {
-		addSequential(new DriveDistance(100, 0.4f));
+		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 	}
 
 	private void middleToRightSwitch() {
-		addSequential(new DriveDistance(50, 0.4f));
+		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new StrafeDistance(44, 0.3f));
-		addSequential(new DriveDistance(100, 0.4f));
+		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
 	private void middleToLeftSwitch() {
-		addSequential(new DriveDistance(50, 0.4f));
+		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new StrafeDistance(85, -0.3f));
-		addSequential(new DriveDistance(100, 0.4f));
+		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
