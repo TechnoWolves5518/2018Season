@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
 		driveTrainSub = new DriveTrainSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
-		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
+		// CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();
@@ -137,8 +137,8 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Number of Cubes", twoCube);
 		
 		// Set to FALSE for competition.
-		logger.setDebug(false); //Must be false during competition
-		logger.setVerbose(false);
+		logger.setDebug(true); //Must be false during competition
+		logger.setVerbose(true);
 		
 //		driveTrainSub = new DriveTrainSub();
 //		autoDriveSub = new AutoDriveSub();
@@ -214,7 +214,6 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 
-		driveTrainSub.resetEncoders();
 		logger.debug("Auto init.  **** ");
 		readDashBoard();
 		
@@ -238,8 +237,8 @@ public class Robot extends TimedRobot {
 		
 		sfSub.pReverse();
 		
+		driveTrainSub.resetEncoders();
 		autonomousCommand.start();
-		
 	}
 
 	/**
@@ -256,6 +255,9 @@ public class Robot extends TimedRobot {
 		if (autonomousCommand != null) {
 			autonomousCommand.cancel();
 		}
+		
+		driveTrainSub.resetEncoders();
+		
 		sfSub.pReverse();
 		sfSub.lockWings();
 	}

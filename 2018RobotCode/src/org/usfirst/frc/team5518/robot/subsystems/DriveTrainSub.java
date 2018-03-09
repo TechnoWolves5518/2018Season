@@ -65,7 +65,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0.04, 0, 0.05, gyro, this); // tune kP, kI, kD values here
+		pidGyro = new PIDController(0.05, 0, 0.04, gyro, this); // tune kP, kI, kD values here
 		pidLeft = new PIDController(0, 0, 0, leftEncoder, this);
 		pidRight = new PIDController(0, 0, 0, rightEncoder, this);
 
@@ -123,6 +123,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		// driveBase.driveCartesian(drive, strafe, rotate, angle);
 		driveBase.driveCartesian(drive, strafe, rotate);
+		System.out.println("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {
@@ -130,14 +131,14 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// evenDrive();
 		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
-		drive(0, vertSpeed, 0);
+		drive(-vertSpeed, 0, rotAdjustment);
 
 	}
 
 	public void autoStrafe(float strafeDist, float strafeSpeed) {
 
 		Robot.logger.debug("distance: " + avgAbsEncoderPos());
-		drive(strafeSpeed, 0, rotAdjustment);
+		drive(0, strafeSpeed, rotAdjustment);
 		
 	}
 
@@ -214,11 +215,13 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	}
 
 	public double avgEncoderPos() {
-		return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+		// return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
+		return (rightEncoder.getDistance());
 	}
 
 	public double avgAbsEncoderPos() {
-		return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance())) / 2;
+		// return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance())) / 2;
+		return (Math.abs(rightEncoder.getDistance()));
 	}
 	
 	@Override

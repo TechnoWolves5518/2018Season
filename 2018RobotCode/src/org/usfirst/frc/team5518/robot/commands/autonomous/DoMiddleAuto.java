@@ -27,6 +27,7 @@ public class DoMiddleAuto extends CommandGroup {
 
 		if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
 			Robot.logger.debug("Drive forward to line from middle pos");
+			System.out.println("Drive to line from middle");
 			middleToLine();
 		}
 
@@ -99,7 +100,11 @@ public class DoMiddleAuto extends CommandGroup {
 
 	private void middleToLeftSwitch() {
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(85, -0.3f));
+//		addSequential(new StrafeDistance(85, -0.23f));
+		addSequential(new RotateDistance(-90, 0.3f));
+		addSequential(new DriveDistance(85, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new DriveDistance(70, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new RotateDistance(90, 0.3f));
 		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
