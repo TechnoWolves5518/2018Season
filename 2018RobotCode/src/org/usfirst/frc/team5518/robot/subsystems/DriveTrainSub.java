@@ -123,7 +123,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		// driveBase.driveCartesian(drive, strafe, rotate, angle);
 		driveBase.driveCartesian(drive, strafe, rotate);
-		System.out.println("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
+		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {
@@ -189,7 +189,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		
 		val = Math.pow(val, 3);
 		
-		if (Math.abs(val) < 0.1) { // Apply custom deadband directly to inputs
+		if (Math.abs(val) < 0.03) { // Apply custom deadband directly to inputs
 			val = 0;
 		}
 
