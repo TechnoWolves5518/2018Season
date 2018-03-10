@@ -12,13 +12,17 @@ public class DriveDistance extends Command {
 	private float distance;
 	private float speed;
 
-	public DriveDistance(float m_distance, float m_speed) {
+	public DriveDistance(float m_distance, float m_speed, boolean useTimer) {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 
 		distance = m_distance; //measurements in inches
 		speed = m_speed;
+		
+		if (useTimer) {
+			this.setTimeout(4);
+		}
 	}
 
 	// Called just before this Command runs the first time
@@ -34,7 +38,13 @@ public class DriveDistance extends Command {
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return !(Robot.driveTrainSub.avgAbsEncoderPos() < distance);
+		boolean done;
+		if (this.isTimedOut() || Robot.driveTrainSub.avgAbsEncoderPos() > distance) {
+			return true;
+		}
+		else {
+			return  false;
+		}
 	}
 
 	// Called once after isFinished returns true

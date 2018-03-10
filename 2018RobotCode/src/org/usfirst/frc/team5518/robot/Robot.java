@@ -137,7 +137,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Number of Cubes", twoCube);
 		
 		// Set to FALSE for competition.
-		logger.setDebug(true); //Must be false during competition
+		logger.setDebug(false); //Must be false during competition
 		logger.setVerbose(true);
 		
 //		driveTrainSub = new DriveTrainSub();
