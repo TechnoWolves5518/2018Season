@@ -45,8 +45,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	private float rotAdjustment = 0;
 	private double rotateToAngleRate;
 	
-	private static final float kAngleTolerance = 0.5f;
-	private static final float kSpeedTolerance = 0.01f;
+	public static final float kAngleTolerance = 0.5f;
+	public static final float kSpeedTolerance = 0.01f;
 	
 	private float expiraton = 0.3f; // Motor Safety expiration period
 
@@ -118,8 +118,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// System.out.println("INPUTS drive  " + drive + "  strafe  " + strafe + "  rotate  " + rotate);
 		// System.out.println("TALONS FL: " + frontLeftTalon.get() + " BL: " + backLeftTalon.get() + " FR: " + frontRightTalon.get() + " BR: " + backRightTalon.get());
 		
-		angle = gyro.getAngle();
-		
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		// driveBase.driveCartesian(drive, strafe, rotate, angle);
 		driveBase.driveCartesian(drive, strafe, rotate);
@@ -143,7 +141,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		
 	}
 
-	public void autoRotate(float rotatePoint, float rotateSpeed) {
+	public void rotate(float rotatePoint, float rotateSpeed) {
 		
 		angle = gyro.getAngle();
 		
@@ -156,11 +154,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 			drive(0.0, 0.0, -rotateSpeed);
 		}
 
-	}
-	
-	public void pidTurn(float dgs) {
-		// Robot.logger.debug("Running PID TURN");
-		pidGyro.enable();
 	}
 	
 	public void pidDrive(float dist) {
@@ -178,7 +171,58 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// Stop driving. Failsafe if connection is interrupted or robot code ends.
 		driveBase.driveCartesian(0, 0, 0);
 	}
+	
 
+	/**
+	 * Start the PID controller for the gyro to
+	 * turn the robot
+	 * 
+	 * @param degrees The setpoint of the robot
+	 */
+	public void enableGyroPID(float degrees) {
+		// Robot.logger.debug("Running PID TURN");
+		pidGyro.setSetpoint(degrees);
+		pidGyro.enable();
+	}
+	
+	/**
+	 * Disable the gyro's PID controller. Call
+	 * this method in the end() method of a command
+	 * after enabling and turning the robot.
+	 */
+	public void disableGyroPID() {
+		pidGyro.disable();
+	}
+	
+	/**
+	 * Drive to the setpoint set in the gyro's PID controller.
+	 * Call this method in the execute() method of a command after
+	 * calling enableGyroPID(float) in the init() method of a command.
+	 */
+	public void rotatePID() {
+		drive(0, 0, rotateToAngleRate); 
+}
+	
+	/**
+	 * Return whether the robot is on target with its
+	 * setpoint set in the gyro's PID controller
+	 * 
+	 * @return True if the robot is on target and
+	 * false otherwise
+	 */
+	public boolean isGyroPIDOnTarget() {
+		return pidGyro.onTarget();
+	}
+	
+	/**
+	 * Get the current gyro angle
+	 * 
+	 * @return The gyro angle in degrees
+	 */
+	public double getGyroAngle() {
+		return gyro.getAngle();
+	}
+	
 	public double quadCurve(double val) {
 
 //		if (val >= 0) { // Apply a quadratic curve to the inputs of the controller (preserving positive/negative values)
