@@ -11,6 +11,7 @@ public class WaitCom extends Command {
 
     public WaitCom(double time) {
         this.setTimeout(time);
+        requires(Robot.sfSub);
     }
 
     // Called just before this Command runs the first time
@@ -19,7 +20,8 @@ public class WaitCom extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrainSub.autoDrive(0.1f, 0.1f);
+//    	Robot.driveTrainSub.autoDrive(0.1f, 0.1f);
+    	Robot.logger.info("Waiting...");
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -33,6 +33,7 @@ public class DoLeftAuto extends CommandGroup {
 
 		if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
 			Robot.logger.debug("Drive forward to line from left pos");
+			leftToLine();
 		}
 
 		if (function == FieldTarget.kSwitch){ // If SWITCH is chosen in dashboard
