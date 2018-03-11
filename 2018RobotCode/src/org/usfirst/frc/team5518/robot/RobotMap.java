@@ -32,6 +32,8 @@ public class RobotMap {
 //	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
 	public static double SCALE_DELAY = .5; // extension time for scale shot in seconds (300 ms)
 	public static float AUTO_DRIVE_SPEED = 0.5f;
+	public static float AUTO_STRAFE_SPEED = 0.4f;
+	public static float AUTO_ROTATE_SPEED = 0.3f;
 	
 	// PORT MAPPING
 	// drive train

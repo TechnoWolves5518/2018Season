@@ -89,25 +89,25 @@ public class DoLeftAuto extends CommandGroup {
 	}
 
 	private void leftToLine() { // done
-		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED, false));
+		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 	}
 
 	private void leftToRightSwitch() { // done
-		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED, false)); // First leg gets us past the left side of switch
-		addSequential(new RotateDistance(90, 0.3f));
-		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED, false)); // Second leg drives across field to right side
-		addSequential(new RotateDistance(90, 0.3f));
-		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED, false)); // Third leg gets us even with switch
-		addSequential(new RotateDistance(90, 0.3f));
-		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED, true)); // Fourth leg drives up to the fence of the switch
+		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED)); // Second leg drives across field to right side
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with switch
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // Fourth leg drives up to the fence of the switch
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
 	private void leftToLeftSwitch() { // done
 
-		addSequential(new DriveDistance(152, RobotMap.AUTO_DRIVE_SPEED, false));
-		addSequential(new RotateDistance(90, 0.3f)); //clockwise		
-		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED, true)); // drive up to fence
+		addSequential(new DriveDistance(152, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise		
+		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // drive up to fence
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}
@@ -128,30 +128,30 @@ public class DoLeftAuto extends CommandGroup {
 	}
 
 	private void leftToRightScale() {
-		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED, false)); // First leg gets us past the left side of switch
-		addSequential(new RotateDistance(90, 0.3f));
-		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED, false)); // Second leg drives across field to right side
-		addSequential(new RotateDistance(-90, 0.3f));
-		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED, false)); // Third leg gets us even with scale
-		addSequential(new RotateDistance(-65, 0.3f));
+		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED)); // Second leg drives across field to right side
+		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with scale
+		addSequential(new RotateDistance(-65, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 	}
 
 	private void leftToLeftScale(String numCubes) {
-		addSequential(new DriveDistance(288, RobotMap.AUTO_DRIVE_SPEED, false));
-		addSequential(new RotateDistance(65, 0.3f));
+		addSequential(new DriveDistance(288, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new RotateDistance(65, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		// Initiate two cube auto after this point
 		if (numCubes.equals("two")) {
-			addSequential(new RotateDistance(115, 0.3f));
-			addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED, false));
-			addSequential(new StrafeDistance(41, -RobotMap.AUTO_DRIVE_SPEED));
+			addSequential(new RotateDistance(115, RobotMap.AUTO_ROTATE_SPEED));
+			addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
+			addSequential(new StrafeDistance(41, -RobotMap.AUTO_STRAFE_SPEED));
 			addSequential(new TimedIntakeCom(10));
-			addSequential(new DriveDistance(42, RobotMap.AUTO_DRIVE_SPEED, false));
-			addSequential(new DriveDistance(42, -RobotMap.AUTO_DRIVE_SPEED, false));
-			addSequential(new StrafeDistance(41, RobotMap.AUTO_DRIVE_SPEED));
-			addSequential(new DriveDistance(50, -RobotMap.AUTO_DRIVE_SPEED, false));
-			addSequential(new RotateDistance(-115, 0.3f));
+			addSequential(new DriveDistance(42, RobotMap.AUTO_DRIVE_SPEED));
+			addSequential(new DriveDistance(42, -RobotMap.AUTO_DRIVE_SPEED));
+			addSequential(new StrafeDistance(41, RobotMap.AUTO_STRAFE_SPEED));
+			addSequential(new DriveDistance(50, -RobotMap.AUTO_DRIVE_SPEED));
+			addSequential(new RotateDistance(-115, RobotMap.AUTO_ROTATE_SPEED));
 //			addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY));
 		}
 	}

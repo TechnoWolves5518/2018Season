@@ -130,7 +130,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 		// evenDrive();
 		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
-		System.out.println("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
+		Robot.logger.info("Avg enc " + avgEncoderPos());
 		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
 		drive(-vertSpeed, 0, rotAdjustment);
 
@@ -147,7 +147,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		
 		angle = gyro.getAngle();
 		
-		Robot.logger.debug("Gyro value: " + angle);
+		Robot.logger.info("Gyro value: " + angle);
 		
 		if (angle < rotatePoint - kAngleTolerance) {
 			drive(0.0, 0.0, rotateSpeed);
