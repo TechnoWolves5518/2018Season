@@ -18,6 +18,8 @@ public class WingReleaseCom extends Command {
 	public boolean isAPressed, wasAPressed, isXPressed, wasXPressed;
 	public boolean activateWings;
 
+	public double time; public double timeout;
+	
 	public WingReleaseCom() {
 		// Use requires() here to declare subsystem dependencies
 		// eg. requires(chassis);
@@ -33,17 +35,25 @@ public class WingReleaseCom extends Command {
 		isXPressed = false;
 		wasXPressed = false;
 		activateWings = false;
+		time = 0;
+		timeout = 1000;
 		Robot.sfSub.initNeutral();
 	}
 	
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
 		
-		activateWings = OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER);
+		// activateWings = OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER);
+		
+		activateWings = OI.sfController.getRawButtonPressed(RobotMap.XBOX_RBUMPER);
 		
 		if (activateWings) {
 			Robot.sfSub.activateWings();
 			System.out.println("Activate wings");
+			time = System.currentTimeMillis();
+		}
+		if ((System.currentTimeMillis() - time) > timeout) {
+			Robot.sfSub.lockWings();
 		}
 		
 	}

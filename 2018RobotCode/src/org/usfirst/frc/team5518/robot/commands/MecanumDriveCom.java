@@ -49,7 +49,7 @@ public class MecanumDriveCom extends Command {
 		nos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
 		
 		if (!nos) {
-			driveSpeed *= 0.66f; // If the speed button isn't pressed, move at 2/3 speed
+			driveSpeed *= 0.8f; // If the speed button isn't pressed, move at 2/3 speed
 		}
 		
     		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);

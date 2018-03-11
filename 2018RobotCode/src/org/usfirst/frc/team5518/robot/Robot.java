@@ -116,8 +116,8 @@ public class Robot extends TimedRobot {
 		robotLocationChooser.addObject("Right", RobotLocation.rl_right);
 		
 		// CHOOSE AUTONOMOUS TARGET
-		fieldTargetChooser.addDefault("Do Nothing", fieldTargetList.kDoNothing);
-		fieldTargetChooser.addObject("Line", fieldTargetList.kLine);
+		fieldTargetChooser.addObject("Do Nothing", fieldTargetList.kDoNothing);
+		fieldTargetChooser.addDefault("Line", fieldTargetList.kLine);
 		fieldTargetChooser.addObject("Switch", fieldTargetList.kSwitch);
 		fieldTargetChooser.addObject("Scale", fieldTargetList.kScale);
 		fieldTargetChooser.addObject("Choose", fieldTargetList.kChoose);
@@ -232,7 +232,7 @@ public class Robot extends TimedRobot {
 		} 
 		else {
 			logger.debug("Auto Position = UNKNOWN ");
-			// Include code for this possibility
+			autonomousCommand = new DoMiddleAuto(FieldTarget.kLine, gameData, numCubes);
 		}
 		
 		sfSub.pReverse();

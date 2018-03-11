@@ -90,7 +90,7 @@ public class DoRightAuto extends CommandGroup {
 
 
 	private void rightToLine() { // done
-		addSequential(new DriveDistance(100, 0.3f, false));
+		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED, false));
 	}
 
 	private void rightToRightSwitch() { // done

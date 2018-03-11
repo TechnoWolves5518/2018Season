@@ -23,6 +23,7 @@ public class AutoLauncherCom extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.logger.debug("AutoLaunch, activate! " + seconds);
+		System.out.println("AutoLaunch, activate! " + seconds);
 	}
 
 	// Called repeatedly when this Command is scheduled to run

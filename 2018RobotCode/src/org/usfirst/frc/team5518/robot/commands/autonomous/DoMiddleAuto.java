@@ -4,6 +4,7 @@ import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
 import org.usfirst.frc.team5518.robot.RobotMap;
 import org.usfirst.frc.team5518.robot.commands.TimedIntakeCom;
+import org.usfirst.frc.team5518.robot.commands.WaitCom;
 import org.usfirst.frc.team5518.robot.commands.WingReleaseCom;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -93,8 +94,9 @@ public class DoMiddleAuto extends CommandGroup {
 
 	private void middleToRightSwitch() {
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED, false));
-		addSequential(new StrafeDistance(44, 0.3f));
-		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED, true));
+		addSequential(new StrafeDistance(44, 0.4f));
+		addSequential(new DriveDistance(78, RobotMap.AUTO_DRIVE_SPEED, false));
+		addSequential(new WaitCom(1));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
@@ -106,10 +108,21 @@ public class DoMiddleAuto extends CommandGroup {
 //		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 //		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
+		// real auto
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED, false));
-		addSequential(new StrafeDistance(85, -0.23f));
-		addSequential(new DriveDistance(70, RobotMap.AUTO_DRIVE_SPEED, true));
+		addSequential(new StrafeDistance(85, -0.4f));
+		addSequential(new DriveDistance(78, RobotMap.AUTO_DRIVE_SPEED, false));
+		addSequential(new WaitCom(1));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		
+		// for practice field
+//		addSequential(new DriveDistance(20, RobotMap.AUTO_DRIVE_SPEED, false));
+//		addSequential(new StrafeDistance(35, -0.4f));
+//		addSequential(new DriveDistance(20, RobotMap.AUTO_DRIVE_SPEED, true));
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		
+//		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED, false));
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
 	private void middleToRightScale() {
