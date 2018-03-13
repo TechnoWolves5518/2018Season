@@ -94,7 +94,7 @@ public class DoMiddleAuto extends CommandGroup {
 
 	private void middleToRightSwitch() {
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(44, RobotMap.AUTO_STRAFE_SPEED));
+		addSequential(new StrafeDistance(50, RobotMap.AUTO_STRAFE_SPEED));
 		addSequential(new DriveDistance(78, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new WaitCom(1));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
@@ -110,7 +110,7 @@ public class DoMiddleAuto extends CommandGroup {
 		
 		// real auto
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(85, -RobotMap.AUTO_STRAFE_SPEED));
+		addSequential(new StrafeDistance(100, -RobotMap.AUTO_STRAFE_SPEED));
 		addSequential(new DriveDistance(78, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new WaitCom(1));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));

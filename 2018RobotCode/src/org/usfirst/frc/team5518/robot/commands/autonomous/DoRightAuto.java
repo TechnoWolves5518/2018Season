@@ -69,8 +69,7 @@ public class DoRightAuto extends CommandGroup {
 			}
 			else if (switchPos == 'R') {
 				rightToRightSwitch();
-			}
-			else if (scalePos == 'L') {
+			}			else if (scalePos == 'L') {
 				rightToLeftScale();
 			}
 			else if (switchPos == 'L') {
@@ -97,7 +96,7 @@ public class DoRightAuto extends CommandGroup {
 	private void rightToRightSwitch() { // done
 		addSequential(new DriveDistance(152, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise		
-		addSequential(new DriveDistance(26.5f, RobotMap.AUTO_DRIVE_SPEED)); // drive up to fence
+		addSequential(new DriveDistance(40, RobotMap.AUTO_DRIVE_SPEED)); // drive up to fence
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 

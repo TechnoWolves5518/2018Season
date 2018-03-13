@@ -13,14 +13,14 @@ public class MecanumDriveCom extends Command {
 	
 	public double strafeSpeed, driveSpeed, zRotation;
 	public double ltValue, rtValue;
-	public boolean nos;
+	public boolean notnos;
 	
     public MecanumDriveCom() {
 
     		requires(Robot.driveTrainSub); // Declare subsystem dependencies
     		
 		strafeSpeed = 0; driveSpeed = 0; zRotation = 0; // Give default values to declared variables
-		nos = false;
+		notnos = false;
 		
 	}
     
@@ -46,10 +46,10 @@ public class MecanumDriveCom extends Command {
 		strafeSpeed = Robot.driveTrainSub.quadCurve(strafeSpeed); // Apply squared inputs
 		strafeSpeed *= RobotMap.KX; // Apply speed caps
 		
-		nos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
+		notnos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
 		
-		if (!nos) {
-			driveSpeed *= 0.8f; // If the speed button isn't pressed, move at 2/3 speed
+		if (notnos) {
+			driveSpeed *= 0.5f; // If the speed button isn't pressed, move at 2/3 speed
 		}
 		
     		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
