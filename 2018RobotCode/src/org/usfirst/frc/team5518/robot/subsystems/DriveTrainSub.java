@@ -127,8 +127,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	public void autoDrive(float vertDist, float vertSpeed) {
 
 		// evenDrive();
-		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
-		Robot.logger.info("Avg enc " + avgEncoderPos());
+//		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
+		Robot.logger.verbose("Avg enc " + avgEncoderPos());
 		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
 		drive(-vertSpeed, 0, rotAdjustment);
 
@@ -136,7 +136,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 	public void autoStrafe(float strafeDist, float strafeSpeed) {
 
-		Robot.logger.debug("distance: " + avgAbsEncoderPos());
+//		Robot.logger.debug("distance: " + avgAbsEncoderPos());
+		Robot.logger.verbose("Avg enc " + avgEncoderPos());
 		drive(0, strafeSpeed, rotAdjustment);
 		
 	}
