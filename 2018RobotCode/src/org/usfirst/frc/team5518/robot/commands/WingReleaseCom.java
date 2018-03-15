@@ -48,12 +48,12 @@ public class WingReleaseCom extends Command {
 		activateWings = OI.sfController.getRawButtonPressed(RobotMap.XBOX_RBUMPER);
 		
 		if (activateWings) {
-			Robot.sfSub.activateWings();
+			Robot.sfSub.extendIntake();
 			System.out.println("Activate wings");
 			time = System.currentTimeMillis();
 		}
 		if ((System.currentTimeMillis() - time) > timeout) {
-			Robot.sfSub.lockWings();
+			Robot.sfSub.retractIntake();
 		}
 		
 	}

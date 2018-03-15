@@ -158,7 +158,7 @@ public class Robot extends TimedRobot {
 		autonomousCommand = null;
 		
 		sfSub.pReverse();
-		sfSub.lockWings();
+		sfSub.retractIntake();
 		
 		driveTrainSub.calibrateGyro();
 	}
@@ -259,7 +259,7 @@ public class Robot extends TimedRobot {
 		driveTrainSub.resetEncoders();
 		
 		sfSub.pReverse();
-		sfSub.lockWings();
+		sfSub.retractIntake();
 	}
 
 	/**

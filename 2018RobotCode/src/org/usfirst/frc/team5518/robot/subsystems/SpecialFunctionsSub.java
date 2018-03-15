@@ -2,6 +2,7 @@ package org.usfirst.frc.team5518.robot.subsystems;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
+import org.usfirst.frc.team5518.robot.commands.ExtendedIntakeCom;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -27,10 +28,12 @@ public class SpecialFunctionsSub extends Subsystem {
 	private VictorSP leftSecondaryMotor;
 	private VictorSP rightSecondaryMotor;
 	
+	public VictorSP leftExtendedIntake, rightExtendedIntake;
+	
 	// Pneumatic Components
 	private Compressor compressor;
 	private DoubleSolenoid doubleSolenoidShooter;
-	private DoubleSolenoid doubleSolenoidWing;
+	private DoubleSolenoid solenoidIntake;
 	
 	public SpecialFunctionsSub() {
 		// init components
@@ -41,9 +44,12 @@ public class SpecialFunctionsSub extends Subsystem {
 		leftSecondaryMotor = new VictorSP(RobotMap.LEFT_SECONDARY_INTAKE);
 		rightSecondaryMotor = new VictorSP(RobotMap.RIGHT_SECONDARY_INTAKE);
 		
+		leftExtendedIntake = new VictorSP(RobotMap.LEFT_EXTENDED_INTAKE);
+		rightExtendedIntake = new VictorSP(RobotMap.RIGHT_EXTENDED_INTAKE);
+		
 		compressor = new Compressor(RobotMap.COMPRESSOR);
-		doubleSolenoidShooter = new DoubleSolenoid(RobotMap.DS_FORWARD, RobotMap.DS_BACKWARD);
-		doubleSolenoidWing = new DoubleSolenoid(RobotMap.WINGS_FORWARD, RobotMap.WINGS_BACKWARD);
+		doubleSolenoidShooter = new DoubleSolenoid(RobotMap.PNEU_SHOOTER_FORWARD, RobotMap.PNEU_SHOOTER_BACKWARD);
+		solenoidIntake = new DoubleSolenoid(RobotMap.PNEU_INTAKE_FORWARD, RobotMap.PNEU_INTAKE_BACKWARD);
 		
 		compressor.setClosedLoopControl(true); // refill compressor automatically
 		compressor.start(); // turn compressor on
@@ -55,6 +61,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		rightMotor.setSafetyEnabled(false);
 		
 		doubleSolenoidShooter.set(DoubleSolenoid.Value.kReverse);
+		
+		setDefaultCommand(new ExtendedIntakeCom());
 	}
 	
 	/**
@@ -74,11 +82,11 @@ public class SpecialFunctionsSub extends Subsystem {
 		doubleSolenoidShooter.set(DoubleSolenoid.Value.kReverse); // set solenoid to reverse (called in end of AutoLauncherCom, doesn't actually do anything, not wired)
 	}
 	
-	public void activateWings() {
-		doubleSolenoidWing.set(DoubleSolenoid.Value.kForward);
+	public void extendIntake() {
+		solenoidIntake.set(DoubleSolenoid.Value.kForward);
 	}
-	public void lockWings() {
-		doubleSolenoidWing.set(DoubleSolenoid.Value.kReverse);
+	public void retractIntake() {
+		solenoidIntake.set(DoubleSolenoid.Value.kReverse);
 	}
 	
 	public void intake(double speed, double speed2, double adjust) {
@@ -99,6 +107,11 @@ public class SpecialFunctionsSub extends Subsystem {
 //		rightMotor.set(speed);
 		leftSecondaryMotor.set(speed2);
 		rightSecondaryMotor.set(speed2);
+	}
+	
+	public void extendedIntake(double leftSpeed, double rightSpeed) {
+		leftExtendedIntake.set(leftSpeed);
+		rightExtendedIntake.set(rightSpeed);
 	}
 
 }

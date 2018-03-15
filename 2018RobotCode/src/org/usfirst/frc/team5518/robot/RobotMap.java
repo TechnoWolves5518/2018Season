@@ -47,13 +47,13 @@ public class RobotMap {
     public static int RIGHT_INTAKE = 5;
     public static int LEFT_SECONDARY_INTAKE = 0;
     public static int RIGHT_SECONDARY_INTAKE = 1;
+    public static int LEFT_EXTENDED_INTAKE = 2;
+    public static int RIGHT_EXTENDED_INTAKE = 3;
     public static int COMPRESSOR = 0; //PCM port
-    public static int DS_FORWARD = 1; //PCM port  
-    public static int DS_BACKWARD = 2; //PCM port
-    public static int WINGS_FORWARD = 7; //PCM port
-    public static int WINGS_BACKWARD = 6; //PCM port
-    public static int LEFT_SERVO = 3;
-    public static int RIGHT_SERVO = 2;
+    public static int PNEU_SHOOTER_FORWARD = 1; //PCM port  
+    public static int PNEU_SHOOTER_BACKWARD = 2; //PCM port
+    public static int PNEU_INTAKE_FORWARD = 7; //PCM port
+    public static int PNEU_INTAKE_BACKWARD = 6; //PCM port
 	
 	// WINGMAN STUFF RIPOFFz
 	// axes
