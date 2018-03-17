@@ -61,15 +61,13 @@ public class SpecialFunctionsSub extends Subsystem {
 		rightMotor.setSafetyEnabled(false);
 		
 		doubleSolenoidShooter.set(DoubleSolenoid.Value.kReverse);
-		
-		setDefaultCommand(new ExtendedIntakeCom());
 	}
 	
 	/**
 	 * Set a default command for the subsystem
 	 */
     public void initDefaultCommand() {
-        // No need to set default command
+    	setDefaultCommand(new ExtendedIntakeCom());
     }
     
 	public void initNeutral() {

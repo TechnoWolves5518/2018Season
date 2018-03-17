@@ -18,6 +18,7 @@ public class ExtendedIntakeCom extends Command {
 	
 	public ExtendedIntakeCom() {    		
 		// eg. requires(chassis);
+		requires(Robot.sfSub);
 	}
 
 	// Called just before this Command runs the first time
