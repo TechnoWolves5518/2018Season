@@ -3,6 +3,7 @@ package org.usfirst.frc.team5518.robot.commands.autonomous;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
 import org.usfirst.frc.team5518.robot.commands.TimedIntakeCom;
+import org.usfirst.frc.team5518.robot.commands.WaitCom;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
@@ -90,13 +91,14 @@ public class DoRightAuto extends CommandGroup {
 
 
 	private void rightToLine() { // done
-		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new DriveDistance(RobotMap.LINE_DISTANCE + RobotMap.SIDE_EXTEND, RobotMap.AUTO_DRIVE_SPEED));
 	}
 
 	private void rightToRightSwitch() { // done
 		addSequential(new DriveDistance(152, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise		
 		addSequential(new DriveDistance(40, RobotMap.AUTO_DRIVE_SPEED)); // drive up to fence
+		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
@@ -108,6 +110,7 @@ public class DoRightAuto extends CommandGroup {
 		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with switch
 		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // Fourth leg drives up to the fence of the switch
+		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
@@ -129,6 +132,7 @@ public class DoRightAuto extends CommandGroup {
 	private void rightToRightScale(String numCubes) {
 		addSequential(new DriveDistance(288, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(-65, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		// Initiate two cube auto after this point
 		if (numCubes.equals("two")) {
@@ -152,6 +156,7 @@ public class DoRightAuto extends CommandGroup {
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with scale
 		addSequential(new RotateDistance(65, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 	}
 

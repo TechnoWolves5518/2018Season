@@ -5,7 +5,6 @@ import org.usfirst.frc.team5518.robot.Robot.FieldTarget;
 import org.usfirst.frc.team5518.robot.RobotMap;
 import org.usfirst.frc.team5518.robot.commands.TimedIntakeCom;
 import org.usfirst.frc.team5518.robot.commands.WaitCom;
-import org.usfirst.frc.team5518.robot.commands.WingReleaseCom;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -18,16 +17,16 @@ public class DoMiddleAuto extends CommandGroup {
 
 		// Check if DS is in autonomous mode, print destination and gamedata to console
 		if ( Robot.ds.isAutonomous() ) {
-			Robot.logger.debug("MiddleAuto " + function.toString() + " : using gamedata " + Robot.gameData);
+			Robot.logger.verbose("MiddleAuto " + function.toString() + " : using gamedata " + Robot.gameData);
 		}
 
 		if (function == FieldTarget.kDoNothing) { // If DO NOTHING is chosen in dashboard
-			Robot.logger.debug("Do nothing.");
+			Robot.logger.verbose("Do nothing.");
 			autoNothing(cubes);
 		}
 
 		if (function == FieldTarget.kLine) { // If LINE is chosen in dashboard
-			Robot.logger.debug("Drive forward to line from middle pos");
+			Robot.logger.verbose("Drive forward to line from middle pos");
 			System.out.println("Drive to line from middle");
 			middleToLine();
 		}
@@ -35,12 +34,12 @@ public class DoMiddleAuto extends CommandGroup {
 		if (function == FieldTarget.kSwitch){ // If SWITCH is chosen in dashboard
 
 			if(gameData.charAt(0) == 'R') { // If the switch is on the right
-				Robot.logger.debug("Drive from middle pos to right switch");
+				Robot.logger.verbose("Drive from middle pos to right switch");
 				middleToRightSwitch();
 				// leftToRightSwitchBehind();
 			} else { // If the switch is on the left
 				//Drive forward, then pivot right to switch.
-				Robot.logger.debug("Drive from middle pos to left switch");
+				Robot.logger.verbose("Drive from middle pos to left switch");
 				middleToLeftSwitch();
 			}
 		}
@@ -89,14 +88,14 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToLine() {
-		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new DriveDistance(RobotMap.LINE_DISTANCE, RobotMap.AUTO_DRIVE_SPEED));
 	}
 
 	private void middleToRightSwitch() {
-		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(50, RobotMap.AUTO_STRAFE_SPEED));
-		addSequential(new DriveDistance(78, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new WaitCom(1));
+		addSequential(new DriveDistance(70, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new StrafeDistance(60, RobotMap.AUTO_STRAFE_SPEED));
+		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
@@ -110,9 +109,9 @@ public class DoMiddleAuto extends CommandGroup {
 		
 		// real auto
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(100, -RobotMap.AUTO_STRAFE_SPEED));
-		addSequential(new DriveDistance(78, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new WaitCom(1));
+		addSequential(new StrafeDistance(120, -RobotMap.AUTO_STRAFE_SPEED));
+		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 		// for practice field

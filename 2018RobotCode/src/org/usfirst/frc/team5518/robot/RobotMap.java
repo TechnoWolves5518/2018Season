@@ -28,12 +28,17 @@ public class RobotMap {
 	// SPEED VARIABLES
 	public static double INTAKE_SPEED = 1;
 	public static double SECONDARY_INTAKE_SPEED = 1;
-	public static double SWITCH_DELAY = .09; // extension time for switch shot in seconds (70 ms)
+	public static double EXTENDED_INTAKE_SPEED = 0.4;
+	public static double SWITCH_DELAY = .08; // extension time for switch shot in seconds (70 ms)
 //	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
 	public static double SCALE_DELAY = .5; // extension time for scale shot in seconds (300 ms)
-	public static float AUTO_DRIVE_SPEED = 0.5f;
+	public static float AUTO_DRIVE_SPEED = 0.3f;
 	public static float AUTO_STRAFE_SPEED = 0.4f;
 	public static float AUTO_ROTATE_SPEED = 0.3f;
+	
+	public static float LINE_DISTANCE = 140;
+	public static float SIDE_EXTEND = 80;
+	public static float WAIT_TIME = 0.3f;
 	
 	// PORT MAPPING
 	// drive train
@@ -52,8 +57,8 @@ public class RobotMap {
     public static int COMPRESSOR = 0; //PCM port
     public static int PNEU_SHOOTER_FORWARD = 1; //PCM port  
     public static int PNEU_SHOOTER_BACKWARD = 2; //PCM port
-    public static int PNEU_INTAKE_FORWARD = 7; //PCM port
-    public static int PNEU_INTAKE_BACKWARD = 6; //PCM port
+    public static int PNEU_INTAKE_FORWARD = 0; //PCM port
+    public static int PNEU_INTAKE_BACKWARD = 3; //PCM port
 	
 	// WINGMAN STUFF RIPOFFz
 	// axes

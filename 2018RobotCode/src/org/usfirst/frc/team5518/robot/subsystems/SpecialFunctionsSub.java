@@ -2,7 +2,6 @@ package org.usfirst.frc.team5518.robot.subsystems;
 
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
-import org.usfirst.frc.team5518.robot.commands.ExtendedIntakeCom;
 
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -28,7 +27,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	private VictorSP leftSecondaryMotor;
 	private VictorSP rightSecondaryMotor;
 	
-	public VictorSP leftExtendedIntake, rightExtendedIntake;
+	private VictorSP leftExtendedIntake, rightExtendedIntake;
 	
 	// Pneumatic Components
 	private Compressor compressor;
@@ -55,6 +54,8 @@ public class SpecialFunctionsSub extends Subsystem {
 		compressor.start(); // turn compressor on
 		
 		leftSecondaryMotor.setInverted(true);
+		rightSecondaryMotor.setInverted(true);
+		rightExtendedIntake.setInverted(false);
 		
 		// enable safety on motor controllers
 		leftMotor.setSafetyEnabled(false);
@@ -67,7 +68,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	 * Set a default command for the subsystem
 	 */
     public void initDefaultCommand() {
-    	setDefaultCommand(new ExtendedIntakeCom());
+    	setDefaultCommand(Robot.dropIntakeCom);
     }
     
 	public void initNeutral() {
@@ -87,19 +88,25 @@ public class SpecialFunctionsSub extends Subsystem {
 		solenoidIntake.set(DoubleSolenoid.Value.kReverse);
 	}
 	
-	public void intake(double speed, double speed2, double adjust) {
+	public void intake(double speed, double speed2, double speed3, double adjust) {
 		// set speed of both motors via the motor controllers
 		if (adjust > 0.01) {
 			leftMotor.set(speed - adjust);
+			leftExtendedIntake.set(speed3 - adjust);
 			rightMotor.set(speed);
+			rightExtendedIntake.set(speed3);
 		}
 		else if (adjust < -0.01) {
 			leftMotor.set(speed);
+			leftExtendedIntake.set(speed3);
 			rightMotor.set(speed + adjust);
+			rightExtendedIntake.set(speed3 + adjust);
 		}
 		else {
 			leftMotor.set(speed);
 			rightMotor.set(speed);
+			leftExtendedIntake.set(speed3);
+			rightExtendedIntake.set(speed3);
 		}
 //		leftMotor.set(speed);
 //		rightMotor.set(speed);

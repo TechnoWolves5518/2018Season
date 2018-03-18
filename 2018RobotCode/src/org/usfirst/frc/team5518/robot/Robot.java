@@ -50,6 +50,7 @@ public class Robot extends TimedRobot {
 	 */
 	public static DriveTrainSub driveTrainSub;
 	public static MecanumDriveCom driveInputCom;
+	public static DropIntake dropIntakeCom;
 	public static AutoLauncherCom autoLauncher;
 	
 	public static SpecialFunctionsSub sfSub;
@@ -103,7 +104,7 @@ public class Robot extends TimedRobot {
 		driveTrainSub = new DriveTrainSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
-		// CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
+		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();
@@ -144,6 +145,8 @@ public class Robot extends TimedRobot {
 //		autoDriveSub = new AutoDriveSub();
 		
 		driveInputCom = new MecanumDriveCom();
+		dropIntakeCom = new DropIntake();
+//		extendedIntakeCom = new ExtendedIntakeCom();
 //		driveDistance = new DriveDistance(0, 0);
 //		strafeDistance = new StrafeDistance(0, 0);
 		

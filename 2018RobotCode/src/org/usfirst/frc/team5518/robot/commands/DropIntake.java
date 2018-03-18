@@ -9,40 +9,50 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ReverseIntakeCom extends Command {
+public class DropIntake extends Command {
+
+	private boolean isLPressed, wasLPressed;
+	private boolean extended;
 	
-	private double intakeAdjustment;
-	
-    public ReverseIntakeCom() {
-    		// Make this subsystem dependent on the special functions subsystem (hint: use Robot.java)
-        // eg. requires(chassis);
+    public DropIntake() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.sfSub);
+    	extended = false;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	isLPressed = OI.sfController.getRawButton(RobotMap.XBOX_LBUMPER);
+    	wasLPressed = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-		
-    	intakeAdjustment = OI.sfController.getRawAxis(RobotMap.XBOX_RSTICKX) * 0.1;
+    	isLPressed = OI.sfController.getRawButton(RobotMap.XBOX_LBUMPER);
+    	if (isLPressed != wasLPressed && isLPressed == true) {
+    		extended = !extended;
+    	}
     	
-    	Robot.sfSub.intake(-RobotMap.INTAKE_SPEED, -RobotMap.SECONDARY_INTAKE_SPEED, -RobotMap.EXTENDED_INTAKE_SPEED, intakeAdjustment);
+    	if (extended) {
+    		Robot.sfSub.extendIntake();
+    	}
+    	else {
+    		Robot.sfSub.retractIntake();
+    	}
+    	
     }
-
+    
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return !OI.sfController.getRawButton(RobotMap.XBOX_RBUMPER);
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
     }
 }

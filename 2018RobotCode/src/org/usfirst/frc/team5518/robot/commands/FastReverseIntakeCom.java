@@ -9,58 +9,44 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class ExtendedIntakeCom extends Command {
-
-	private double leftSpeed, rightSpeed;
-	private double leftInput, rightInput;
-
-	private double speed;
+public class FastReverseIntakeCom extends Command {
 	
-	public ExtendedIntakeCom() {    		
+	private double intakeAdjustment;
+	
+	public FastReverseIntakeCom() {
+		// Make this subsystem dependent on the special functions subsystem (hint: use Robot.java)
 		// eg. requires(chassis);
-		requires(Robot.sfSub);
 	}
 
 	// Called just before this Command runs the first time
 	protected void initialize() {
-
+		intakeAdjustment = 0;
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	protected void execute() {
-		leftInput = OI.sfController.getRawAxis(RobotMap.XBOX_LTRIGGER);
-		rightInput = OI.sfController.getRawAxis(RobotMap.XBOX_RTRIGGER);
 		
-		leftSpeed = speedControl(leftSpeed);
-		rightSpeed = speedControl(rightSpeed);
+		intakeAdjustment = OI.sfController.getRawAxis(RobotMap.XBOX_LSTICKX) * 0.3;
 		
-		Robot.sfSub.extendedIntake(leftSpeed, rightSpeed);
-	}
+		
+		// Make the intake run via the method in the subsystem
+		Robot.sfSub.intake(-RobotMap.INTAKE_SPEED, -RobotMap.SECONDARY_INTAKE_SPEED, -RobotMap.EXTENDED_INTAKE_SPEED - 0.2, intakeAdjustment);
 
-	private double speedControl(double input) {
-		
-		speed = input / 3;
-		
-		if (input >= 0.1) {
-			speed += 0.33;
-			return speed;
-		}
-		else {
-			return 0;
-		}
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
-		return false;
+		return !Robot.m_oi.sfController.getRawButton(RobotMap.XBOX_BBTN);
 	}
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
 	}
 }

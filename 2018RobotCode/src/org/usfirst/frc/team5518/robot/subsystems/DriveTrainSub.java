@@ -262,12 +262,12 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 	public double avgEncoderPos() {
 		// return (leftEncoder.getDistance() + rightEncoder.getDistance()) / 2;
-		return (rightEncoder.getDistance());
+		return (leftEncoder.getDistance());
 	}
 
 	public double avgAbsEncoderPos() {
 		// return (Math.abs(leftEncoder.getDistance()) + Math.abs(rightEncoder.getDistance())) / 2;
-		return (Math.abs(rightEncoder.getDistance()));
+		return (Math.abs(leftEncoder.getDistance()));
 	}
 	
 	@Override
