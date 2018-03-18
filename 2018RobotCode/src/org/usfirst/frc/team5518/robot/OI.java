@@ -52,7 +52,7 @@ public class OI {
 		
 		xButtonDrive.whenPressed(new RotateDistance(-90f, 0.3f));
 		bButtonDrive.whenPressed(new RotateDistance(90f, 0.3f));
-		yButtonDrive.whenPressed(new RotateDistance(90f, 0.3f));
+		yButtonDrive.whenPressed(new RotateDistance(180f, 0.3f));
 		
 	}
 	
