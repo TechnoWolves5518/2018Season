@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
 		driveTrainSub = new DriveTrainSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
-		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
+//		CameraServer.getInstance().startAutomaticCapture();  // Camera Setup
 		
 		pathChooser = new SendableChooser<String>();
 		robotLocationChooser = new SendableChooser<RobotLocation>();

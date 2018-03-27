@@ -12,9 +12,13 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  *
  */
 public class DoMiddleAuto extends CommandGroup {
-
+	
+	public String gameDataPub;
+	
 	public DoMiddleAuto(Robot.FieldTarget function, String gameData, String cubes) {
 
+		gameDataPub = gameData;
+		
 		// Check if DS is in autonomous mode, print destination and gamedata to console
 		if ( Robot.ds.isAutonomous() ) {
 			Robot.logger.verbose("MiddleAuto " + function.toString() + " : using gamedata " + Robot.gameData);
@@ -89,6 +93,9 @@ public class DoMiddleAuto extends CommandGroup {
 
 	private void middleToLine() {
 		addSequential(new DriveDistance(RobotMap.LINE_DISTANCE, RobotMap.AUTO_DRIVE_SPEED));
+		if (gameDataPub.charAt(0) == 'L') {
+			addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		}
 	}
 
 	private void middleToRightSwitch() {
@@ -109,7 +116,7 @@ public class DoMiddleAuto extends CommandGroup {
 		
 		// real auto
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(120, -RobotMap.AUTO_STRAFE_SPEED));
+		addSequential(new StrafeDistance(145, -RobotMap.AUTO_STRAFE_SPEED));
 		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
 		addSequential(new WaitCom(RobotMap.WAIT_TIME));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
@@ -121,7 +128,7 @@ public class DoMiddleAuto extends CommandGroup {
 //		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 //		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED, false));
-//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));LKJ;
 	}
 
 	private void middleToRightScale() {
@@ -130,7 +137,9 @@ public class DoMiddleAuto extends CommandGroup {
 		addSequential(new StrafeDistance(3, 0.2f));
 		addSequential(new DriveDistance(15, 0.1f));
 		addSequential(new RotateDistance(-90, 0.2f)); //counterclockwise
-		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+D
+
+		`addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		*/
 	}
 

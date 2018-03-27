@@ -28,17 +28,20 @@ public class DropIntake extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	isLPressed = OI.sfController.getRawButton(RobotMap.XBOX_LBUMPER);
     	if (isLPressed != wasLPressed && isLPressed == true) {
     		extended = !extended;
+    		
+    		if (extended) {
+        		Robot.sfSub.extendIntake();
+        	}
+        	else {
+        		Robot.sfSub.retractIntake();
+        	}
+    		
     	}
-    	
-    	if (extended) {
-    		Robot.sfSub.extendIntake();
-    	}
-    	else {
-    		Robot.sfSub.retractIntake();
-    	}
+    	wasLPressed = isLPressed;
     	
     }
     
