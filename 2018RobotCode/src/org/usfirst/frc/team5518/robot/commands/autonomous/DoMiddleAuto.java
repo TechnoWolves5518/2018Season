@@ -99,11 +99,16 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToRightSwitch() {
-		addSequential(new DriveDistance(70, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(60, RobotMap.AUTO_STRAFE_SPEED));
-		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
-		addSequential(new WaitCom(RobotMap.WAIT_TIME));
-		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		// district auto
+//		addSequential(new DriveDistance(70, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new StrafeDistance(60, RobotMap.AUTO_STRAFE_SPEED));
+//		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
+//		addSequential(new WaitCom(RobotMap.WAIT_TIME));
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		
+		// states auto
+		
+		
 	}
 
 	private void middleToLeftSwitch() {
@@ -114,12 +119,15 @@ public class DoMiddleAuto extends CommandGroup {
 //		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
 //		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
-		// real auto
-		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(145, -RobotMap.AUTO_STRAFE_SPEED));
-		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
-		addSequential(new WaitCom(RobotMap.WAIT_TIME));
-		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		// district auto
+//		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new StrafeDistance(90, -RobotMap.AUTO_STRAFE_SPEED));
+//		addSequential(new DriveDistance(75, RobotMap.AUTO_DRIVE_SPEED + 0.1f));
+//		addSequential(new WaitCom(RobotMap.WAIT_TIME));
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		
+		// states auto
+		addSequential(new AngleDriveDistance(120, RobotMap.AUTO_DRIVE_SPEED, -46.47f)); // goes 114 to the left
 		
 		// for practice field
 //		addSequential(new DriveDistance(20, RobotMap.AUTO_DRIVE_SPEED, false));

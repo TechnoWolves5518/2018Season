@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -29,7 +30,9 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	public static final double kDistancePerRevolution = 8 * Math.PI; // Distance traveled in one wheel rotation (circumference)
 	final static double kPulsesPerRevolution = 360; // Encoder pulses in one shaft revolution
 	public static final double kDistancePerPulse = kDistancePerRevolution / kPulsesPerRevolution; // Distance in inches per pulse
-
+	
+	public Ultrasonic ultra;
+	
 	private PIDController pidLeft;
 	private PIDController pidRight;
 	public PIDController pidGyro;
@@ -59,8 +62,11 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		setupTalons(backLeftTalon);
 		setupTalons(frontRightTalon);
 		setupTalons(backRightTalon);
-
+		
 		// Construct sensors
+		ultra = new Ultrasonic(4, 5);
+		ultra.setAutomaticMode(true);
+		
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
@@ -121,19 +127,25 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		// Use the driveCartesian WPI method, passing in vertical motion, strafing, and tank rotation.
 		// driveBase.driveCartesian(drive, strafe, rotate, angle);
 		driveBase.driveCartesian(drive, strafe, rotate);
-		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
+//		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 	}
 	
 	public void autoDrive(float vertDist, float vertSpeed) {
 
 		// evenDrive();
 //		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
-		Robot.logger.verbose("Avg enc " + avgEncoderPos());
-		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
+//		Robot.logger.verbose("Avg enc " + avgEncoderPos());
+//		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
 		drive(-vertSpeed, 0, rotAdjustment);
 
 	}
 
+	public void autoAngledDrive(float dist, float speed, float angle) {
+		
+		driveBase.drivePolar(speed, angle, 0);
+		
+	}
+	
 	public void autoStrafe(float strafeDist, float strafeSpeed) {
 
 //		Robot.logger.debug("distance: " + avgAbsEncoderPos());

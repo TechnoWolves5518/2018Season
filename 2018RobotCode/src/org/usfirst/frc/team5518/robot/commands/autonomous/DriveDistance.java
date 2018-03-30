@@ -38,11 +38,18 @@ public class DriveDistance extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		
-		if (!(Robot.driveTrainSub.avgAbsEncoderPos() < distance)) {
+//		if (!(Robot.driveTrainSub.avgAbsEncoderPos() < distance)) {
+//			return true;
+//		}
+//		else {
+//			return  false;
+//		}
+		
+		if (!(Robot.driveTrainSub.ultra.getRangeInches() < distance)) {
 			return true;
 		}
 		else {
-			return  false;
+			return false;
 		}
 		
 	}
