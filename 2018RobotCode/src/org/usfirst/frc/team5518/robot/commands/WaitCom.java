@@ -20,7 +20,7 @@ public class WaitCom extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	Robot.driveTrainSub.autoDrive(0.1f, 0.1f);
+    	Robot.driveTrainSub.autoDrive(20f, 0.4f);
     	Robot.logger.info("Waiting...");
     }
 

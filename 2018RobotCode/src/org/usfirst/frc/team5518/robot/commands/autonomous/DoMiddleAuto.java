@@ -107,7 +107,8 @@ public class DoMiddleAuto extends CommandGroup {
 //		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 		// states auto
-		
+		addSequential(new DriveDistance(120, RobotMap.AUTO_DRIVE_SPEED)); // drives forward 120 based on ultrasonic
+		addSequential(new WaitCom(2)); // drives forward for 2 seconds just to be sure
 		
 	}
 
@@ -128,6 +129,7 @@ public class DoMiddleAuto extends CommandGroup {
 		
 		// states auto
 		addSequential(new AngleDriveDistance(120, RobotMap.AUTO_DRIVE_SPEED, -46.47f)); // goes 114 to the left
+		addSequential(new WaitCom(2)); // drives forward for 2 seconds
 		
 		// for practice field
 //		addSequential(new DriveDistance(20, RobotMap.AUTO_DRIVE_SPEED, false));
