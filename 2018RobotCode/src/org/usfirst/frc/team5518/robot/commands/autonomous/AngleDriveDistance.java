@@ -35,11 +35,11 @@ public class AngleDriveDistance extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     		
-    		if (!(Robot.driveTrainSub.ultra.getRangeInches() < distance)) {
-			return true;
+    		if (Robot.driveTrainSub.ultra.getRangeInches() < distance || Robot.driveTrainSub.ultra.getRangeInches() > distance+42) {
+			return false;
 		}
 		else {
-			return false;
+			return true;
 		}
     		
     }
