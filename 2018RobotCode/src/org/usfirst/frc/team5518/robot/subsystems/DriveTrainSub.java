@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5518.robot.subsystems;
 
+import org.usfirst.frc.team5518.robot.OI;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
@@ -8,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.Ultrasonic;
@@ -183,6 +185,18 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 	}
 	
+	public void alignScale() {
+		double dist = ultra.getRangeInches();
+		if (RobotMap.SCALE_ALIGNMENT_DIST-RobotMap.ALLOWANCE < dist && dist < RobotMap.SCALE_ALIGNMENT_DIST+RobotMap.ALLOWANCE) {
+			OI.driveController.setRumble(RumbleType.kRightRumble, 0.5);
+			OI.driveController.setRumble(RumbleType.kLeftRumble, 0.5);
+		}
+		else {
+			OI.driveController.setRumble(RumbleType.kRightRumble, 0);
+			OI.driveController.setRumble(RumbleType.kLeftRumble, 0);
+		}
+	}
+	
 	public void pidDrive(float dist) {
 		if (pidLeft.onTarget()) {
 			pidLeft.disable();
@@ -199,7 +213,6 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		driveBase.driveCartesian(0, 0, 0);
 	}
 	
-
 	/**
 	 * Start the PID controller for the gyro to
 	 * turn the robot

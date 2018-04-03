@@ -15,6 +15,8 @@ public class MecanumDriveCom extends Command {
 	public double ltValue, rtValue;
 	public boolean notnos;
 	
+	public boolean lbPressed;
+	
     public MecanumDriveCom() {
 
     		requires(Robot.driveTrainSub); // Declare subsystem dependencies
@@ -48,8 +50,14 @@ public class MecanumDriveCom extends Command {
 		
 		notnos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
 		
+		lbPressed = OI.driveController.getRawButton(RobotMap.XBOX_LBUMPER);
+		
 		if (notnos) {
 			driveSpeed *= 0.5f; // If the speed button isn't pressed, move at 2/3 speed
+		}
+		
+		if (lbPressed) {
+			Robot.driveTrainSub.alignScale();
 		}
 		
     		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
