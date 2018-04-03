@@ -102,7 +102,7 @@ public class DoLeftAuto extends CommandGroup {
 		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with switch
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // Fourth leg drives up to the fence of the switch
-		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME, false)); // wait and don't move
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
@@ -110,7 +110,7 @@ public class DoLeftAuto extends CommandGroup {
 
 		addSequential(new DriveDistance(196-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise
-		addSequential(new WaitCom(3, true));
+		addSequential(new WaitCom(3, true)); // wait with move
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}
