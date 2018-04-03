@@ -140,6 +140,20 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 
 	}
 
+	public void autoDriveToPoint(float point, float speed) {
+		
+		if (ultra.getRangeInches() < point-1) {
+			drive(speed, 0, rotAdjustment);
+		}
+		else if (ultra.getRangeInches() > point+1) {
+			drive(-speed, 0, rotAdjustment);
+		}
+		else {
+			drive(0, 0, 0);
+		}
+		
+	}
+	
 	public void autoAngledDrive(float dist, float speed, float angle) {
 		
 		driveBase.drivePolar(speed, angle, 0);

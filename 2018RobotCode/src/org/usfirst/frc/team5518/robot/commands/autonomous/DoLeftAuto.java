@@ -102,7 +102,7 @@ public class DoLeftAuto extends CommandGroup {
 		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with switch
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // Fourth leg drives up to the fence of the switch
-		addSequential(new WaitCom(RobotMap.WAIT_TIME));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
@@ -111,7 +111,7 @@ public class DoLeftAuto extends CommandGroup {
 		addSequential(new DriveDistance(152, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise		
 		addSequential(new DriveDistance(40, RobotMap.AUTO_DRIVE_SPEED)); // drive up to fence
-		addSequential(new WaitCom(RobotMap.WAIT_TIME));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}
@@ -138,14 +138,14 @@ public class DoLeftAuto extends CommandGroup {
 		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
 		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with scale
 		addSequential(new RotateDistance(-65, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new WaitCom(RobotMap.WAIT_TIME));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 	}
 
 	private void leftToLeftScale(String numCubes) {
 		addSequential(new DriveDistance(288, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(65, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new WaitCom(RobotMap.WAIT_TIME));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		// Initiate two cube auto after this point
 		if (numCubes.equals("two")) {

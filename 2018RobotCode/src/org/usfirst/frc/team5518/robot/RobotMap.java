@@ -39,6 +39,8 @@ public class RobotMap {
 	public static float LINE_DISTANCE = 140;
 	public static float SIDE_EXTEND = 80;
 	public static float WAIT_TIME = 0.4f;
+	public static float ROBOT_LENGTH = 32f;
+	public static float ROBOT_WIDTH = 37f;
 	
 	// PORT MAPPING
 	// drive train
