@@ -108,10 +108,9 @@ public class DoLeftAuto extends CommandGroup {
 
 	private void leftToLeftSwitch() { // done
 
-		addSequential(new DriveDistance(152, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise		
-		addSequential(new DriveDistance(40, RobotMap.AUTO_DRIVE_SPEED)); // drive up to fence
-		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
+		addSequential(new DriveDistance(196-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise
+		addSequential(new WaitCom(3, true));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}
@@ -143,8 +142,9 @@ public class DoLeftAuto extends CommandGroup {
 	}
 
 	private void leftToLeftScale(String numCubes) {
-		addSequential(new DriveDistance(288, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new RotateDistance(65, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(300, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveToPointUltrasonicCom(30, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
 		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		// Initiate two cube auto after this point
