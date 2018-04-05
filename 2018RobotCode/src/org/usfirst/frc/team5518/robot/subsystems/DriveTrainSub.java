@@ -66,14 +66,14 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		setupTalons(backRightTalon);
 		
 		// Construct sensors
-		ultra = new Ultrasonic(4, 5);
+		ultra = new Ultrasonic(8, 9);
 		ultra.setAutomaticMode(true);
 		
 		leftEncoder = new Encoder(0, 1, true, EncodingType.k4X);
 		rightEncoder = new Encoder(2, 3, false, EncodingType.k4X);
 		gyro = new ADXRS450_Gyro();
 		// Construct PID controllers
-		pidGyro = new PIDController(0.05, 0, 0.04, gyro, this); // tune kP, kI, kD values here
+		pidGyro = new PIDController(0.05, 0, 0.05, gyro, this); // tune kP, kI, kD values here
 		pidLeft = new PIDController(0, 0, 0, leftEncoder, this);
 		pidRight = new PIDController(0, 0, 0, rightEncoder, this);
 
@@ -138,7 +138,7 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 //		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 //		Robot.logger.verbose("Avg enc " + avgEncoderPos());
 //		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
-		drive(-vertSpeed, 0, rotAdjustment);
+		drive(-vertSpeed, 0, -0.03);
 
 	}
 

@@ -55,7 +55,7 @@ public class SpecialFunctionsSub extends Subsystem {
 		
 		leftSecondaryMotor.setInverted(true);
 		rightSecondaryMotor.setInverted(true);
-		rightExtendedIntake.setInverted(false);
+		rightExtendedIntake.setInverted(true);
 		
 		// enable safety on motor controllers
 		leftMotor.setSafetyEnabled(false);

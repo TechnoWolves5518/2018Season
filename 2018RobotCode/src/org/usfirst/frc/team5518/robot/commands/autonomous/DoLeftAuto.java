@@ -110,7 +110,7 @@ public class DoLeftAuto extends CommandGroup {
 
 		addSequential(new DriveDistance(196-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise
-		addSequential(new WaitCom(3, true)); // wait with move
+		addSequential(new WaitCom(1, true)); // wait with move
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 
 	}

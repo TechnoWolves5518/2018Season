@@ -53,7 +53,7 @@ public class DoRightAuto extends CommandGroup {
 		if (function == FieldTarget.kScale) { // If SCALE is chosen in dashboard
 			if (scalePos == 'R') { // if the scale is on the right (our side)
 				//Drive to right scale
-				Robot.logger.debug("Drive from right pos to right scale");
+				System.out.println("Drive from right pos to right scale");
 				rightToRightScale(cubes);
 			} else { // if the scale is on the left side (opposite from us)
 				//Drive to left scale
@@ -95,9 +95,9 @@ public class DoRightAuto extends CommandGroup {
 	}
 
 	private void rightToRightSwitch() { // done
-		addSequential(new DriveDistance(196-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new DriveDistance(180-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED)); // anticlockwise
-		addSequential(new WaitCom(3, true));
+		addSequential(new WaitCom(1, true));
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
