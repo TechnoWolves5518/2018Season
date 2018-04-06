@@ -187,12 +187,10 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	
 	public void alignScale() {
 		double dist = ultra.getRangeInches();
-		if (RobotMap.SCALE_ALIGNMENT_DIST-RobotMap.ALLOWANCE < dist && dist < RobotMap.SCALE_ALIGNMENT_DIST+RobotMap.ALLOWANCE) {
-			OI.driveController.setRumble(RumbleType.kRightRumble, 0.5);
-			OI.driveController.setRumble(RumbleType.kLeftRumble, 0.5);
+		if (dist > (RobotMap.SCALE_ALIGNMENT_DIST - RobotMap.ALLOWANCE) && dist < (RobotMap.SCALE_ALIGNMENT_DIST+RobotMap.ALLOWANCE)) {
+			OI.driveController.setRumble(RumbleType.kLeftRumble, 1);
 		}
 		else {
-			OI.driveController.setRumble(RumbleType.kRightRumble, 0);
 			OI.driveController.setRumble(RumbleType.kLeftRumble, 0);
 		}
 	}

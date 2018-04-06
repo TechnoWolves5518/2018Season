@@ -130,12 +130,9 @@ public class DoMiddleAuto extends CommandGroup {
 		
 		// states auto
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new RotateDistance(-90, 0.3f));
-		// addSequential(new AngleDriveDistance(120, -RobotMap.AUTO_DRIVE_SPEED-0.2f, 23.47f)); // goes 114 to the left
-		addSequential(new DriveDistance(110, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new RotateDistance(90, 0.3f));
-		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new WaitCom(1, true)); // drives forward for 2 seconds
+		addSequential(new StrafeDistance(160, -RobotMap.AUTO_STRAFE_SPEED));
+		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new WaitCom(1, true)); // drives forward for 1 seconds
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 		// for practice field
