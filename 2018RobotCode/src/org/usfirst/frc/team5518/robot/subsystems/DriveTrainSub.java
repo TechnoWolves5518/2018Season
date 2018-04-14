@@ -138,7 +138,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 //		Robot.logger.debug("Right enc: " + rightEncoder.getDistance() + " Left enc " + leftEncoder.getDistance() + " Avg enc " + avgEncoderPos());
 //		Robot.logger.verbose("Avg enc " + avgEncoderPos());
 //		Robot.logger.debug("Right enc: " + rightEncoder.get() + " Left enc " + leftEncoder.get());
-		drive(-vertSpeed, 0, -0.03);
+		drive(-vertSpeed, 0, 0.01);
+		
 
 	}
 
