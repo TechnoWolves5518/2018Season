@@ -114,12 +114,6 @@ public class DoMiddleAuto extends CommandGroup {
 	}
 
 	private void middleToLeftSwitch() {
-//		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-//		addSequential(new RotateDistance(-90, 0.3f));
-//		addSequential(new DriveDistance(85, RobotMap.AUTO_DRIVE_SPEED));
-//		addSequential(new RotateDistance(90, 0.3f));
-//		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
-//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 		// district auto
 //		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
