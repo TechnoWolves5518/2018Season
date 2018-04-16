@@ -29,7 +29,7 @@ public class WaitCom extends Command {
 		else {
 			Robot.driveTrainSub.autoDrive(0.1f, 0.1f);
 		}
-		Robot.logger.info("Waiting...");
+		// Robot.debug.info("Waiting...");
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

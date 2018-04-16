@@ -16,9 +16,9 @@ package org.usfirst.frc.team5518.robot;
 public class RobotMap {
 	
 	// DRIVE VARIABLES
-	public static double KX = 1;
-	public static double KY = 1;
-	public static double KZ = 1;
+	public static double KX = 0.8;
+	public static double KY = 0.8;
+	public static double KZ = 0.8;
 	
 	// Decreased speeds for DEMO PURPOSES
 //	public static double KX = 0.5;
@@ -26,11 +26,11 @@ public class RobotMap {
 //	public static double KZ = 0.5;
 	
 	// SPEED VARIABLES
-	public static double INTAKE_SPEED = 1;
+	public static double INTAKE_SPEED = 0.8;
 	public static double SECONDARY_INTAKE_SPEED = 1;
-	public static double EXTENDED_INTAKE_SPEED = 0.4;
+	public static double EXTENDED_INTAKE_SPEED = 0.6;
 //	public static double SWITCH_DELAY = .08; // extension time for switch shot in seconds (70 ms)
-	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
+	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
 	public static double SCALE_DELAY = .5; // extension time for scale shot in seconds (300 ms)
 	public static float AUTO_DRIVE_SPEED = 0.3f;
 	public static float AUTO_STRAFE_SPEED = 0.4f;
@@ -51,13 +51,15 @@ public class RobotMap {
 	public static int FRONT_RIGHT = 2;
 	public static int BACK_RIGHT = 3;
 	
-	// special Functions 
-	public static int LEFT_INTAKE = 4;
+	// special functions
+		// pwm
+	public static int LEFT_SPIKY_INTAKE = 0;
+    public static int RIGHT_SPIKY_INTAKE = 1;
+    public static int LEFT_ARM_INTAKE = 2;
+    public static int RIGHT_ARM_INTAKE = 3;
+    public static int LEFT_INTAKE = 4;
     public static int RIGHT_INTAKE = 5;
-    public static int LEFT_SECONDARY_INTAKE = 0;
-    public static int RIGHT_SECONDARY_INTAKE = 1;
-    public static int LEFT_EXTENDED_INTAKE = 2;
-    public static int RIGHT_EXTENDED_INTAKE = 3;
+    	// pcm
     public static int COMPRESSOR = 0; //PCM port
     public static int PNEU_SHOOTER_FORWARD = 1; //PCM port  
     public static int PNEU_SHOOTER_BACKWARD = 2; //PCM port

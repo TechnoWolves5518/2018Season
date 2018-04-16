@@ -33,7 +33,7 @@ public class DriveDistance extends Command {
 	protected void execute() {
 		Robot.logger.debug("running driveDistance");
 		Robot.driveTrainSub.autoDrive(distance, speed);
-		System.out.println(Robot.driveTrainSub.ultra.getRangeInches());
+		// System.out.println(Robot.driveTrainSub.ultra.getRangeInches());
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

@@ -4,6 +4,7 @@ import org.usfirst.frc.team5518.robot.OI;
 import org.usfirst.frc.team5518.robot.Robot;
 import org.usfirst.frc.team5518.robot.RobotMap;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -60,6 +61,13 @@ public class MecanumDriveCom extends Command {
 			Robot.driveTrainSub.alignScale();
 		}
 		
+		if (OI.driveController.getRawButton(RobotMap.XBOX_LBUMPER)) {
+			OI.driveController.setRumble(RumbleType.kLeftRumble, 1);
+		}
+		else {
+			OI.driveController.setRumble(RumbleType.kLeftRumble, 0);
+		}
+		
     		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
 		
 		// Call the drive() function from the driveTrainSubsystem, pass in collected speed values
@@ -80,7 +88,7 @@ public class MecanumDriveCom extends Command {
     // Called when another command which requires one or more of the same subsystems is scheduled to run
     protected void interrupted() {
 		System.out.println("ROBOT INTERRUPTED");
-    		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
+    	Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 }
 

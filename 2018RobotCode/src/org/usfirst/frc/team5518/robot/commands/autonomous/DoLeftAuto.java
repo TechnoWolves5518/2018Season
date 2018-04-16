@@ -91,24 +91,28 @@ public class DoLeftAuto extends CommandGroup {
 	}
 
 	private void leftToLine() { // done
-		addSequential(new DriveDistance(RobotMap.LINE_DISTANCE + RobotMap.SIDE_EXTEND, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new DriveDistance(RobotMap.LINE_DISTANCE + RobotMap.SIDE_EXTEND, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new WaitCom(4, true));
 	}
 
 	private void leftToRightSwitch() { // done
-		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
-		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED)); // Second leg drives across field to right side
-		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with switch
-		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // Fourth leg drives up to the fence of the switch
-		addSequential(new WaitCom(RobotMap.WAIT_TIME, false)); // wait and don't move
-		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
+//		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
+//		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED)); // Second leg drives across field to right side
+//		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with switch
+//		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new DriveDistance(30, RobotMap.AUTO_DRIVE_SPEED)); // Fourth leg drives up to the fence of the switch
+//		addSequential(new WaitCom(RobotMap.WAIT_TIME, false)); // wait and don't move
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
+		
+		leftToLine();
 	}
 
 	private void leftToLeftSwitch() { // done
 
-		addSequential(new DriveDistance(196-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
+		// addSequential(new WaitCom(3.2, true));
+		addSequential(new DriveDistance(173-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise
 		addSequential(new WaitCom(1, true)); // wait with move
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
