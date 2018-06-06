@@ -29,7 +29,7 @@ public class WaitCom extends Command {
 		else {
 			Robot.driveTrainSub.autoDrive(0.1f, 0.1f);
 		}
-		// Robot.debug.info("Waiting...");
+		Robot.logger.debug("Waiting...");
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
@@ -39,10 +39,12 @@ public class WaitCom extends Command {
 
 	// Called once after isFinished returns true
 	protected void end() {
+		Robot.driveTrainSub.autoDrive(0.0f, 0.0f);
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		end();
 	}
 }

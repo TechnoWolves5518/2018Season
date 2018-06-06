@@ -10,39 +10,37 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class ReverseIntakeCom extends Command {
-	
+
 	private double intakeAdjustment;
-	
-    public ReverseIntakeCom() {
-    		// Make this subsystem dependent on the special functions subsystem (hint: use Robot.java)
-        // eg. requires(chassis);
-    }
 
-    // Called just before this Command runs the first time
-    protected void initialize() {
-    }
+	public ReverseIntakeCom() {
+	}
 
-    // Called repeatedly when this Command is scheduled to run
-    protected void execute() {
-		
-    	intakeAdjustment = OI.sfController.getRawAxis(RobotMap.XBOX_RSTICKX) * 0.1;
-    	
-    	Robot.sfSub.intake(-RobotMap.INTAKE_SPEED, -RobotMap.SECONDARY_INTAKE_SPEED, -RobotMap.EXTENDED_INTAKE_SPEED, intakeAdjustment);
-    }
+	// Called just before this Command runs the first time
+	protected void initialize() {
+	}
 
-    // Make this return true when this Command no longer needs to run execute()
-    protected boolean isFinished() {
-    	return !OI.sfController.getRawButton(RobotMap.XBOX_YBTN);
-    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
 
-    // Called once after isFinished returns true
-    protected void end() {
-    		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
-    }
+		intakeAdjustment = OI.sfController.getRawAxis(RobotMap.XBOX_RSTICKX) * 0.1;
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
-    protected void interrupted() {
-    		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
-    }
+		Robot.sfSub.intake(-RobotMap.INTAKE_SPEED, -RobotMap.SECONDARY_INTAKE_SPEED, -RobotMap.EXTENDED_INTAKE_SPEED, intakeAdjustment);
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return !OI.sfController.getRawButton(RobotMap.XBOX_YBTN);
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+		Robot.sfSub.intake(0.0, 0.0, 0.0, 0.0);
+	}
 }

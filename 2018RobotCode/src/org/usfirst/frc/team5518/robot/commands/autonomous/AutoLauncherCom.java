@@ -14,7 +14,6 @@ public class AutoLauncherCom extends Command {
 	private double seconds;
 
 	public AutoLauncherCom(double secs) {
-		// Use requires() here to declare subsystem dependencies
 		requires(Robot.sfSub);
 		seconds = secs;
 		this.setTimeout(secs);
@@ -23,7 +22,6 @@ public class AutoLauncherCom extends Command {
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		Robot.logger.debug("AutoLaunch, activate! " + seconds);
-		System.out.println("AutoLaunch, activate! " + seconds);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -36,11 +34,8 @@ public class AutoLauncherCom extends Command {
 	// Make this return true when this Command no longer needs to run execute()
 	protected boolean isFinished() {
 		if (this.isTimedOut()) {
-			Robot.logger.debug("AutoLauncher timed out");
+			Robot.logger.debug("AutoLauncher finished, ran " + seconds + " seconds");
 			Robot.sfSub.pReverse();
-		}
-		else {
-			Robot.logger.debug("AutoLauncher not finished");
 		}
 		return this.isTimedOut();
 	}
@@ -53,5 +48,6 @@ public class AutoLauncherCom extends Command {
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	protected void interrupted() {
+		Robot.sfSub.pReverse();
 	}
 }
