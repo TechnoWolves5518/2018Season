@@ -40,7 +40,7 @@ public class RotateDistance extends Command {
 	 * Called just before this Command runs the first time
 	 */
 	protected void initialize() {
-		if (speed <= 0) {
+		if (speed <= 0) { // 0 is the speed value used to indicate that we should use PID rather than open loop control 
 			Robot.driveTrainSub.resetGyro();
 			Robot.driveTrainSub.enableGyroPID(degrees);
 		}
@@ -51,12 +51,15 @@ public class RotateDistance extends Command {
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
 	protected void execute() {
-		Robot.logger.debug("running rotate");
 		
-		if (speed <= 0)
+		if (speed <= 0) {
 			Robot.driveTrainSub.rotatePID();
-		else
+			Robot.logger.debug("running rotate PID");
+		}
+		else {
 			Robot.driveTrainSub.rotate(degrees, speed);
+			Robot.logger.debug("running rotate bang-bang");
+		}
 	}
 
 	/**
