@@ -45,17 +45,14 @@ public class Robot extends TimedRobot {
 	// Scheduler.getInstance().run() it basically calls the SubSystems command execute() 
 	// method of every SubSystem registered.
 	
-	/**
-	 * Subsystems
-	 */
+	// Subsystem and command declarations
 	public static DriveTrainSub driveTrainSub;
+	public static SpecialFunctionsSub sfSub;
+	
 	public static MecanumDriveCom driveInputCom;
 	public static DropIntake dropIntakeCom;
 	public static AutoLauncherCom autoLauncher;
 	
-	public static SpecialFunctionsSub sfSub;
-	
-//	public static AutoDriveSub autoDriveSub;
 	public static DriveDistance driveDistance;
 	public static StrafeDistance strafeDistance;
 	
@@ -63,14 +60,13 @@ public class Robot extends TimedRobot {
 	
 	public static OI m_oi;
 	public static DriverStation ds;
-	//public static SmartDashboard smartDS;
 	
 	Command autonomousCommand; // create placeholder for chosen command
 	
 	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
 	
 	// Needed information to know which auto path to do
-	public static String       gameData;
+	public static String gameData;
 	private enum RobotLocation {rl_left, rl_middle, rl_right}
 
 	public enum FieldTarget {
@@ -82,14 +78,13 @@ public class Robot extends TimedRobot {
         }
 	
 	private FieldTarget chosenAutoFunction;
-	//private boolean      isBackPath; // Default: Back=True, Toggle=False (i.e. Front)
 	private SendableChooser<String>        pathChooser;
 	private SendableChooser<RobotLocation> robotLocationChooser;
-	private SendableChooser<FieldTarget> fieldTargetChooser;
-	private SendableChooser<String> twoCube;
+	private SendableChooser<FieldTarget>   fieldTargetChooser;
+	private SendableChooser<String> 		  twoCube;
 	
 	// Variables we retrieve from the Smart Dashboard
-	private String path          = "Unknown";  // This tells whether the robot will cross the field in the front or back
+	private String path = "Unknown";  // This tells whether the robot will cross the field in the front or back
 	private RobotLocation robotLocation;       // This is the ROBOT location on the field (not driver team location)
 	private FieldTarget fieldTargetList;
 	private String numCubes;
@@ -100,7 +95,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		sfSub = new SpecialFunctionsSub();
+		sfSub 		  = new SpecialFunctionsSub();
 		driveTrainSub = new DriveTrainSub();
 		m_oi          = new OI();
 		ds            = DriverStation.getInstance();
@@ -138,44 +133,29 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putData("Number of Cubes", twoCube);
 		
 		// Set to FALSE for competition.
-		logger.setDebug(false); //Must be false during competition
+		logger.setDebug(false); // set to false during competition
 		logger.setVerbose(true);
-		
-//		driveTrainSub = new DriveTrainSub();
-//		autoDriveSub = new AutoDriveSub();
-		
+				
 		driveInputCom = new MecanumDriveCom();
 		dropIntakeCom = new DropIntake();
-//		extendedIntakeCom = new ExtendedIntakeCom();
-//		driveDistance = new DriveDistance(0, 0);
-//		strafeDistance = new StrafeDistance(0, 0);
 		
-		// Autonomous data initial.
-		gameData        = "";
-		//robotLocation   = -1;
-		chosenAutoFunction    = FieldTarget.kDoNothing;
-		optionalPath    = true;
+		// default autonomous data
+		gameData = "";
+		chosenAutoFunction = FieldTarget.kDoNothing;
+		optionalPath = true;
 		numCubes = "one";
-		
-		// Default.
 		autonomousCommand = null;
 		
+		// start with shooter and intake retracted
 		sfSub.pReverse();
 		sfSub.retractIntake();
 		
 		driveTrainSub.calibrateGyro();
 	}
 
-	/**
-	 * This function is called once each time the robot enters Disabled mode.
-	 * You can use it to reset any subsystem information you want to clear when
-	 * the robot is disabled.
-	 */
 	@Override
 	public void disabledInit() {
 		gameData = "";
-		
-		// Also set DriverStation gameData to ""
 	}
 
 	@Override
@@ -185,39 +165,26 @@ public class Robot extends TimedRobot {
 	
 	public void readDashBoard() {
 
-		// Define robot data needed only for autonomous.
+		// read the smart dashboard for autonomous choices
 		gameData        = ds.getGameSpecificMessage();
 		robotLocation   = robotLocationChooser.getSelected();
 		chosenAutoFunction    = fieldTargetChooser.getSelected();
-		//isBackPath    = SmartDashboard.getBoolean("Path_Back", false);
 		path          = pathChooser.getSelected();
 		robotLocation = robotLocationChooser.getSelected();
 		numCubes = twoCube.getSelected();
 
-		//System.out.println("isBackPath   : " + isBackPath);
 		// Log information
-		logger.debug("----------READING DASHBOARD DATA----------");
-		logger.debug("Game Data = " + gameData + " Robot Location = " + robotLocation);
+		logger.info("----------READING DASHBOARD DATA----------");
+		logger.info("Game Data = " + gameData + " Robot Location = " + robotLocation);
 		logger.info("path         : " + path);
 		logger.info("Field Target : " + chosenAutoFunction);
 		logger.info("Number of Cubes : " + numCubes);
 	}
 	
-	/**
-	 * This autonomous (along with the chooser code above) shows how to select
-	 * between different autonomous modes using the dashboard. The sendable
-	 * chooser code works with the Java SmartDashboard. If you prefer the
-	 * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-	 * getString code to get the auto name from the text box below the Gyro
-	 *
-	 * <p>You can add additional auto modes by adding additional commands to the
-	 * chooser code above (like the commented example) or additional comparisons
-	 * to the switch structure below with additional strings & commands.
-	 */
 	@Override
 	public void autonomousInit() {
 
-		logger.debug("Auto init.  **** ");
+		logger.debug("-------------- auto init --------------");
 		readDashBoard();
 		
 		// Handle autonomous based on starting position.
@@ -233,20 +200,16 @@ public class Robot extends TimedRobot {
 			logger.debug("Auto Position = right ");
 			autonomousCommand = new DoRightAuto(chosenAutoFunction, gameData, numCubes);
 		} 
-		else {
+		else { // if dashboard doesn't get proper information, run line auto
 			logger.debug("Auto Position = UNKNOWN ");
 			autonomousCommand = new DoMiddleAuto(FieldTarget.kLine, gameData, numCubes);
 		}
 		
 		sfSub.pReverse();
-		
 		driveTrainSub.resetEncoders();
 		autonomousCommand.start();
 	}
 
-	/**
-	 * This function is called periodically during autonomous.
-	 */
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
@@ -260,23 +223,15 @@ public class Robot extends TimedRobot {
 		}
 		
 		driveTrainSub.resetEncoders();
-		
 		sfSub.pReverse();
 		sfSub.retractIntake();
 	}
 
-	/**
-	 * This function is called periodically during operator control.
-	 */
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-//		System.out.println(driveTrainSub.ultra.getRangeInches());
 	}
 
-	/**
-	 * This function is called periodically during test mode.
-	 */
 	@Override
 	public void testPeriodic() {
 		System.out.println("Running in test mode.");
