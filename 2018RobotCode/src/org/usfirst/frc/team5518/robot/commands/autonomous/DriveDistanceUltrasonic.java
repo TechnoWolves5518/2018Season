@@ -7,19 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class AngleDriveDistance extends Command {
+public class DriveDistanceUltrasonic extends Command {
 	
-	private float distance;
-	private float speed;
-	private float angle;
+	float point, speed;
 	
-    public AngleDriveDistance(float m_distance, float m_speed, float m_angle) {
+    public DriveDistanceUltrasonic(float m_point, float m_speed) {
         // Use requires() here to declare subsystem dependencies
-    		requires(Robot.driveTrainSub);
-    		
-    		distance = m_distance;
+        requires(Robot.driveTrainSub);
+    		point = m_point;
     		speed = m_speed;
-    		angle = m_angle;
     }
 
     // Called just before this Command runs the first time
@@ -28,19 +24,14 @@ public class AngleDriveDistance extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    		Robot.logger.debug("running AngleDriveDistance");
-		Robot.driveTrainSub.autoAngledDrive(distance, speed, angle);
+	    	Robot.logger.debug("running driveDistanceUltrasonic");
+	    	Robot.driveTrainSub.autoDriveToPoint(point, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
     		
-    		if (Robot.driveTrainSub.ultra.getRangeInches() < distance || Robot.driveTrainSub.ultra.getRangeInches() > distance+42) {
-			return false;
-		}
-		else {
-			return true;
-		}
+    		return !(Robot.driveTrainSub.ultra.getRangeInches() < point);
     		
     }
 

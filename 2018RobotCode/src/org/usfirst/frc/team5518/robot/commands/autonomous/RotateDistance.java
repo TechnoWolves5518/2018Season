@@ -17,16 +17,11 @@ public class RotateDistance extends Command {
 	private float speed;
 
 	/**
-	 * Construct a new command to rotate the robot
-	 * using bang-bang control
-	 * 
+	 * Construct a new command to rotate the robot using bang-bang control
 	 * @param degrees The setpoint to rotate to
-	 * @param speed The speed to turn the robot at. If
-	 * set equal to or below 0, then rotate
+	 * @param speed The speed to turn the robot at. If set equal to or below 0, then rotate
 	 */
 	public RotateDistance(float degrees, float speed) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
 		requires(Robot.driveTrainSub);
 
 		this.degrees = degrees;
@@ -34,9 +29,7 @@ public class RotateDistance extends Command {
 	}
 	
 	/**
-	 * Construct a new command to rotate the robot
-	 * using PID control
-	 * 
+	 * Construct a new command to rotate the robot using PID control
 	 * @param degrees
 	 */
 	public RotateDistance(float degrees) {
@@ -47,7 +40,7 @@ public class RotateDistance extends Command {
 	 * Called just before this Command runs the first time
 	 */
 	protected void initialize() {
-		if (speed <= 0) {
+		if (speed <= 0) { // 0 is the speed value used to indicate that we should use PID rather than open loop control 
 			Robot.driveTrainSub.resetGyro();
 			Robot.driveTrainSub.enableGyroPID(degrees);
 		}
@@ -58,12 +51,15 @@ public class RotateDistance extends Command {
 	 * @see edu.wpi.first.wpilibj.command.Command#execute()
 	 */
 	protected void execute() {
-		Robot.logger.debug("running rotate");
 		
-		if (speed <= 0)
+		if (speed <= 0) {
 			Robot.driveTrainSub.rotatePID();
-		else
+			Robot.logger.debug("running rotate PID");
+		}
+		else {
 			Robot.driveTrainSub.rotate(degrees, speed);
+			Robot.logger.debug("running rotate bang-bang");
+		}
 	}
 
 	/**
@@ -72,7 +68,7 @@ public class RotateDistance extends Command {
 	protected boolean isFinished() {
 		if (speed > 0) {
 			// check if angle within threshold
-			double angle = Robot.driveTrainSub.getGyroAngle();
+			double angle = Robot.driveTrainSub.gyro.getAngle();
 			return (angle >= degrees - DriveTrainSub.kAngleTolerance)
 				&& (angle <= degrees + DriveTrainSub.kAngleTolerance);
 		}

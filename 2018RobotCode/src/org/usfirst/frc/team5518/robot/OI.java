@@ -7,7 +7,6 @@
 
 package org.usfirst.frc.team5518.robot;
 
-import org.usfirst.frc.team5518.robot.commands.DropIntake;
 import org.usfirst.frc.team5518.robot.commands.FastReverseIntakeCom;
 import org.usfirst.frc.team5518.robot.commands.ForwardIntakeCom;
 import org.usfirst.frc.team5518.robot.commands.ReverseIntakeCom;
@@ -26,7 +25,6 @@ public class OI {
 	
 	public static Joystick driveController = new Joystick(0); // Create XBOX controller from USB port 0
 	public static Joystick sfController = new Joystick(1); // Create XBOX controller from USB port 1
-	// public static Joystick flight = new Joystick(0); // Create flight controller from USB port 0
 	
 	private Button rBumperSF = new JoystickButton(sfController, RobotMap.XBOX_RBUMPER);
 	
@@ -40,20 +38,17 @@ public class OI {
 	private Button yButtonDrive = new JoystickButton(driveController, RobotMap.XBOX_YBTN);
 	
 	public OI() {
-		
-//		lBumperSF.whileHeld(new WingReleaseCom());
-		
+		// shooting commands
 		aButtonSF.whenPressed(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		xButtonSF.whenPressed(new AutoLauncherCom(RobotMap.SCALE_DELAY));
-		
+		// intake commands
 		bButtonSF.whileHeld(new ForwardIntakeCom());
 		yButtonSF.whileHeld(new ReverseIntakeCom());
 		rBumperSF.whileHeld(new FastReverseIntakeCom());
-		
+		// quick turn commands
 		xButtonDrive.whenPressed(new RotateDistance(-90f, 0.3f));
 		bButtonDrive.whenPressed(new RotateDistance(90f, 0.3f));
 		yButtonDrive.whenPressed(new RotateDistance(180f, 0.3f));
-		
 	}
 	
 	

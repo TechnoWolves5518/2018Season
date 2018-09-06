@@ -23,6 +23,7 @@ public class TimedIntakeCom extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     		Robot.sfSub.intake(RobotMap.INTAKE_SPEED, RobotMap.SECONDARY_INTAKE_SPEED, RobotMap.EXTENDED_INTAKE_SPEED, 0);
+    		Robot.logger.debug("Running timed intake...");
     }
 
     // Make this return true when this Command no longer needs to run execute()

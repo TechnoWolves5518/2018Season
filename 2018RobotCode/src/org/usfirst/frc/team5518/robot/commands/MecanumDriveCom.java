@@ -14,7 +14,7 @@ public class MecanumDriveCom extends Command {
 	
 	public double strafeSpeed, driveSpeed, zRotation;
 	public double ltValue, rtValue;
-	public boolean notnos;
+	public boolean notnos; // slow button
 	
 	public boolean lbPressed;
 	
@@ -29,7 +29,7 @@ public class MecanumDriveCom extends Command {
     
     // Called just before this Command runs the first time
     protected void initialize() {
-    		System.out.println("START DOING"); // For logging purposes
+    		Robot.logger.info("Mecanum Drive Command Initializing");
     }
     
     // Called repeatedly when this Command is scheduled to run
@@ -38,41 +38,28 @@ public class MecanumDriveCom extends Command {
 		// ------------------------- XBOX CONTROLS ------------------------- //
 		// Forwards/Backwards movement
 		driveSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKY); // Set vertical movement to left stick Y axis
-		driveSpeed = Robot.driveTrainSub.quadCurve(driveSpeed); // Apply squared inputs
-		driveSpeed *= RobotMap.KY; // Apply speed caps
+		driveSpeed = Robot.driveTrainSub.readSpeedValues(driveSpeed, RobotMap.KY); // Change sens and cap
 		
 		zRotation = OI.driveController.getRawAxis(RobotMap.XBOX_RSTICKX); // Set pivot rotations to right stick
-		zRotation = Robot.driveTrainSub.quadCurve(zRotation); // Apply squared inputs
-		zRotation *= RobotMap.KZ; // Apply speed caps
+		zRotation = Robot.driveTrainSub.readSpeedValues(zRotation, RobotMap.KZ); // Change sens and cap
 		
 		strafeSpeed = OI.driveController.getRawAxis(RobotMap.XBOX_LSTICKX); // Set strafe movement to left stick X axis
-		strafeSpeed = Robot.driveTrainSub.quadCurve(strafeSpeed); // Apply squared inputs
-		strafeSpeed *= RobotMap.KX; // Apply speed caps
+		strafeSpeed = Robot.driveTrainSub.readSpeedValues(strafeSpeed, RobotMap.KX); // Change sens and cap
 		
-		notnos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set speedy-mode toggle ot right bumper
-		
+		notnos = OI.driveController.getRawButton(RobotMap.XBOX_RBUMPER); // Set slow-mode to right bumper
 		lbPressed = OI.driveController.getRawButton(RobotMap.XBOX_LBUMPER);
 		
 		if (notnos) {
-			driveSpeed *= 0.5f; // If the speed button isn't pressed, move at 2/3 speed
+			driveSpeed *= 0.5f; // If the slow button is pressed, move at half speed
 		}
 		
 		if (lbPressed) {
-			Robot.driveTrainSub.alignScale();
+			Robot.driveTrainSub.alignScale();  // Left bumper used to line up for scale shot
 		}
-		
-		if (OI.driveController.getRawButton(RobotMap.XBOX_LBUMPER)) {
-			OI.driveController.setRumble(RumbleType.kLeftRumble, 1);
-		}
-		else {
-			OI.driveController.setRumble(RumbleType.kLeftRumble, 0);
-		}
-		
-    		// System.out.println("forward move:   " + xSpeed + "   strafe:   " + ySpeed + "   zRotation:   " + zRotation);
 		
 		// Call the drive() function from the driveTrainSubsystem, pass in collected speed values
 		Robot.driveTrainSub.drive(driveSpeed, strafeSpeed, zRotation); 
-		
+		Robot.logger.debug("forward move:   " + driveSpeed + "   strafe:   " + strafeSpeed + "   zRotation:   " + zRotation);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -87,8 +74,8 @@ public class MecanumDriveCom extends Command {
 
     // Called when another command which requires one or more of the same subsystems is scheduled to run
     protected void interrupted() {
-		System.out.println("ROBOT INTERRUPTED");
-    	Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
+		Robot.logger.info("ROBOT INTERRUPTED");
+		Robot.driveTrainSub.stop(); // Call the failsafe Stop() function
     }
 }
 

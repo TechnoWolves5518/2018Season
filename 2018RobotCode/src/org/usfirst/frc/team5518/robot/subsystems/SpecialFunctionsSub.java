@@ -14,19 +14,16 @@ import edu.wpi.first.wpilibj.command.Subsystem;
  * on the robot for launching the power cube either on a scale or
  * a switch as well as intaking a power cube for loading it onto
  * the robot.
- *
- * @author Armaan Syed
- * @author Taha Bokhari
  */
 public class SpecialFunctionsSub extends Subsystem {
 	
-	/** The motor controllers for intaking a powercube */
+	// The motor controllers for intaking a powercube
 	private VictorSP leftMotor;
 	private VictorSP rightMotor;
-	
+	// the secondary motors are the spiky intake wheels
 	private VictorSP leftSecondaryMotor;
 	private VictorSP rightSecondaryMotor;
-	
+	// the extended intakes are the arm intakes
 	private VictorSP leftExtendedIntake, rightExtendedIntake;
 	
 	// Pneumatic Components
@@ -68,7 +65,7 @@ public class SpecialFunctionsSub extends Subsystem {
 	 * Set a default command for the subsystem
 	 */
     public void initDefaultCommand() {
-    	setDefaultCommand(Robot.dropIntakeCom);
+    		setDefaultCommand(Robot.dropIntakeCom);
     }
     
 	public void initNeutral() {
@@ -108,16 +105,9 @@ public class SpecialFunctionsSub extends Subsystem {
 			leftExtendedIntake.set(speed3);
 			rightExtendedIntake.set(speed3);
 		}
-//		leftMotor.set(speed);
-//		rightMotor.set(speed);
 		leftSecondaryMotor.set(speed2);
 		rightSecondaryMotor.set(speed2);
 	}
 	
-	public void extendedIntake(double leftSpeed, double rightSpeed) {
-		leftExtendedIntake.set(leftSpeed);
-		rightExtendedIntake.set(rightSpeed);
-	}
-
 }
 

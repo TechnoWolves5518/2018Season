@@ -12,8 +12,7 @@ public class StrafeDistance extends Command {
 	private float speed;
 
 	public StrafeDistance(float m_distance, float m_speed) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
+
 		requires(Robot.driveTrainSub);
 
 		distance = m_distance;

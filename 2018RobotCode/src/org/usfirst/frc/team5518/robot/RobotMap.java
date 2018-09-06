@@ -21,6 +21,7 @@ public class RobotMap {
 	public static double KZ = 0.8;
 	
 	// Decreased speeds for DEMO PURPOSES
+	// Make sure robot is not in granny mode during competition
 //	public static double KX = 0.5;
 //	public static double KY = 0.5;
 //	public static double KZ = 0.5;
@@ -29,20 +30,25 @@ public class RobotMap {
 	public static double INTAKE_SPEED = 0.8;
 	public static double SECONDARY_INTAKE_SPEED = 1;
 	public static double EXTENDED_INTAKE_SPEED = 0.6;
-//	public static double SWITCH_DELAY = .08; // extension time for switch shot in seconds (70 ms)
-	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (60 ms) DEMO NUMBER
-	public static double SCALE_DELAY = .5; // extension time for scale shot in seconds (300 ms)
 	public static float AUTO_DRIVE_SPEED = 0.3f;
 	public static float AUTO_STRAFE_SPEED = 0.4f;
 	public static float AUTO_ROTATE_SPEED = 0.3f;
 	
+	// MISC VALUES
+	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (70 ms)
+	public static double SCALE_DELAY = .5; // extension time for scale shot in seconds (500 ms)
+	
 	public static float LINE_DISTANCE = 140;
 	public static float SIDE_EXTEND = 80;
-	public static float WAIT_TIME = 0.4f;
-	public static float ROBOT_LENGTH = 32f;
-	public static float ROBOT_WIDTH = 37f;
 	public static double SCALE_ALIGNMENT_DIST = 32;
 	public static double ALLOWANCE = 2;
+	
+	public static float ROBOT_LENGTH = 32f;
+	public static float ROBOT_WIDTH = 37f;
+	
+	public static float WAIT_TIME = 0.4f;
+	
+	public static double CONTROLLER_CUSTOM_DEADBAND = 0.03;
 	
 	// PORT MAPPING
 	// drive train
@@ -52,36 +58,50 @@ public class RobotMap {
 	public static int BACK_RIGHT = 3;
 	
 	// special functions
-		// pwm
+		// PWM
 	public static int LEFT_SPIKY_INTAKE = 0;
     public static int RIGHT_SPIKY_INTAKE = 1;
     public static int LEFT_ARM_INTAKE = 2;
     public static int RIGHT_ARM_INTAKE = 3;
     public static int LEFT_INTAKE = 4;
     public static int RIGHT_INTAKE = 5;
-    	// pcm
-    public static int COMPRESSOR = 0; //PCM port
-    public static int PNEU_SHOOTER_FORWARD = 1; //PCM port  
-    public static int PNEU_SHOOTER_BACKWARD = 2; //PCM port
-    public static int PNEU_INTAKE_FORWARD = 0; //PCM port
-    public static int PNEU_INTAKE_BACKWARD = 3; //PCM port
+    		// PCM
+    public static int COMPRESSOR = 0;
+    public static int PNEU_SHOOTER_FORWARD = 1;  
+    public static int PNEU_SHOOTER_BACKWARD = 2;
+    public static int PNEU_INTAKE_FORWARD = 0;
+    public static int PNEU_INTAKE_BACKWARD = 3;
 	
-	// WINGMAN STUFF RIPOFFz
-	// axes
+    // sensors
+    		// ultrasonic
+    public static int ULTRA_PING = 8;
+    public static int ULTRA_ECHO = 9;
+    		// encoders
+    public static int LEFT_ENC_A = 0;
+    public static int LEFT_ENC_B = 1;
+    public static int RIGHT_ENC_A = 2;
+    public static int RIGHT_ENC_B = 3;
+    		// gyroscope
+    public static double GYRO_PID_KP = 0.05;
+    public static double GYRO_PID_KI = 0;
+    public static double GYRO_PID_KD = 0.05;
+    public static double GYRO_PID_SPEED = 0.4;
+    
+	// WINGMAN STUFF
+		// axes
 	public static int JOYSTICK_XAXIS = 0;
 	public static int JOYSTICK_YAXIS = 1;
 	public static int JOYSTICK_ZAXIS = 2;
 	
 	// XBOX 360/ONE CONTROLLER MAPPING
-	// axes
+		// axes
 	public static int XBOX_LSTICKX = 0;
 	public static int XBOX_LSTICKY = 1; 
 	public static int XBOX_RSTICKX = 4;
 	public static int XBOX_RSTICKY = 5;
 	public static int XBOX_LTRIGGER = 2;
 	public static int XBOX_RTRIGGER = 3;
-	
-	// buttons
+		// buttons
 	public static int XBOX_YBTN = 4;
 	public static int XBOX_XBTN = 3;
 	public static int XBOX_ABTN = 1;
