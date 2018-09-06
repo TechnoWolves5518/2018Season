@@ -338,6 +338,8 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		talon.setExpiration(expiraton);
 		talon.setInverted(false);
 		talon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+//		talon.configContinuousCurrentLimit(5, 1000);
+		talon.enableCurrentLimit(true);
 	}
 	
 }
