@@ -96,7 +96,7 @@ public class DoLeftAuto extends CommandGroup {
 	}
 
 	private void leftToLeftSwitch() {
-		addSequential(new DriveDistance(173-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new DriveDistanceUltrasonic(173-RobotMap.ROBOT_LENGTH, RobotMap.AUTO_DRIVE_SPEED));
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED)); //clockwise
 		addSequential(new WaitCom(1, true)); // wait with move
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target

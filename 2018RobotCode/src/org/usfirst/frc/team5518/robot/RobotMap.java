@@ -35,7 +35,7 @@ public class RobotMap {
 	public static float AUTO_ROTATE_SPEED = 0.3f;
 	
 	// MISC VALUES
-	public static double SWITCH_DELAY = .07; // extension time for switch shot in seconds (70 ms)
+	public static double SWITCH_DELAY = .06; // extension time for switch shot in seconds (70 ms)
 	public static double SCALE_DELAY = .5; // extension time for scale shot in seconds (500 ms)
 	
 	public static float LINE_DISTANCE = 140;

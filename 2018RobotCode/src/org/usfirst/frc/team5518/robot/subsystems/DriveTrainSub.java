@@ -119,9 +119,9 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 	public void autoDriveToPoint(float point, float speed) {
 		
 		if (ultra.getRangeInches() < point-1) {
-			drive(speed, 0, rotAdjustment);
-		} else if (ultra.getRangeInches() > point+1) {
 			drive(-speed, 0, rotAdjustment);
+		} else if (ultra.getRangeInches() > point+1) {
+			drive(speed, 0, rotAdjustment);
 		} else {
 			drive(0, 0, 0);
 		}
@@ -264,18 +264,14 @@ public class DriveTrainSub extends Subsystem implements PIDOutput {
 		gyro.calibrate();
 	}
 	
-<<<<<<< HEAD
-	public void setupTalons(WPI_TalonSRX talon) {
-		talon.setSafetyEnabled(true);
-		talon.setExpiration(expiraton);
-		talon.setInverted(false);
-		talon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
-//		talon.configContinuousCurrentLimit(5, 1000);
-		talon.enableCurrentLimit(true);
-	}
-	
-=======
->>>>>>> branch 'WolfByte' of https://github.com/TechnoWolves5518/2018Season.git
+//	public void setupTalons(WPI_TalonSRX talon) {
+//		talon.setSafetyEnabled(true);
+//		talon.setExpiration(expiraton);
+//		talon.setInverted(false);
+//		talon.setNeutralMode(com.ctre.phoenix.motorcontrol.NeutralMode.Brake);
+////		talon.configContinuousCurrentLimit(5, 1000);
+//		talon.enableCurrentLimit(true);
+//	}
 }
 
 
