@@ -83,7 +83,7 @@ public class RobotMap {
     public static int RIGHT_ENC_B = 3;
     		// gyroscope
     public static double GYRO_PID_KP = 0.05;
-    public static double GYRO_PID_KI = 0;
+    public static double GYRO_PID_KI = 0.05;
     public static double GYRO_PID_KD = 0.05;
     public static double GYRO_PID_SPEED = 0.4;
     

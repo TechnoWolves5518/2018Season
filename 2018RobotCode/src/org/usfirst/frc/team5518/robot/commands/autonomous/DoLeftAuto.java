@@ -102,10 +102,6 @@ public class DoLeftAuto extends CommandGroup {
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
-	private void leftToRightSwitchBehind() {
-		
-	}
-
 	private void leftToRightScale() {
 		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
 		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
