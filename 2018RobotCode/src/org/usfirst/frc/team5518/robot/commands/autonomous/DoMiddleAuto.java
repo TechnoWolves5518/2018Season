@@ -79,6 +79,7 @@ public class DoMiddleAuto extends CommandGroup {
 
 	private void middleToLine() {
 //		addSequential(new DriveDistance(RobotMap.LINE_DISTANCE, RobotMap.AUTO_DRIVE_SPEED));
+		// Time based movement
 		addSequential(new WaitCom(4, true));
 	}
 
