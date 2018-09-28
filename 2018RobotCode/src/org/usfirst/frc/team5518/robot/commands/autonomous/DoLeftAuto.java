@@ -102,23 +102,27 @@ public class DoLeftAuto extends CommandGroup {
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY)); // pass in delay for respective target
 	}
 
-	private void leftToRightScale() {
-		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
-		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED)); // Second leg drives across field to right side
-		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with scale
-		addSequential(new RotateDistance(-65, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
-		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+	private void leftToRightScale() { //disabled
+//		addSequential(new DriveDistance(220, RobotMap.AUTO_DRIVE_SPEED)); // First leg gets us past the left side of switch
+//		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new DriveDistance(224, RobotMap.AUTO_DRIVE_SPEED)); // Second leg drives across field to right side
+//		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new DriveDistance(68, RobotMap.AUTO_DRIVE_SPEED)); // Third leg gets us even with scale
+//		addSequential(new RotateDistance(-65, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
+//		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+		
+		leftToLine();
 	}
 
-	private void leftToLeftScale() {
-		addSequential(new DriveDistance(300, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
-		addSequential(new DriveDistanceUltrasonic(30, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
-		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+	private void leftToLeftScale() { //disabled
+//		addSequential(new DriveDistance(300, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+//		addSequential(new DriveDistanceUltrasonic(30, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
+//		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+		
+		leftToLine();
 	}
 
 }
