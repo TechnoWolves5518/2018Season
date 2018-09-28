@@ -93,8 +93,8 @@ public class DoMiddleAuto extends CommandGroup {
 		
 		// states auto
 //		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED)); // drives forward 120 based on ultrasonic
-		addSequential(new WaitCom(6, true)); // drives forward for 2 seconds just to be sure
-		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+//		addSequential(new WaitCom(6, true)); // drives forward for 2 seconds just to be sure
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 		// THOR auto
 		addSequential(new WaitCom(6, true)); // drives forward for 6 seconds; no sensor usage
