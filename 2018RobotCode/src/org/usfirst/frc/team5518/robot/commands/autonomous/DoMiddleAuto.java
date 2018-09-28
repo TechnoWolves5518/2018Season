@@ -96,6 +96,10 @@ public class DoMiddleAuto extends CommandGroup {
 		addSequential(new WaitCom(6, true)); // drives forward for 2 seconds just to be sure
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
+		// THOR auto
+		addSequential(new WaitCom(6, true)); // drives forward for 6 seconds; no sensor usage
+		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		
 	}
 
 	private void middleToLeftSwitch() {
