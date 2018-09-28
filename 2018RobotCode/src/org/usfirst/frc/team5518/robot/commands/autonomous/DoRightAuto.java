@@ -103,16 +103,12 @@ public class DoRightAuto extends CommandGroup {
 		rightToLine();
 	}
 
-	private void rightToLeftSwitchBehind() {
-		
-	}
-
 	private void rightToRightScale() {
-//		addSequential(new DriveDistance(300, RobotMap.AUTO_DRIVE_SPEED));
-//		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
-//		addSequential(new DriveDistanceUltrasonic(30, RobotMap.AUTO_DRIVE_SPEED));
-//		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
-//		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
+		addSequential(new WaitCom(6.5, true)); // 6.5 initial scale wait time (guess)
+		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistanceUltrasonic(30, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new WaitCom(RobotMap.WAIT_TIME, false));
+		addSequential(new AutoLauncherCom(RobotMap.SCALE_DELAY)); // pass in delay for respective target
 		
 		rightToLine();
 	}
