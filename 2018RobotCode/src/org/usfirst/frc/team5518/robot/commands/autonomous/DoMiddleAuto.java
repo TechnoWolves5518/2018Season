@@ -112,10 +112,18 @@ public class DoMiddleAuto extends CommandGroup {
 //		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 		
 		// states auto
+//		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new StrafeDistance(160, -RobotMap.AUTO_STRAFE_SPEED));
+//		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
+//		addSequential(new WaitCom(1, true)); // drives forward for 1 seconds
+//		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
+		
+		// THOR auto
 		addSequential(new DriveDistance(50, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new StrafeDistance(160, -RobotMap.AUTO_STRAFE_SPEED));
-		addSequential(new DriveDistance(100, RobotMap.AUTO_DRIVE_SPEED));
-		addSequential(new WaitCom(1, true)); // drives forward for 1 seconds
+		addSequential(new RotateDistance(-90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new DriveDistance(160, RobotMap.AUTO_DRIVE_SPEED));
+		addSequential(new RotateDistance(90, RobotMap.AUTO_ROTATE_SPEED));
+		addSequential(new WaitCom(4, true)); // drives forward for 1 second
 		addSequential(new AutoLauncherCom(RobotMap.SWITCH_DELAY));
 	}
 
