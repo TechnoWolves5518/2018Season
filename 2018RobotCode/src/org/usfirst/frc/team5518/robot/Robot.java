@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
 	
 	Command autonomousCommand; // create placeholder for chosen command
 	
-	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back)
+	private boolean optionalPath; // Choose to go on the optional paths (red paths on paper, front instead of back) useless
 	
 	// Needed information to know which auto path to do
 	public static String gameData;
